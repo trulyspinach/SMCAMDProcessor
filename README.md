@@ -13,3 +13,9 @@ Please note that this release is at very initial stage of development, make sure
 
 
 ![alt cover](https://raw.githubusercontent.com/trulyspinach/SMCAMDProcessor/master/imgs/iStats.png?token=ACEQAOUQWAAIXGLIPL563PK6LECW6)
+
+
+#### Notes
+- I am still fairly new to macOS kernel development, this software project was initally a hobby project to get some reading on my newly built AMD hackintosh computer.
+
+- With that being said, please bear with some of the spaghetti and not-idiomatic codes. Any criticism is much welcomed :)
