@@ -1,0 +1,347 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B57D280723F66C8E002BC699 /* SMCAMDProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280123F66C8E002BC699 /* SMCAMDProcessor.cpp */; };
+		B57D280823F66C8E002BC699 /* Keyimplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280223F66C8E002BC699 /* Keyimplementations.cpp */; };
+		B57D280923F66C8E002BC699 /* SMCAMDProcessor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B57D280323F66C8E002BC699 /* SMCAMDProcessor.hpp */; };
+		B57D280A23F66C8E002BC699 /* KeyImplementations.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B57D280423F66C8E002BC699 /* KeyImplementations.hpp */; };
+		B57D280B23F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280523F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp */; };
+		B57D280C23F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B57D280623F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B57D27F423F66AE7002BC699 /* SMCAMDProcessor.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMCAMDProcessor.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		B57D27FB23F66AE7002BC699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B57D280123F66C8E002BC699 /* SMCAMDProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SMCAMDProcessor.cpp; sourceTree = "<group>"; };
+		B57D280223F66C8E002BC699 /* Keyimplementations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Keyimplementations.cpp; sourceTree = "<group>"; };
+		B57D280323F66C8E002BC699 /* SMCAMDProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SMCAMDProcessor.hpp; sourceTree = "<group>"; };
+		B57D280423F66C8E002BC699 /* KeyImplementations.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KeyImplementations.hpp; sourceTree = "<group>"; };
+		B57D280523F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SMCAMDProcessorUserClient.cpp; sourceTree = "<group>"; };
+		B57D280623F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SMCAMDProcessorUserClient.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B57D27F123F66AE7002BC699 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B57D27EA23F66AE7002BC699 = {
+			isa = PBXGroup;
+			children = (
+				B57D27F623F66AE7002BC699 /* SMCAMDProcessor */,
+				B57D27F523F66AE7002BC699 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B57D27F523F66AE7002BC699 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B57D27F423F66AE7002BC699 /* SMCAMDProcessor.kext */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B57D27F623F66AE7002BC699 /* SMCAMDProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				B57D280123F66C8E002BC699 /* SMCAMDProcessor.cpp */,
+				B57D280323F66C8E002BC699 /* SMCAMDProcessor.hpp */,
+				B57D280523F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp */,
+				B57D280623F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp */,
+				B57D280223F66C8E002BC699 /* Keyimplementations.cpp */,
+				B57D280423F66C8E002BC699 /* KeyImplementations.hpp */,
+				B57D27FB23F66AE7002BC699 /* Info.plist */,
+			);
+			path = SMCAMDProcessor;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		B57D27EF23F66AE7002BC699 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B57D280C23F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp in Headers */,
+				B57D280A23F66C8E002BC699 /* KeyImplementations.hpp in Headers */,
+				B57D280923F66C8E002BC699 /* SMCAMDProcessor.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		B57D27F323F66AE7002BC699 /* SMCAMDProcessor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B57D27FE23F66AE7002BC699 /* Build configuration list for PBXNativeTarget "SMCAMDProcessor" */;
+			buildPhases = (
+				B57D27EF23F66AE7002BC699 /* Headers */,
+				B57D27F023F66AE7002BC699 /* Sources */,
+				B57D27F123F66AE7002BC699 /* Frameworks */,
+				B57D27F223F66AE7002BC699 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SMCAMDProcessor;
+			productName = SMCAMDProcessor;
+			productReference = B57D27F423F66AE7002BC699 /* SMCAMDProcessor.kext */;
+			productType = "com.apple.product-type.kernel-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B57D27EB23F66AE7002BC699 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = trulyspinach;
+				TargetAttributes = {
+					B57D27F323F66AE7002BC699 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = B57D27EE23F66AE7002BC699 /* Build configuration list for PBXProject "SMCAMDProcessor" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B57D27EA23F66AE7002BC699;
+			productRefGroup = B57D27F523F66AE7002BC699 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B57D27F323F66AE7002BC699 /* SMCAMDProcessor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B57D27F223F66AE7002BC699 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B57D27F023F66AE7002BC699 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B57D280B23F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp in Sources */,
+				B57D280723F66C8E002BC699 /* SMCAMDProcessor.cpp in Sources */,
+				B57D280823F66C8E002BC699 /* Keyimplementations.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B57D27FC23F66AE7002BC699 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		B57D27FD23F66AE7002BC699 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B57D27FF23F66AE7002BC699 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"MODULE_VERSION=$(MODULE_VERSION)",
+					"PRODUCT_NAME=$(PRODUCT_NAME)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",
+					"${PROJECT_DIR}/VirtualSMC.kext/Contents/Resources",
+				);
+				INFOPLIST_FILE = SMCAMDProcessor/Info.plist;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
+				MODULE_NAME = wtf.spinach.SMCAMDProcessor;
+				MODULE_VERSION = 1.0.0d1;
+				OTHER_CPLUSPLUSFLAGS = "-Wno-inconsistent-missing-override";
+				OTHER_LDFLAGS = "-static";
+				PRODUCT_BUNDLE_IDENTIFIER = wtf.spinach.SMCAMDProcessor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Debug;
+		};
+		B57D280023F66AE7002BC699 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PRODUCT_NAME=$(PRODUCT_NAME)",
+					"MODULE_VERSION=$(MODULE_VERSION)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",
+					"${PROJECT_DIR}/VirtualSMC.kext/Contents/Resources",
+				);
+				INFOPLIST_FILE = SMCAMDProcessor/Info.plist;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
+				MODULE_NAME = wtf.spinach.SMCAMDProcessor;
+				MODULE_VERSION = 1.0.0d1;
+				OTHER_CPLUSPLUSFLAGS = "-Wno-inconsistent-missing-override";
+				OTHER_LDFLAGS = "-static";
+				PRODUCT_BUNDLE_IDENTIFIER = wtf.spinach.SMCAMDProcessor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B57D27EE23F66AE7002BC699 /* Build configuration list for PBXProject "SMCAMDProcessor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57D27FC23F66AE7002BC699 /* Debug */,
+				B57D27FD23F66AE7002BC699 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B57D27FE23F66AE7002BC699 /* Build configuration list for PBXNativeTarget "SMCAMDProcessor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57D27FF23F66AE7002BC699 /* Debug */,
+				B57D280023F66AE7002BC699 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B57D27EB23F66AE7002BC699 /* Project object */;
+}
