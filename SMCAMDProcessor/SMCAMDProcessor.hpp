@@ -91,6 +91,7 @@ class SMCAMDProcessor : public IOService {
     static constexpr SMC_KEY KeyPCPC = SMC_MAKE_IDENTIFIER('P','C','P','C');
     static constexpr SMC_KEY KeyPCPG = SMC_MAKE_IDENTIFIER('P','C','P','G');
     static constexpr SMC_KEY KeyPCPR = SMC_MAKE_IDENTIFIER('P','C','P','R');
+    static constexpr SMC_KEY KeyPSTR = SMC_MAKE_IDENTIFIER('P','S','T','R');
     static constexpr SMC_KEY KeyPCPT = SMC_MAKE_IDENTIFIER('P','C','P','T');
     static constexpr SMC_KEY KeyPCTR = SMC_MAKE_IDENTIFIER('P','C','T','R');
     static constexpr SMC_KEY KeyTCxD(size_t i) { return SMC_MAKE_IDENTIFIER('T','C',KeyIndexes[i],'D'); }
@@ -121,7 +122,7 @@ public:
     
     void updateClockSpeed();
     void updatePackageTemp();
-    void updatePackageEnegry();
+    void updatePackageEnergy();
     
     uint32_t totalNumberOfPhysicalCores;
     
@@ -129,11 +130,11 @@ public:
     /**
      *  Hard allocate space for cached readings.
      */
-    uint64_t MSR_HARDWARE_PSTATE_STATUS_perCore[24] {};
+    float MSR_HARDWARE_PSTATE_STATUS_perCore[24] {};
     float PACKAGE_TEMPERATURE_perPackage[CPUInfo::MaxCpus];
     
     uint64_t lastUpdateTime;
-    uint64_t lastUpdateEnegryValue;
+    uint64_t lastUpdateEnergyValue;
     
     double uniPackageEnegry;
     

@@ -82,9 +82,9 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
             arguments->scalarOutputCount = 1;
             arguments->scalarOutput[0] = numPhyCores;
             
-            arguments->structureOutputSize = numPhyCores * sizeof(uint64_t);
+            arguments->structureOutputSize = numPhyCores * sizeof(float);
 
-            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            float *dataOut = (float*) arguments->structureOutput;
 
             for(uint32_t i = 0; i < numPhyCores; i++){
                 dataOut[i] = fProvider->MSR_HARDWARE_PSTATE_STATUS_perCore[i];
@@ -100,6 +100,27 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
             
             float *dataOut = (float*) arguments->structureOutput;
             dataOut[0] = fProvider->PACKAGE_TEMPERATURE_perPackage[0];
+            break;
+        }
+        
+        //Get all data like this: [float power, float temperature, float clock_core_1, 2, 3 .....]
+        //Yes, i am too lazy to write a struct
+        case 4: {
+            uint32_t numPhyCores = fProvider->totalNumberOfPhysicalCores;
+            arguments->scalarOutputCount = 1;
+            arguments->scalarOutput[0] = numPhyCores;
+            
+            arguments->structureOutputSize = (numPhyCores + 2) * sizeof(float);
+
+            float *dataOut = (float*) arguments->structureOutput;
+            
+            dataOut[0] = (float)fProvider->uniPackageEnegry;
+            dataOut[1] = fProvider->PACKAGE_TEMPERATURE_perPackage[0];
+            
+            for(uint32_t i = 0; i < numPhyCores; i++){
+                dataOut[i + 2] = fProvider->MSR_HARDWARE_PSTATE_STATUS_perCore[i];
+            }
+            
             break;
         }
             
