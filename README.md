@@ -16,6 +16,7 @@ Please note that this release is at very initial stage of development, make sure
 
 ## Tested Processors
 * Ryzen 9 3900X
+* Ryzen 7 3700X
 * Ryzen 5 3600
 
 <img src="imgs/iStats.png" width="40%">
