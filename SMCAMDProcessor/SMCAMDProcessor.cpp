@@ -264,7 +264,7 @@ void SMCAMDProcessor::updatePackageTemp(){
     uint32_t totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
     if (totalNumberOfPhysicalCores == 6) // 1600X,1700X,1800X
         offset = -20.0f;
-    else if  (totalNumberOfPhysicalCores == 12 || totalNumberOfPhysicalCores ==32)// Threadripper 19,Threadripper 29
+    else if  (totalNumberOfPhysicalCores == 12 || totalNumberOfPhysicalCores == 32)// Threadripper 19,Threadripper 29
         offset = -27.0f;
     else if (totalNumberOfPhysicalCores == 8) //  2700X
         offset = -10.0f;
