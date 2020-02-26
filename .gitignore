@@ -1,7 +1,5 @@
 
 Lilu.kext/
 VirtualSMC.kext/
+SMCAMDProcessor.xcodeproj/
 .DS_Store
-SMCAMDProcessor.xcodeproj/project.xcworkspace/
-SMCAMDProcessor.xcodeproj/project.xcworkspace/
-SMCAMDProcessor.xcodeproj/xcuserdata/
