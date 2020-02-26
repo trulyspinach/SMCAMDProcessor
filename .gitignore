@@ -1,3 +1,6 @@
 
 Lilu.kext/
 VirtualSMC.kext/
+VirtualSMCSDK/
+AMD*/
+.DS_Store

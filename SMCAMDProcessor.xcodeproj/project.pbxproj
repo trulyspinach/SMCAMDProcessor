@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B56162C72400EF770006A7D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56162C62400EF770006A7D8 /* AppDelegate.swift */; };
-		B56162C92400EF770006A7D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56162C82400EF770006A7D8 /* ViewController.swift */; };
-		B56162CB2400EF780006A7D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B56162CA2400EF780006A7D8 /* Assets.xcassets */; };
-		B56162CE2400EF780006A7D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B56162CC2400EF780006A7D8 /* Main.storyboard */; };
-		B561633524010C050006A7D8 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B561633424010C050006A7D8 /* GraphView.swift */; };
 		B57D280723F66C8E002BC699 /* SMCAMDProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280123F66C8E002BC699 /* SMCAMDProcessor.cpp */; };
 		B57D280823F66C8E002BC699 /* Keyimplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280223F66C8E002BC699 /* Keyimplementations.cpp */; };
 		B57D280923F66C8E002BC699 /* SMCAMDProcessor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B57D280323F66C8E002BC699 /* SMCAMDProcessor.hpp */; };
@@ -21,14 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B56162C42400EF770006A7D8 /* AMD Power Gadget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AMD Power Gadget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B56162C62400EF770006A7D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B56162C82400EF770006A7D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B56162CA2400EF780006A7D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B56162CD2400EF780006A7D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B56162CF2400EF780006A7D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B56162D02400EF780006A7D8 /* AMD_Power_Gadget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AMD_Power_Gadget.entitlements; sourceTree = "<group>"; };
-		B561633424010C050006A7D8 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		B57D27F423F66AE7002BC699 /* SMCAMDProcessor.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMCAMDProcessor.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57D27FB23F66AE7002BC699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B57D280123F66C8E002BC699 /* SMCAMDProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SMCAMDProcessor.cpp; sourceTree = "<group>"; };
@@ -40,13 +27,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B56162C12400EF770006A7D8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B57D27F123F66AE7002BC699 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -57,25 +37,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B56162C52400EF770006A7D8 /* AMD Power Gadget */ = {
-			isa = PBXGroup;
-			children = (
-				B561633424010C050006A7D8 /* GraphView.swift */,
-				B56162C62400EF770006A7D8 /* AppDelegate.swift */,
-				B56162C82400EF770006A7D8 /* ViewController.swift */,
-				B56162CA2400EF780006A7D8 /* Assets.xcassets */,
-				B56162CC2400EF780006A7D8 /* Main.storyboard */,
-				B56162CF2400EF780006A7D8 /* Info.plist */,
-				B56162D02400EF780006A7D8 /* AMD_Power_Gadget.entitlements */,
-			);
-			path = "AMD Power Gadget";
-			sourceTree = "<group>";
-		};
 		B57D27EA23F66AE7002BC699 = {
 			isa = PBXGroup;
 			children = (
 				B57D27F623F66AE7002BC699 /* SMCAMDProcessor */,
-				B56162C52400EF770006A7D8 /* AMD Power Gadget */,
 				B57D27F523F66AE7002BC699 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				B57D27F423F66AE7002BC699 /* SMCAMDProcessor.kext */,
-				B56162C42400EF770006A7D8 /* AMD Power Gadget.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,23 +83,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		B56162C32400EF770006A7D8 /* AMD Power Gadget */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B56162D32400EF780006A7D8 /* Build configuration list for PBXNativeTarget "AMD Power Gadget" */;
-			buildPhases = (
-				B56162C02400EF770006A7D8 /* Sources */,
-				B56162C12400EF770006A7D8 /* Frameworks */,
-				B56162C22400EF770006A7D8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "AMD Power Gadget";
-			productName = "AMD Power Gadget";
-			productReference = B56162C42400EF770006A7D8 /* AMD Power Gadget.app */;
-			productType = "com.apple.product-type.application";
-		};
 		B57D27F323F66AE7002BC699 /* SMCAMDProcessor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B57D27FE23F66AE7002BC699 /* Build configuration list for PBXNativeTarget "SMCAMDProcessor" */;
@@ -160,13 +107,9 @@
 		B57D27EB23F66AE7002BC699 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = trulyspinach;
 				TargetAttributes = {
-					B56162C32400EF770006A7D8 = {
-						CreatedOnToolsVersion = 11.3.1;
-					};
 					B57D27F323F66AE7002BC699 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -186,21 +129,11 @@
 			projectRoot = "";
 			targets = (
 				B57D27F323F66AE7002BC699 /* SMCAMDProcessor */,
-				B56162C32400EF770006A7D8 /* AMD Power Gadget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B56162C22400EF770006A7D8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B56162CB2400EF780006A7D8 /* Assets.xcassets in Resources */,
-				B56162CE2400EF780006A7D8 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B57D27F223F66AE7002BC699 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -211,16 +144,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B56162C02400EF770006A7D8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B56162C92400EF770006A7D8 /* ViewController.swift in Sources */,
-				B56162C72400EF770006A7D8 /* AppDelegate.swift in Sources */,
-				B561633524010C050006A7D8 /* GraphView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B57D27F023F66AE7002BC699 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -233,58 +156,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		B56162CC2400EF780006A7D8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B56162CD2400EF780006A7D8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		B56162D12400EF780006A7D8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "AMD Power Gadget/AMD_Power_Gadget.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "AMD Power Gadget/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		B56162D22400EF780006A7D8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "AMD Power Gadget/AMD_Power_Gadget.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "AMD Power Gadget/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		B57D27FC23F66AE7002BC699 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -377,8 +249,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -390,6 +263,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -399,7 +273,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.1d1;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -412,7 +286,6 @@
 				);
 				INFOPLIST_FILE = SMCAMDProcessor/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
-				MARKETING_VERSION = 1.0.1d1;
 				MODULE_NAME = wtf.spinach.SMCAMDProcessor;
 				MODULE_VERSION = 1.0.0d1;
 				OTHER_CPLUSPLUSFLAGS = "-Wno-inconsistent-missing-override";
@@ -428,7 +301,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.1d1;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -439,9 +312,10 @@
 				);
 				INFOPLIST_FILE = SMCAMDProcessor/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
-				MARKETING_VERSION = 1.0.1d1;
 				MODULE_NAME = wtf.spinach.SMCAMDProcessor;
 				MODULE_VERSION = 1.0.0d1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				"MTL_ENABLE_DEBUG_INFO[arch=*]" = NO;
 				OTHER_CPLUSPLUSFLAGS = "-Wno-inconsistent-missing-override";
 				OTHER_LDFLAGS = "-static";
 				PRODUCT_BUNDLE_IDENTIFIER = wtf.spinach.SMCAMDProcessor;
@@ -453,15 +327,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B56162D32400EF780006A7D8 /* Build configuration list for PBXNativeTarget "AMD Power Gadget" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B56162D12400EF780006A7D8 /* Debug */,
-				B56162D22400EF780006A7D8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B57D27EE23F66AE7002BC699 /* Build configuration list for PBXProject "SMCAMDProcessor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -24,11 +24,11 @@ bool SMCAMDProcessor::setupKeysVsmc(){
     
     bool suc = true;
     
-//    suc &= VirtualSMCAPI::addKey(KeyTCxD(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
+    suc &= VirtualSMCAPI::addKey(KeyTCxD(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
     suc &= VirtualSMCAPI::addKey(KeyTCxE(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
     suc &= VirtualSMCAPI::addKey(KeyTCxF(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-//    suc &= VirtualSMCAPI::addKey(KeyTCxG(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78));
-//    suc &= VirtualSMCAPI::addKey(KeyTCxH(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
+    suc &= VirtualSMCAPI::addKey(KeyTCxG(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78));
+    suc &= VirtualSMCAPI::addKey(KeyTCxH(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
     suc &= VirtualSMCAPI::addKey(KeyTCxJ(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78));
     suc &= VirtualSMCAPI::addKey(KeyTCxP(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
     suc &= VirtualSMCAPI::addKey(KeyTCxT(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
@@ -36,9 +36,8 @@ bool SMCAMDProcessor::setupKeysVsmc(){
     
     
     suc &= VirtualSMCAPI::addKey(KeyPCPR, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    suc &= VirtualSMCAPI::addKey(KeyPSTR, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-//    suc &= VirtualSMCAPI::addKey(KeyPCPT, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-//    suc &= VirtualSMCAPI::addKey(KeyPCTR, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
+    suc &= VirtualSMCAPI::addKey(KeyPCPT, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
+    suc &= VirtualSMCAPI::addKey(KeyPCTR, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
     
     
 //    VirtualSMCAPI::addKey(KeyPC0C, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
@@ -164,7 +163,7 @@ bool SMCAMDProcessor::start(IOService *provider){
         
         //Read stats from package.
         provider->updatePackageTemp();
-        provider->updatePackageEnergy();
+        provider->updatePackageEnegry();
         
         provider->timerEventSource->setTimeoutMS(1000);
     });
@@ -232,37 +231,47 @@ void SMCAMDProcessor::updateClockSpeed(){
     bool err = !read_msr(kMSR_HARDWARE_PSTATE_STATUS, &msr_value_buf);
     if(err) IOLog("AMDCPUSupport::updateClockSpeed: failed somewhere");
             
-    //Convert register value to clock speed.
-    uint32_t eax = (uint32_t)(msr_value_buf & 0xffffffff);
-        
-    // MSRC001_0293
-    // CurHwPstate [24:22]
-    // CurCpuVid [21:14]
-    // CurCpuDfsId [13:8]
-    // CurCpuFid [7:0]
-    int curCpuDfsId = (int)((eax >> 8) & 0x3f);
-    int curCpuFid = (int)(eax & 0xff);
-    
-    float clock = (float)(curCpuFid / (double)curCpuDfsId * 200.0);
-    
-    MSR_HARDWARE_PSTATE_STATUS_perCore[physical] = clock;
+//    IOLog("AMDCPUSupport::updateClockSpeed: i am CPU %hhu, physical %hhu\n", package, physical);
+            
+    MSR_HARDWARE_PSTATE_STATUS_perCore[physical] = msr_value_buf;
 }
 
-void SMCAMDProcessor::updatePackageTemp(){
-    
+void SMCAMDProcessor::updatePackageTemp(){    
     IOPCIAddressSpace space;
     space.bits = 0x00;
     
     fIOPCIDevice->configWrite32(space, (UInt8)kFAMILY_17H_PCI_CONTROL_REGISTER, (UInt32)kF17H_M01H_THM_TCON_CUR_TMP);
-    uint32_t v = fIOPCIDevice->configRead32(space, kFAMILY_17H_PCI_CONTROL_REGISTER + 4);
-    v = (v >> 21) * 125;
-    float temperature = v * 0.001f;
+    uint32_t temperature = fIOPCIDevice->configRead32(space, kFAMILY_17H_PCI_CONTROL_REGISTER + 4);
     
-    PACKAGE_TEMPERATURE_perPackage[0] = temperature;
-//    IOLog("AMDCPUSupport::updatePackageTemp: read from pci device %d \n", (int)PACKAGE_TEMPERATURE_perPackage[0]);
+    
+    bool tempOffsetFlag = (temperature & kF17H_TEMP_OFFSET_FLAG) != 0;
+    temperature = (temperature >> 21) * 125;
+
+    float offset = 0.0f;
+
+    // Offset table: https://github.com/torvalds/linux/blob/master/drivers/hwmon/k10temp.c#L78
+    uint32_t totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
+    if (totalNumberOfPhysicalCores == 6) // (cpuModel.Contains("1600X") || cpuModel.Contains("1700X") || cpuModel.Contains("1800X"))
+        offset = -20.0f;
+    else if  (totalNumberOfPhysicalCores == 12)// (cpuModel.Contains("Threadripper 19") || cpuModel.Contains("Threadripper 29"))
+        offset = -27.0f;
+    else if (totalNumberOfPhysicalCores == 8) //  (cpuModel.Contains("2700X"))
+        offset = -10.0f;
+    else if (totalNumberOfPhysicalCores == 32) //  (cpuModel.Contains("ThreadRipper"))
+        offset = -27.0f;    
+
+    float t = temperature * 0.001f;
+    if (tempOffsetFlag)
+        t += -49.0f;
+    
+    if (offset < 0)
+        t += offset;
+    
+    
+    PACKAGE_TEMPERATURE_perPackage[0] = t;
 }
 
-void SMCAMDProcessor::updatePackageEnergy(){
+void SMCAMDProcessor::updatePackageEnegry(){
     
     uint64_t time = getCurrentTimeNs();
     
@@ -271,14 +280,18 @@ void SMCAMDProcessor::updatePackageEnergy(){
     
     uint32_t enegryValue = (uint32_t)(msr_value_buf & 0xffffffff);
     
-    uint64_t enegryDelta = (lastUpdateEnergyValue <= enegryValue) ?
-        enegryValue - lastUpdateEnergyValue : UINT64_MAX - lastUpdateEnergyValue;
+    uint64_t enegryDelta = (lastUpdateEnegryValue <= enegryValue) ?
+        enegryValue - lastUpdateEnegryValue : UINT64_MAX - lastUpdateEnegryValue;
     
     double e = (0.0000153 * enegryDelta) / ((time - lastUpdateTime) / 1000000000.0);
     uniPackageEnegry = e;
     
-    lastUpdateEnergyValue = enegryValue;
+    lastUpdateEnegryValue = enegryValue;
     lastUpdateTime = time;
+    
+//    IOLog("AMDCPUSupport::updatePackageEnegry: %d \n", (int)e);
+//    IOLog("AMDCPUSupport::updatePackageEnegry: %d la\n", (int)enegryDelta);
+    
 }
 
 EXPORT extern "C" kern_return_t ADDPR(kern_start)(kmod_info_t *, void *) {
