@@ -1,3 +1,7 @@
 
 Lilu.kext/
 VirtualSMC.kext/
+.DS_Store
+SMCAMDProcessor.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+SMCAMDProcessor.xcodeproj/project.xcworkspace/xcuserdata/necross.xcuserdatad/UserInterfaceState.xcuserstate
+SMCAMDProcessor.xcodeproj/xcuserdata/necross.xcuserdatad/xcschemes/xcschememanagement.plist
