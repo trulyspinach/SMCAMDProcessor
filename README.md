@@ -17,13 +17,16 @@ Please note that this release is at very initial stage of development, make sure
 ## Tested Processors
 * Ryzen 9 3900X
 * Ryzen 7 3700X
+* Ryzen 7 2700X
 * Ryzen 5 3600
+* Threadripper 2990WX
 
 <img src="imgs/iStats.png" width="40%">
+
+## Credits
+* [necross2](https://github.com/necross2) for adding support to temperature sensor offset.
 
 ## Notes
 * I am still fairly new to macOS kernel development, this software project was initally a hobby project to get some reading on my newly built AMD hackintosh computer.
 
 * With that being said, please bear with some of the spaghetti and not-idiomatic codes. Any criticism is much welcomed :)
-
-* I'm having a hard time figuring out the combinations of SMC keys required for iStat to display a type of sensor. So some sensors might not be available based on your SMBios type.
