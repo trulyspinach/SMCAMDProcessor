@@ -260,11 +260,12 @@ void SMCAMDProcessor::updatePackageTemp(){
     temperature = (temperature >> 21) * 125;
 
     float offset = 0.0f;
-
+    float t = temperature * 0.001f;
+    
     // Offset table: https://github.com/torvalds/linux/blob/master/drivers/hwmon/k10temp.c#L78
     uint32_t totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
     
-    if temperature{
+    if(tempOffsetFlag) {
         if (totalNumberOfPhysicalCores == 6) // 1600X,1700X,1800X
             offset = -20.0f;
         else if (totalNumberOfPhysicalCores == 8) //  2700X
@@ -272,7 +273,6 @@ void SMCAMDProcessor::updatePackageTemp(){
         else if  (totalNumberOfPhysicalCores == 12 || totalNumberOfPhysicalCores == 32) // TR1900,2900
             offset = -27.0f;
         
-        float t = temperature * 0.001f;
         
         if (tempOffsetFlag && (kF17H_TEMP_OFFSET_FLAG != 0))
             t += -49.0f;
