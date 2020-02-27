@@ -265,6 +265,7 @@ void SMCAMDProcessor::updatePackageTemp(){
     // Offset table: https://github.com/torvalds/linux/blob/master/drivers/hwmon/k10temp.c#L78
     uint32_t totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
     
+
     if(tempOffsetFlag) {
         if (totalNumberOfPhysicalCores == 6) // 1600X,1700X,1800X
             offset = -20.0f;
