@@ -273,7 +273,7 @@ void SMCAMDProcessor::updatePackageTemp(){
     
     float t = temperature * 0.001f;
     
-    if (tempOffsetFlag)
+    if (tempOffsetFlag && (kF17H_TEMP_OFFSET_FLAG != 0))
         t += -49.0f;
 
     if (offset < 0)
