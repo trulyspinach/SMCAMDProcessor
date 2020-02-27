@@ -41,7 +41,7 @@ class GraphView: NSView {
     let gridDivLines: [Double] = [0, 0.15, 0.25, 0.35, 0.5, 0.6, 0.8, 1]
     let maxDataPoints = 30
     
-    let dummyData: [Double] = [1,3,3,2, 9, 1, 2 ,3]
+    let dummyData: [Double] = [1,3,2]
 //    let dummyData: [Double] = [1,1,1,3,2 ,1]
     
     

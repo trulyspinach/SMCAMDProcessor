@@ -131,7 +131,7 @@ public:
     /**
      *  Hard allocate space for cached readings.
      */
-    float MSR_HARDWARE_PSTATE_STATUS_perCore[24] {};
+    float MSR_HARDWARE_PSTATE_STATUS_perCore[CPUInfo::MaxCpus] {};
     float PACKAGE_TEMPERATURE_perPackage[CPUInfo::MaxCpus];
     
     uint64_t lastUpdateTime;

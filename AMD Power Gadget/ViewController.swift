@@ -105,8 +105,9 @@ class ViewController: NSViewController, NSWindowDelegate {
         var numberOfCores: UInt64 = 0
         var outputCount: UInt32 = 1
         
-        var outputStr: [Float] = [Float](repeating: 0, count: 32)
-        var outputStrCount: Int = 4 * 64
+        let maxStrLength = 66 //MaxCpu + 2
+        var outputStr: [Float] = [Float](repeating: 0, count: maxStrLength)
+        var outputStrCount: Int = 4 * maxStrLength
         let res = IOConnectCallMethod(connect, 4, nil, 0, nil, 0,
                                       &numberOfCores, &outputCount,
                                       &outputStr, &outputStrCount)

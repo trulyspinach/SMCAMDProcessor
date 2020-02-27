@@ -707,7 +707,7 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="AMD_Power_Gadget" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl">
+                    <view key="view" appearanceType="darkAqua" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -721,18 +721,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="388" height="925"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-KS-nxl">
-                                                    <rect key="frame" x="18" y="866" width="298" height="39"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-KS-nxl">
+                                                    <rect key="frame" x="18" y="867" width="298" height="38"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Power Gadget" id="kgx-Yz-PbY">
                                                         <font key="font" size="27" name="HelveticaNeue-Bold"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dUS-mw-nYz" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="596" width="368" height="241"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dUS-mw-nYz" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="596" width="368" height="242"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jld-SV-yGS">
                                                             <rect key="frame" x="18" y="202" width="298" height="27"/>
@@ -798,9 +796,8 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </customView>
-                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TFs-yj-lzu" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="TFs-yj-lzu" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="336" width="368" height="241"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qhw-g2-Ry1">
                                                             <rect key="frame" x="18" y="202" width="298" height="27"/>
@@ -866,9 +863,8 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </customView>
-                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVq-Zt-29Y" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dVq-Zt-29Y" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="76" width="368" height="241"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p3e-V6-tG5">
                                                             <rect key="frame" x="18" y="202" width="298" height="27"/>
@@ -934,18 +930,20 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </customView>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lW7-TH-Jh4">
-                                                    <rect key="frame" x="18" y="849" width="372" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Ryzen 9 3900X n-Core Processor" id="dkz-Wd-dhY">
-                                                        <font key="font" size="16" name="HelveticaNeue-Bold"/>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lW7-TH-Jh4">
+                                                    <rect key="frame" x="18" y="846" width="372" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="29" id="6C3-hR-dsW"/>
+                                                        <constraint firstAttribute="width" constant="368" id="bUD-fi-qGW"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" alignment="left" title="AMD Ryzen 9 3900X n-Core Processor" id="dkz-Wd-dhY">
+                                                        <font key="font" size="15" name="HelveticaNeue-Bold"/>
                                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
-                                                    <rect key="frame" x="143" y="20" width="103" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
+                                                    <rect key="frame" x="155" y="25" width="79" height="16"/>
                                                     <buttonCell key="cell" type="bevel" title="trulyspinach" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
@@ -955,9 +953,8 @@
                                                         <action selector="buttonPressed:" target="XfG-lQ-9wD" id="64Z-nc-FX5"/>
                                                     </connections>
                                                 </button>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-xZ-Nqc">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-xZ-Nqc">
                                                     <rect key="frame" x="103" y="43" width="183" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Designed and Engineered By:" id="j0C-AZ-HUC">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -965,6 +962,30 @@
                                                     </textFieldCell>
                                                 </textField>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="dUS-mw-nYz" secondAttribute="trailing" id="2VD-4R-hRQ"/>
+                                                <constraint firstItem="zyk-cy-OHd" firstAttribute="top" secondItem="tU5-xZ-Nqc" secondAttribute="bottom" constant="2" id="6tT-DA-1CL"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="dVq-Zt-29Y" secondAttribute="leading" id="AWt-bz-fnf"/>
+                                                <constraint firstItem="dUS-mw-nYz" firstAttribute="top" secondItem="YXN-KS-nxl" secondAttribute="bottom" constant="29" id="Gjz-Jd-Mwt"/>
+                                                <constraint firstItem="YXN-KS-nxl" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="20" symbolic="YES" id="H5I-vD-bdX"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="YXN-KS-nxl" secondAttribute="leading" id="H5h-02-vM6"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="dUS-mw-nYz" secondAttribute="leading" id="KjU-TQ-odV"/>
+                                                <constraint firstItem="TFs-yj-lzu" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="348" id="QD2-7C-QSt"/>
+                                                <constraint firstItem="dVq-Zt-29Y" firstAttribute="top" secondItem="TFs-yj-lzu" secondAttribute="bottom" constant="19" id="THl-Lw-orm"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="TFs-yj-lzu" secondAttribute="trailing" id="Wyh-vg-Hhw"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="TIX-Q5-kis" secondAttribute="leading" constant="20" symbolic="YES" id="Wzp-gX-th1"/>
+                                                <constraint firstItem="tU5-xZ-Nqc" firstAttribute="centerX" secondItem="zyk-cy-OHd" secondAttribute="centerX" id="YFk-qA-lD9"/>
+                                                <constraint firstItem="tU5-xZ-Nqc" firstAttribute="top" secondItem="dVq-Zt-29Y" secondAttribute="bottom" constant="17" id="Zu6-eZ-KuA"/>
+                                                <constraint firstAttribute="bottom" secondItem="dVq-Zt-29Y" secondAttribute="bottom" constant="76" id="ZyT-Zt-PRq"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="TFs-yj-lzu" secondAttribute="leading" id="efh-Qa-okv"/>
+                                                <constraint firstAttribute="trailing" secondItem="YXN-KS-nxl" secondAttribute="trailing" constant="74" id="hqb-jw-Oyu"/>
+                                                <constraint firstItem="dUS-mw-nYz" firstAttribute="top" secondItem="lW7-TH-Jh4" secondAttribute="bottom" constant="8" id="ihb-nE-2b9"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="dVq-Zt-29Y" secondAttribute="trailing" id="tRv-jb-fPd"/>
+                                                <constraint firstItem="tU5-xZ-Nqc" firstAttribute="centerX" secondItem="TIX-Q5-kis" secondAttribute="centerX" id="xEB-Bl-cM3"/>
+                                                <constraint firstItem="TFs-yj-lzu" firstAttribute="top" secondItem="dUS-mw-nYz" secondAttribute="bottom" constant="19" id="xWY-Ya-zkB"/>
+                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="50" id="xy4-YI-iUL"/>
+                                                <constraint firstItem="dVq-Zt-29Y" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="608" id="yg4-w2-cFI"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
                                 </clipView>
