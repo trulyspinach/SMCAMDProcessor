@@ -58,6 +58,7 @@ class SMCAMDProcessor : public IOService {
     static constexpr uint32_t kF17H_M01H_THM_TCON_CUR_TMP = 0x00059800;
     static constexpr uint32_t kF17H_M70H_CCD1_TEMP = 0x00059954;
     static constexpr uint32_t kF17H_TEMP_OFFSET_FLAG = 0x80000;
+    static constexpr uint32_t kF18H_TEMP_OFFSET_FLAG = 0x60000;
     static constexpr uint8_t kFAMILY_17H_PCI_CONTROL_REGISTER = 0x60;
     static constexpr uint32_t kHWCR = 0xC0010015;
     static constexpr uint32_t kMSR_CORE_ENERGY_STAT = 0xC001029A;

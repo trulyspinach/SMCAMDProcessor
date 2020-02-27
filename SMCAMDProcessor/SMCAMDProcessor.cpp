@@ -249,17 +249,42 @@ void SMCAMDProcessor::updateClockSpeed(){
 }
 
 void SMCAMDProcessor::updatePackageTemp(){
-    
     IOPCIAddressSpace space;
     space.bits = 0x00;
-    
+
     fIOPCIDevice->configWrite32(space, (UInt8)kFAMILY_17H_PCI_CONTROL_REGISTER, (UInt32)kF17H_M01H_THM_TCON_CUR_TMP);
-    uint32_t v = fIOPCIDevice->configRead32(space, kFAMILY_17H_PCI_CONTROL_REGISTER + 4);
-    v = (v >> 21) * 125;
-    float temperature = v * 0.001f;
+    uint32_t temperature = fIOPCIDevice->configRead32(space, kFAMILY_17H_PCI_CONTROL_REGISTER + 4);
+
+
+    bool tempOffsetFlag = (temperature & kF17H_TEMP_OFFSET_FLAG) != 0;
+    temperature = (temperature >> 21) * 125;
+
+    float offset = 0.0f;
+    float t = temperature * 0.001f;
     
-    PACKAGE_TEMPERATURE_perPackage[0] = temperature;
-//    IOLog("AMDCPUSupport::updatePackageTemp: read from pci device %d \n", (int)PACKAGE_TEMPERATURE_perPackage[0]);
+    // Offset table: https://github.com/torvalds/linux/blob/master/drivers/hwmon/k10temp.c#L78
+    uint32_t totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
+    
+
+    if(tempOffsetFlag) {
+        if (totalNumberOfPhysicalCores == 6) // 1600X,1700X,1800X
+            offset = -20.0f;
+        else if (totalNumberOfPhysicalCores == 8) //  2700X
+               offset = -10.0f;
+        else if  (totalNumberOfPhysicalCores == 12 || totalNumberOfPhysicalCores == 32) // TR1900,2900
+            offset = -27.0f;
+        
+        
+        if (tempOffsetFlag && (kF17H_TEMP_OFFSET_FLAG != 0))
+            t += -49.0f;
+    }
+        
+
+    if (offset < 0)
+        t += offset;
+
+
+    PACKAGE_TEMPERATURE_perPackage[0] = t;
 }
 
 void SMCAMDProcessor::updatePackageEnergy(){
