@@ -1,7 +1,7 @@
 SMCAMDProcessor
 ========
 
-AMD Processor power management plugin for [VirtualSMC](https://github.com/acidanthera/VirtualSMC).
+AMD Processor system monitoring plugin for [VirtualSMC](https://github.com/acidanthera/VirtualSMC).
 
 
 Please note that this release is at very initial stage of development, make sure you have a proper backup of your EFI folder and never run on any system that matters. 
