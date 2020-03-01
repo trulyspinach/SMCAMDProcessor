@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -684,7 +685,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="AMD Power Gadget" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="AMD Power Gadget" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="darkAqua" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="410" height="770"/>
@@ -711,7 +712,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQS-Yx-qAY">
+                            <scrollView appearanceType="darkAqua" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQS-Yx-qAY">
                                 <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                                 <clipView key="contentView" id="baN-DY-cIK">
                                     <rect key="frame" x="1" y="1" width="408" height="938"/>
@@ -746,7 +747,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Avg: 3.56Ghz Max: 4.3Ghz Min: 2.0Ghz" id="SDV-46-714">
                                                                 <font key="font" size="13" name="HelveticaNeue-Medium"/>
-                                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
@@ -759,7 +760,7 @@
                                                             <color key="value" red="0.34255586139896377" green="0.12315995488859081" blue="0.24662465240115722" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1">
-                                                            <color key="value" name="underPageBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -813,7 +814,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="30 C" id="tmg-PQ-zZy">
                                                                 <font key="font" size="13" name="HelveticaNeue-Medium"/>
-                                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
@@ -826,7 +827,7 @@
                                                             <color key="value" red="0.15746571779473817" green="0.21726086654867266" blue="0.42159164507875635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1">
-                                                            <color key="value" name="underPageBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -880,7 +881,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Avg: 3.56Ghz Max: 4.3Ghz Min: 2.0Ghz" id="Plb-DS-sdn">
                                                                 <font key="font" size="13" name="HelveticaNeue-Medium"/>
-                                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
@@ -893,7 +894,7 @@
                                                             <color key="value" red="0.3294342314" green="0.3246774563" blue="0.34255586139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1">
-                                                            <color key="value" name="underPageBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -938,17 +939,27 @@
                                                     </constraints>
                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" alignment="left" title="AMD Ryzen 9 3900X n-Core Processor" id="dkz-Wd-dhY">
                                                         <font key="font" size="15" name="HelveticaNeue-Bold"/>
-                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
-                                                    <rect key="frame" x="155" y="25" width="79" height="16"/>
-                                                    <buttonCell key="cell" type="bevel" title="trulyspinach" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-cv-FEh">
+                                                    <rect key="frame" x="123" y="20" width="142" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="trulyspinach" id="5Us-8x-J9i">
+                                                        <font key="font" metaFont="systemSemibold" size="13"/>
+                                                        <color key="textColor" red="0.032221600140000001" green="0.51876349519999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
+                                                    <rect key="frame" x="105" y="19" width="179" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <color key="contentTintColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="contentTintColor" red="0.032221600135011963" green="0.51876349517399301" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="buttonPressed:" target="XfG-lQ-9wD" id="64Z-nc-FX5"/>
                                                     </connections>
@@ -957,14 +968,13 @@
                                                     <rect key="frame" x="103" y="43" width="183" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Designed and Engineered By:" id="j0C-AZ-HUC">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="dUS-mw-nYz" secondAttribute="trailing" id="2VD-4R-hRQ"/>
-                                                <constraint firstItem="zyk-cy-OHd" firstAttribute="top" secondItem="tU5-xZ-Nqc" secondAttribute="bottom" constant="2" id="6tT-DA-1CL"/>
                                                 <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="dVq-Zt-29Y" secondAttribute="leading" id="AWt-bz-fnf"/>
                                                 <constraint firstItem="dUS-mw-nYz" firstAttribute="top" secondItem="YXN-KS-nxl" secondAttribute="bottom" constant="29" id="Gjz-Jd-Mwt"/>
                                                 <constraint firstItem="YXN-KS-nxl" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="20" symbolic="YES" id="H5I-vD-bdX"/>
@@ -974,7 +984,6 @@
                                                 <constraint firstItem="dVq-Zt-29Y" firstAttribute="top" secondItem="TFs-yj-lzu" secondAttribute="bottom" constant="19" id="THl-Lw-orm"/>
                                                 <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="TFs-yj-lzu" secondAttribute="trailing" id="Wyh-vg-Hhw"/>
                                                 <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="TIX-Q5-kis" secondAttribute="leading" constant="20" symbolic="YES" id="Wzp-gX-th1"/>
-                                                <constraint firstItem="tU5-xZ-Nqc" firstAttribute="centerX" secondItem="zyk-cy-OHd" secondAttribute="centerX" id="YFk-qA-lD9"/>
                                                 <constraint firstItem="tU5-xZ-Nqc" firstAttribute="top" secondItem="dVq-Zt-29Y" secondAttribute="bottom" constant="17" id="Zu6-eZ-KuA"/>
                                                 <constraint firstAttribute="bottom" secondItem="dVq-Zt-29Y" secondAttribute="bottom" constant="76" id="ZyT-Zt-PRq"/>
                                                 <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="TFs-yj-lzu" secondAttribute="leading" id="efh-Qa-okv"/>
@@ -988,14 +997,15 @@
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </clipView>
                                 <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bxT-br-mDa">
-                                    <rect key="frame" x="1" y="923" width="408" height="16"/>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bxT-br-mDa">
+                                    <rect key="frame" x="-100" y="-100" width="408" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="FRn-xo-Ixx">
-                                    <rect key="frame" x="393" y="1" width="16" height="938"/>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="FRn-xo-Ixx">
+                                    <rect key="frame" x="-100" y="-100" width="16" height="938"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

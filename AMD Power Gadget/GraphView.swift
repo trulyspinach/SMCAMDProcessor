@@ -38,12 +38,16 @@ class GraphView: NSView {
     var viewBottom : CGFloat = 0;
     var viewHeight : CGFloat = 100;
     
-    let gridDivLines: [Double] = [0, 0.15, 0.25, 0.35, 0.5, 0.6, 0.8, 1]
+    let gridDivLines: [Double] = [0, 0.15, 0.25, 0.35, 0.5, 0.6, 0.8, 0.9, 1]
     let maxDataPoints = 30
     
     let dummyData: [Double] = [1,3,2]
 //    let dummyData: [Double] = [1,1,1,3,2 ,1]
     
+    
+    var dataMax : Double = 0
+    var dataMin : Double = 0
+    var dataDiff : Double = 0
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -59,7 +63,7 @@ class GraphView: NSView {
         viewBottom = dirtyRect.height * viewBottomPercentage
         viewHeight = viewTop - viewBottom;
         
-//        dataPoints = dummyData
+//        fillWithDummyData()
 
         drawBackground(in: dirtyRect, context: context, colorSpace: CGColorSpaceCreateDeviceRGB())
 
@@ -69,16 +73,25 @@ class GraphView: NSView {
             drawLine(in: dirtyRect, context: context, colorSpace: CGColorSpaceCreateDeviceRGB())
             drawDataPoint(in: dirtyRect, context: context)
         }
+        
+        self.layer = layer
+        wantsLayer = true
         layer?.cornerRadius = 20
         layer?.masksToBounds = true
     }
     
+    private func fillWithDummyData(){
+        for d in dummyData {
+            addData(value: d)
+        }
+    }
+    
     private func drawBackground(in rect: CGRect, context: CGContext, colorSpace: CGColorSpace?) {
-        // 1
+
         context.saveGState()
         defer { context.restoreGState() }
         
-        // 2
+
         let baseColor = backgroundColor1
         let middleStop = backgroundColor2
         
@@ -93,7 +106,6 @@ class GraphView: NSView {
                 return
         }
         
-        // 3
         let startPoint = CGPoint(x: rect.size.height / 2, y: 0)
         let endPoint = CGPoint(x: rect.size.height / 2, y: rect.size.width)
         context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [])
@@ -101,31 +113,38 @@ class GraphView: NSView {
     
     func addData(value: Double){
         dataPoints.append(value);
-        
-//        while dataPoints.count < maxDataPoints{
-//            dataPoints.append(value )
-//        }
+        sortedDataPoint.append(value.rounded())
         
         if dataPoints.count > maxDataPoints {
             dataPoints.remove(at: 0)
         }
         
-        sortedDataPoint = dataPoints.sorted()
+        if sortedDataPoint.count > maxDataPoints {
+            let countedSet = NSCountedSet(array: sortedDataPoint)
+            let mostFrequent = countedSet.max { countedSet.count(for: $0) < countedSet.count(for: $1) }
+            
+            sortedDataPoint.remove(at: sortedDataPoint.firstIndex(of: mostFrequent as! Double)!)
+        }
+        
+        sortedDataPoint = sortedDataPoint.sorted()
+        
+        dataMax = sortedDataPoint.max()!
+        dataMin = sortedDataPoint.min()!
+        
+        //thanks to yurkins for the fix
+        dataDiff = max(dataMax - dataMin, 1)
+
         
         setNeedsDisplay(bounds)
     }
     
     open override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
-        self.dataPoints = dummyData
+        fillWithDummyData()
     }
     
     private func drawGrid(in rect: CGRect, context: CGContext){
-        
-        let dataMax = dataPoints.max()!
-        let dataMin = dataPoints.min()!
-        let dataDiff = dataMax - dataMin
-        
+                
         let attributes = [
             NSAttributedString.Key.font: NSFont.systemFont(ofSize: 12.0),
             NSAttributedString.Key.foregroundColor: gridColor,
@@ -175,10 +194,6 @@ class GraphView: NSView {
         let path = CGMutablePath()
         path.move(to: CGPoint(x: 0, y: 0), transform: .identity)
         
-        let dataMax = dataPoints.max()!
-        let dataMin = dataPoints.min()!
-        let dataDiff = dataMax - dataMin
-        
         
         let xStep : Double = Double(rect.size.width) / Double(dataPoints.count - 1)
         var lastPoint = CGPoint(x:0,y:0);
@@ -224,10 +239,6 @@ class GraphView: NSView {
     
     private func drawDataPoint(in rect: CGRect, context: CGContext){
         
-        
-        let dataMax = dataPoints.max()!
-        let dataMin = dataPoints.min()!
-        let dataDiff = dataMax - dataMin
         let xStep : Double = Double(rect.size.width) / Double(dataPoints.count - 1)
         
         for (i, v) in dataPoints.enumerated(){

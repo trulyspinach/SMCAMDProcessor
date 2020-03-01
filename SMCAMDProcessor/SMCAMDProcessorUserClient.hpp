@@ -9,10 +9,13 @@
 #ifndef SMCAMDProcessorUserClient_hpp
 #define SMCAMDProcessorUserClient_hpp
 
+//Support for macOS 10.13
+#include <Library/LegacyIOService.h>
+#include "LegacyHeaders/LegacyIOUserClient.h"
 
-#include <IOKit/IOService.h>
-#include <IOKit/IOUserClient.h>
-#include <IOKit/IOLib.h>
+//#include <IOKit/IOService.h>
+//#include <IOKit/IOUserClient.h>
+//#include <IOKit/IOLib.h>
 
 #include "SMCAMDProcessor.hpp"
 

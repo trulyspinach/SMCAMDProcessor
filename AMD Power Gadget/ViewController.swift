@@ -33,8 +33,6 @@ class ViewController: NSViewController, NSWindowDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.window?.delegate = self;
-        // Do any additional setup after loading the view.
-        
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (t) in
             self.sampleData()
@@ -44,7 +42,6 @@ class ViewController: NSViewController, NSWindowDelegate {
             alertAndQuit()
         }
         
-        //        scrollView.documentView?.setFrameSize(NSSize(width: scrollView.frame.size.width - 20, height: 900))
         
         scrollView.scroll(NSPoint(x: 0,y: 0))
         
@@ -100,38 +97,40 @@ class ViewController: NSViewController, NSWindowDelegate {
     }
     
     func sampleData(){
-//        print("ss")
         
         var numberOfCores: UInt64 = 0
         var outputCount: UInt32 = 1
-        
+
         let maxStrLength = 66 //MaxCpu + 2
         var outputStr: [Float] = [Float](repeating: 0, count: maxStrLength)
         var outputStrCount: Int = 4 * maxStrLength
         let res = IOConnectCallMethod(connect, 4, nil, 0, nil, 0,
                                       &numberOfCores, &outputCount,
                                       &outputStr, &outputStrCount)
-        
-        
-        
+
+
+
         if res != KERN_SUCCESS {
             print(String(cString: mach_error_string(res)))
         }
-        
+
         let power = outputStr[0]
         let temperature = outputStr[1]
         var frequencies : [Float] = []
         for i in 0...(numberOfCores-1) {
             frequencies.append(outputStr[Int(i + 2)])
         }
-        
-        powerGraphView.addData(value: Double(power))
+
+        if power < 1000 {
+            powerGraphView.addData(value: Double(power))
+        }
+
         temperatureGraphView.addData(value: Double(temperature))
-        
+
         let meanFre = Double(frequencies.reduce(0, +) / Float(frequencies.count))
         frequencyGraphView.addData(value: meanFre)
         frequencyLabel.stringValue = String(format: "Average of %d Cores: %.2f Ghz, Max: %.2f Ghz", numberOfCores, meanFre * 0.001, frequencies.max()! * 0.001)
-        
+
         temperatureLabel.stringValue = String(format: "%.2f °C", temperature)
         powerLabel.stringValue = String(format: "%.2f Watt", power)
     }

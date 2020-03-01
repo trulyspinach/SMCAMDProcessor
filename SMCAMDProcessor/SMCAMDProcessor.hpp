@@ -1,9 +1,14 @@
 #ifndef SMCAMDProcessor_h
 #define SMCAMDProcessor_h
 
+//Support for macOS 10.13
+#include <Library/LegacyIOService.h>
 
-#include <IOKit/IOService.h>
-#include <IOKit/IOLib.h>
+//#include <IOKit/IOService.h>
+//#include <IOKit/IOLib.h>
+
+
+
 
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/IOTimerEventSource.h>
