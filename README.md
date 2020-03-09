@@ -10,7 +10,7 @@ Please note that this release is at very initial stage of development, make sure
 ### Now with AMD Power Tool
 <img src="imgs/all.png" width="80%">
 
-## Passive Power Mangagement
+## Passive Power Management
 This options serves as a temporary solution to CPU power management due to no active solution are currently available. Comparing to a true active power managment implementation, this option works in a passive way which results in less sensitivity, accuracy and a slow down in performance.
 
 I have been exploring possibilities for implementing a real active power management solution for AMD 17h platform. From what it looks like currently it is definitly possible. I will keep updating here with my latest progress.
