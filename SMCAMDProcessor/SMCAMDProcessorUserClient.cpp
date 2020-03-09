@@ -33,6 +33,7 @@ void SMCAMDProcessorUserClient::stop(IOService *provider){
     IOService::stop(provider);
 }
 
+//this is a meme, not getting the joke? nvm.
 uint64_t multiply_two_numbers(uint64_t number_one, uint64_t number_two){
     uint64_t number_three = 0;
     for(uint32_t i = 0; i < number_two; i++){
@@ -44,33 +45,37 @@ uint64_t multiply_two_numbers(uint64_t number_one, uint64_t number_two){
 IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *arguments,
                                                  IOExternalMethodDispatch *dispatch, OSObject *target, void *reference){
     
-    IOLog("AMDCPUSupportUserClient::externalMethod selector:%d\n", selector);
-    
+    fProvider->registerRequest();
     
     switch (selector) {
+        
+        //Get PStateDef raw values for core 0
         case 0: {
-            // multiply_two_numbers
-            uint64_t r = multiply_two_numbers(arguments->scalarInput[0], arguments->scalarInput[1]);
-            arguments->scalarOutput[0] = r;
-            arguments->scalarOutputCount = 1;
+            arguments->scalarOutputCount = 0;
             
-            IOLog("AMDCPUSupportUserClient::multiply_two_numbers r:%llu\n", r);
+            arguments->structureOutputSize = (fProvider->kMSR_PSTATE_LEN) * sizeof(uint64_t);
+
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            
+            for(uint32_t i = 0; i < fProvider->kMSR_PSTATE_LEN; i++){
+                dataOut[i] = fProvider->PStateDef_perCore[0][i];
+            }
             
             break;
         }
-        case 1: {
-            // read_msr
-//            IOLog("AMDCPUSupportUserClient::read_msr: got raw address %llu\n", arguments->scalarInput[0]);
-            uint32_t msr_addr = (uint32_t)(arguments->scalarInput[0]);
-            uint64_t msr_value_buf = 0;
-            bool err = !fProvider->read_msr(msr_addr, &msr_value_buf);
-            if(err){
-                IOLog("AMDCPUSupportUserClient::read_msr: failed at address %u\n", msr_addr);
-            } else {
-                arguments->scalarOutput[0] = msr_value_buf;
-                arguments->scalarOutputCount = 1;
-            }
             
+            
+        //Get PStateDef floating point clock values for core 0
+        case 1: {
+            arguments->scalarOutputCount = 0;
+            
+            arguments->structureOutputSize = (fProvider->kMSR_PSTATE_LEN) * sizeof(float);
+
+            float *dataOut = (float*) arguments->structureOutput;
+            
+            for(uint32_t i = 0; i < fProvider->kMSR_PSTATE_LEN; i++){
+                dataOut[i] = fProvider->PStateDefClock_perCore[0][i];
+            }
             
             break;
         }
@@ -87,7 +92,7 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
             float *dataOut = (float*) arguments->structureOutput;
 
             for(uint32_t i = 0; i < numPhyCores; i++){
-                dataOut[i] = fProvider->MSR_HARDWARE_PSTATE_STATUS_perCore[i];
+                dataOut[i] = fProvider->effFreq_perCore[i];
             }
             
             break;
@@ -103,22 +108,173 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
             break;
         }
         
-        //Get all data like this: [float power, float temperature, float clock_core_1, 2, 3 .....]
+        //Get all data like this: [power, temp, pstateCur, clock_core_1, 2, 3 .....]
         //Yes, i am too lazy to write a struct
         case 4: {
             uint32_t numPhyCores = fProvider->totalNumberOfPhysicalCores;
             arguments->scalarOutputCount = 1;
             arguments->scalarOutput[0] = numPhyCores;
             
-            arguments->structureOutputSize = (numPhyCores + 2) * sizeof(float);
+            arguments->structureOutputSize = (numPhyCores + 3) * sizeof(float);
 
             float *dataOut = (float*) arguments->structureOutput;
             
             dataOut[0] = (float)fProvider->uniPackageEnegry;
             dataOut[1] = fProvider->PACKAGE_TEMPERATURE_perPackage[0];
+            dataOut[2] = fProvider->PStateCtl;
             
             for(uint32_t i = 0; i < numPhyCores; i++){
-                dataOut[i + 2] = fProvider->MSR_HARDWARE_PSTATE_STATUS_perCore[i];
+                dataOut[i + 3] = fProvider->effFreq_perCore[i];
+            }
+            
+            break;
+        }
+            
+        //Get per core raw load index
+        case 5: {
+            arguments->scalarOutputCount = 0;
+            
+            arguments->structureOutputSize = (fProvider->totalNumberOfPhysicalCores) * sizeof(uint64_t);
+
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            
+            for(uint32_t i = 0; i < fProvider->totalNumberOfPhysicalCores; i++){
+                dataOut[i] = fProvider->instructionDelta_PerCore[i];
+            }
+            
+            break;
+        }
+            
+        //Get per core load index
+        case 6: {
+            arguments->scalarOutputCount = 0;
+            
+            arguments->structureOutputSize = (fProvider->totalNumberOfPhysicalCores) * sizeof(float);
+
+            float *dataOut = (float*) arguments->structureOutput;
+            
+            for(uint32_t i = 0; i < fProvider->totalNumberOfPhysicalCores; i++){
+                dataOut[i] = fProvider->loadIndex_PerCore[i];
+            }
+            
+            break;
+        }
+            
+        //Get basic CPUID
+        //[Family, Model, Physical, Logical, L1_perCore, L2_perCore, L3]
+        case 7: {
+            arguments->scalarOutputCount = 0;
+            
+            arguments->structureOutputSize = (8) * sizeof(uint64_t);
+
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            
+            dataOut[0] = (uint64_t)fProvider->cpuFamily;
+            dataOut[1] = (uint64_t)fProvider->cpuModel;
+            dataOut[2] = (uint64_t)fProvider->totalNumberOfPhysicalCores;
+            dataOut[3] = (uint64_t)fProvider->totalNumberOfLogicalCores;
+            dataOut[4] = (uint64_t)fProvider->cpuCacheL1_perCore;
+            dataOut[5] = (uint64_t)fProvider->cpuCacheL2_perCore;
+            dataOut[6] = (uint64_t)fProvider->cpuCacheL3;
+            dataOut[7] = (uint64_t)fProvider->cpuSupportedByCurrentVersion;
+            
+            break;
+        }
+        
+        //Get SMCAMDProcessor Version String
+        case 8: {
+            arguments->scalarOutputCount = 0;
+            
+            arguments->structureOutputSize = (uint32_t)strlen(fProvider->kMODULE_VERSION);
+            char *dataOut = (char*) arguments->structureOutput;
+            
+            for(uint32_t i = 0; i < arguments->structureOutputSize; i++){
+                dataOut[i] = fProvider->kMODULE_VERSION[i];
+            }
+            
+            break;
+        }
+        
+        //Get PState
+        case 9: {
+            arguments->scalarOutputCount = 0;
+            
+            arguments->structureOutputSize = 1 * sizeof(uint64_t);
+            
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+
+            dataOut[0] = fProvider->PStateCtl;
+            
+            break;
+        }
+        
+        //Set PState
+        case 10: {
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = 0;
+            
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+            
+            fProvider->PStateCtl = (uint8_t)arguments->scalarInput[0];
+            fProvider->applyPowerControl();
+            break;
+        }
+            
+        //Get CPB
+        case 11: {
+            arguments->scalarOutputCount = 0;
+            
+            arguments->structureOutputSize = 2 * sizeof(uint64_t);
+            
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+
+            dataOut[0] = (uint64_t)fProvider->cpbSupported;
+            dataOut[1] = (uint64_t)fProvider->getCPBState();
+            break;
+        }
+        
+        //Set CPB
+        case 12: {
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = 0;
+            
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+            
+            if(!fProvider->cpbSupported)
+                return kIOReturnNoDevice;
+            
+            fProvider->setCPBState(arguments->scalarInput[0]==1?true:false);
+            
+            break;
+        }
+            
+        //Get PPM
+        case 13: {
+            arguments->scalarOutputCount = 0;
+                
+            arguments->structureOutputSize = 1 * sizeof(uint64_t);
+                
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+
+            dataOut[0] = (uint64_t)fProvider->PPMEnabled;
+            break;
+        }
+            
+        //Set PPM
+        case 14: {
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = 0;
+                
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+                
+            fProvider->PPMEnabled = arguments->scalarInput[0]==1?true:false;
+            
+            if(!fProvider->PPMEnabled){
+                fProvider->PStateCtl = 0;
+                fProvider->applyPowerControl();
             }
             
             break;

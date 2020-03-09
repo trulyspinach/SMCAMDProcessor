@@ -187,7 +187,6 @@ class GraphView: NSView {
                                          locations: [0, 1] as [CGFloat]) else {return}
         
         
-        
         context.saveGState()
         defer { context.restoreGState() }
         
@@ -202,7 +201,6 @@ class GraphView: NSView {
             let newPoint = CGPoint(x: CGFloat(Double(i) * xStep),
                                    y: viewBottom + (CGFloat((v - dataMin) / (dataDiff)) * viewHeight))
             
-            
             let difference = newPoint.x - lastPoint.x
             
             var x = lastPoint.x + (difference * lineCurviness)
@@ -215,14 +213,10 @@ class GraphView: NSView {
             
             path.addCurve(to: newPoint, control1: controlPointOne, control2: controlPointTwo)
             
-            
             lastPoint = newPoint;
         }
         
-        
-        
         path.addLine(to: CGPoint(x: rect.size.width, y: 0))
-        
         
         context.addPath(path)
         context.setStrokeColor(lineColor.cgColor)
@@ -231,7 +225,6 @@ class GraphView: NSView {
         
         context.addPath(path)
         context.clip()
-        
         
         context.drawLinearGradient(grad, start: CGPoint(x: 0, y: rect.height),
                                    end: CGPoint(x: 0, y: 0), options: [])
@@ -246,8 +239,6 @@ class GraphView: NSView {
                                    y: viewBottom + (CGFloat((v - dataMin) / (dataDiff)) * viewHeight))
             
             let path = CGMutablePath()
-            
-    
             path.addArc(center: newPoint, radius: dotRadius, startAngle: 0, endAngle: CGFloat(2.0 * Double.pi), clockwise: true)
             path.closeSubpath();
             
@@ -259,8 +250,6 @@ class GraphView: NSView {
             context.setStrokeColor(dotStrokeColor.cgColor)
             context.setLineWidth(lineWidth)
             context.strokePath()
-
-            
         }
     }
 }

@@ -9,7 +9,7 @@
 
 
 
-
+#include <math.h>
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/IOTimerEventSource.h>
 
@@ -54,10 +54,19 @@ class SMCAMDProcessor : public IOService {
     };
     
     
+public:
+    
+    static constexpr char const *kMODULE_VERSION = xStringify(MODULE_VERSION);
+    
+    
     /**
      *  MSRs supported by AMD 17h CPU from:
      *  https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/blob/master/LibreHardwareMonitorLib/Hardware/Cpu/Amd17Cpu.cs
+     * and
+     * Processor Programming Reference for AMD 17h CPU,
+     *
      */
+    
     static constexpr uint32_t kCOFVID_STATUS = 0xC0010071;
     static constexpr uint32_t k17H_M01H_SVI = 0x0005A000;
     static constexpr uint32_t kF17H_M01H_THM_TCON_CUR_TMP = 0x00059800;
@@ -65,14 +74,21 @@ class SMCAMDProcessor : public IOService {
     static constexpr uint32_t kF17H_TEMP_OFFSET_FLAG = 0x80000;
     static constexpr uint32_t kF18H_TEMP_OFFSET_FLAG = 0x60000;
     static constexpr uint8_t kFAMILY_17H_PCI_CONTROL_REGISTER = 0x60;
-    static constexpr uint32_t kHWCR = 0xC0010015;
+    static constexpr uint32_t kMSR_HWCR = 0xC0010015;
     static constexpr uint32_t kMSR_CORE_ENERGY_STAT = 0xC001029A;
     static constexpr uint32_t kMSR_HARDWARE_PSTATE_STATUS = 0xC0010293;
     static constexpr uint32_t kMSR_PKG_ENERGY_STAT = 0xC001029B;
     static constexpr uint32_t kMSR_PSTATE_0 = 0xC0010064;
+    static constexpr uint32_t kMSR_PSTATE_LEN = 8;
+    static constexpr uint32_t kMSR_PSTATE_STAT = 0xC0010063;
+    static constexpr uint32_t kMSR_PSTATE_CTL = 0xC0010062;
     static constexpr uint32_t kMSR_PWR_UNIT = 0xC0010299;
-    static constexpr uint32_t kPERF_CTL_0 = 0xC0010000;
-    static constexpr uint32_t kPERF_CTR_0 = 0xC0010004;
+    static constexpr uint32_t kMSR_MPERF = 0x000000E7;
+    static constexpr uint32_t kMSR_APERF = 0x000000E8;
+    static constexpr uint32_t kMSR_PERF_CTL_0 = 0xC0010000;
+    static constexpr uint32_t kMSR_PERF_CTR_0 = 0xC0010004;
+    static constexpr uint32_t kMSR_PERF_IRPC = 0xC00000E9;
+    
 
     
     /**
@@ -113,7 +129,7 @@ class SMCAMDProcessor : public IOService {
     static constexpr SMC_KEY KeyTCxC(size_t i) { return SMC_MAKE_IDENTIFIER('T','C',KeyIndexes[i],'C'); }
     static constexpr SMC_KEY KeyTCxc(size_t i) { return SMC_MAKE_IDENTIFIER('T','C',KeyIndexes[i],'c'); }
     
-public:
+
     virtual bool init(OSDictionary *dictionary = 0) override;
     virtual void free(void) override;
     
@@ -121,28 +137,76 @@ public:
     virtual void stop(IOService *provider) override;
     
     
-    /**
-     *  A simple wrapper for the kernel function readmsr_carefully.
-     */
+
     bool read_msr(uint32_t addr, uint64_t *value);
+    bool write_msr(uint32_t addr, uint64_t value);
     
-    void updateClockSpeed();
+    
+    void updateClockSpeed(uint8_t physical);
+    void calculateEffectiveFrequency(uint8_t physical);
+    void updateInstructionDelta(uint8_t physical);
+    void applyPowerControl();
+    void updatePowerControl();
+    
+    void setCPBState(bool enabled);
+    bool getCPBState();
+    
     void updatePackageTemp();
     void updatePackageEnergy();
     
-    uint32_t totalNumberOfPhysicalCores;
+    void registerRequest();
     
+    void dumpPstate(uint8_t cpu_num);
+    
+    uint32_t totalNumberOfPhysicalCores;
+    uint32_t totalNumberOfLogicalCores;
+    
+    uint8_t cpuFamily;
+    uint8_t cpuModel;
+    uint8_t cpuSupportedByCurrentVersion;
+    
+    //Cache size in KB
+    uint32_t cpuCacheL1_perCore;
+    uint32_t cpuCacheL2_perCore;
+    uint32_t cpuCacheL3;
     
     /**
      *  Hard allocate space for cached readings.
      */
-    float MSR_HARDWARE_PSTATE_STATUS_perCore[CPUInfo::MaxCpus] {};
+    float effFreq_perCore[CPUInfo::MaxCpus] {};
     float PACKAGE_TEMPERATURE_perPackage[CPUInfo::MaxCpus];
+    
+    uint64_t lastMPERF_PerCore[CPUInfo::MaxCpus];
+    uint64_t lastAPERF_PerCore[CPUInfo::MaxCpus];
+    uint64_t deltaAPERF_PerCore[CPUInfo::MaxCpus];
+    uint64_t deltaMPERF_PerCore[CPUInfo::MaxCpus];
+    
+//    uint64_t lastAPERF_PerCore[CPUInfo::MaxCpus];
+    
+    uint64_t instructionDelta_PerCore[CPUInfo::MaxCpus];
+    uint64_t lastInstructionDelta_perCore[CPUInfo::MaxCpus];
+    
+    float loadIndex_PerCore[CPUInfo::MaxCpus];
+    
+    bool PPMEnabled = false;
+    float PStateStepUpRatio = 0.36;
+    float PStateStepDownRatio = 0.05;
+    
+    uint8_t PStateCur_perCore[CPUInfo::MaxCpus];
+    uint8_t PStateCtl = 0;
+    uint64_t PStateDef_perCore[CPUInfo::MaxCpus][8];
+    uint8_t PStateEnabledLen = 0;
+    float PStateDefClock_perCore[CPUInfo::MaxCpus][8];
+    bool cpbSupported;
+    
     
     uint64_t lastUpdateTime;
     uint64_t lastUpdateEnergyValue;
     
     double uniPackageEnegry;
+    
+
+
     
     
 private:
@@ -150,10 +214,15 @@ private:
     IOWorkLoop *workLoop;
     IOTimerEventSource *timerEventSource;
     
+    bool serviceInitialized = false;
     
-    CPUInfo::CpuGeneration cpuGeneration {CPUInfo::CpuGeneration::Unknown};
+    uint32_t updateTimeInterval = 1000;
+    uint32_t actualUpdateTimeInterval = 1;
+    uint32_t timeOfLastUpdate = 0;
+    uint32_t estimatedRequestTimeInterval = 0;
+    uint32_t timeOfLastMissedRequest = 0;
+    
 
-    uint32_t cpuFamily {0}, cpuModel {0}, cpuStepping {0};
     
     CPUInfo::CpuTopology cpuTopology {};
     

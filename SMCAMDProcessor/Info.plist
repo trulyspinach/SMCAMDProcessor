@@ -53,6 +53,8 @@
 		<string>1.0.0</string>
 		<key>com.apple.iokit.IOPCIFamily</key>
 		<string>2.9</string>
+		<key>com.apple.kec.Libm</key>
+		<string>1.0</string>
 		<key>com.apple.kpi.bsd</key>
 		<string>12.0.0</string>
 		<key>com.apple.kpi.dsep</key>

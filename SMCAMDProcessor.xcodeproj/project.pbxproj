@@ -13,12 +13,19 @@
 		B56162CE2400EF780006A7D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B56162CC2400EF780006A7D8 /* Main.storyboard */; };
 		B561633524010C050006A7D8 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B561633424010C050006A7D8 /* GraphView.swift */; };
 		B564A5CA240B8256000FF929 /* LegacyIOUserClient.h in Headers */ = {isa = PBXBuildFile; fileRef = B564A5C9240B8256000FF929 /* LegacyIOUserClient.h */; };
+		B568E7362414D174007CEEC1 /* CPUSpeedShiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B568E7352414D174007CEEC1 /* CPUSpeedShiftView.swift */; };
+		B5787763241105D3001AE704 /* CPUBarLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5787762241105D3001AE704 /* CPUBarLayer.swift */; };
 		B57D280723F66C8E002BC699 /* SMCAMDProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280123F66C8E002BC699 /* SMCAMDProcessor.cpp */; };
 		B57D280823F66C8E002BC699 /* Keyimplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280223F66C8E002BC699 /* Keyimplementations.cpp */; };
 		B57D280923F66C8E002BC699 /* SMCAMDProcessor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B57D280323F66C8E002BC699 /* SMCAMDProcessor.hpp */; };
 		B57D280A23F66C8E002BC699 /* KeyImplementations.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B57D280423F66C8E002BC699 /* KeyImplementations.hpp */; };
 		B57D280B23F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280523F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp */; };
 		B57D280C23F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B57D280623F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp */; };
+		B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */; };
+		B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */; };
+		B5F46D7F240E593D009F2961 /* CPUPowerStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D7E240E593D009F2961 /* CPUPowerStepView.swift */; };
+		B5F46D81240E6F19009F2961 /* ProcessorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D80240E6F19009F2961 /* ProcessorModel.swift */; };
+		B5F46D83240E76D9009F2961 /* PowerToolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D82240E76D9009F2961 /* PowerToolViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +38,8 @@
 		B56162D02400EF780006A7D8 /* AMD_Power_Gadget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AMD_Power_Gadget.entitlements; sourceTree = "<group>"; };
 		B561633424010C050006A7D8 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		B564A5C9240B8256000FF929 /* LegacyIOUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegacyIOUserClient.h; sourceTree = "<group>"; };
+		B568E7352414D174007CEEC1 /* CPUSpeedShiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUSpeedShiftView.swift; sourceTree = "<group>"; };
+		B5787762241105D3001AE704 /* CPUBarLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUBarLayer.swift; sourceTree = "<group>"; };
 		B57D27F423F66AE7002BC699 /* SMCAMDProcessor.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMCAMDProcessor.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57D27FB23F66AE7002BC699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B57D280123F66C8E002BC699 /* SMCAMDProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SMCAMDProcessor.cpp; sourceTree = "<group>"; };
@@ -39,6 +48,11 @@
 		B57D280423F66C8E002BC699 /* KeyImplementations.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KeyImplementations.hpp; sourceTree = "<group>"; };
 		B57D280523F66C8E002BC699 /* SMCAMDProcessorUserClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SMCAMDProcessorUserClient.cpp; sourceTree = "<group>"; };
 		B57D280623F66C8E002BC699 /* SMCAMDProcessorUserClient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SMCAMDProcessorUserClient.hpp; sourceTree = "<group>"; };
+		B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
+		B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
+		B5F46D7E240E593D009F2961 /* CPUPowerStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPowerStepView.swift; sourceTree = "<group>"; };
+		B5F46D80240E6F19009F2961 /* ProcessorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessorModel.swift; sourceTree = "<group>"; };
+		B5F46D82240E76D9009F2961 /* PowerToolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerToolViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,15 +84,29 @@
 		B56162C52400EF770006A7D8 /* AMD Power Gadget */ = {
 			isa = PBXGroup;
 			children = (
-				B561633424010C050006A7D8 /* GraphView.swift */,
+				B595D3E124166F6000B704F7 /* Resources */,
+				B5F46D80240E6F19009F2961 /* ProcessorModel.swift */,
 				B56162C62400EF770006A7D8 /* AppDelegate.swift */,
+				B561633424010C050006A7D8 /* GraphView.swift */,
 				B56162C82400EF770006A7D8 /* ViewController.swift */,
+				B5787764241105DE001AE704 /* Power Tool */,
 				B56162CA2400EF780006A7D8 /* Assets.xcassets */,
 				B56162CC2400EF780006A7D8 /* Main.storyboard */,
 				B56162CF2400EF780006A7D8 /* Info.plist */,
 				B56162D02400EF780006A7D8 /* AMD_Power_Gadget.entitlements */,
 			);
 			path = "AMD Power Gadget";
+			sourceTree = "<group>";
+		};
+		B5787764241105DE001AE704 /* Power Tool */ = {
+			isa = PBXGroup;
+			children = (
+				B5787762241105D3001AE704 /* CPUBarLayer.swift */,
+				B568E7352414D174007CEEC1 /* CPUSpeedShiftView.swift */,
+				B5F46D7E240E593D009F2961 /* CPUPowerStepView.swift */,
+				B5F46D82240E76D9009F2961 /* PowerToolViewController.swift */,
+			);
+			path = "Power Tool";
 			sourceTree = "<group>";
 		};
 		B57D27EA23F66AE7002BC699 = {
@@ -112,6 +140,15 @@
 				B57D27FB23F66AE7002BC699 /* Info.plist */,
 			);
 			path = SMCAMDProcessor;
+			sourceTree = "<group>";
+		};
+		B595D3E124166F6000B704F7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */,
+				B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +245,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */,
+				B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */,
 				B56162CB2400EF780006A7D8 /* Assets.xcassets in Resources */,
 				B56162CE2400EF780006A7D8 /* Main.storyboard in Resources */,
 			);
@@ -227,8 +266,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F46D83240E76D9009F2961 /* PowerToolViewController.swift in Sources */,
 				B56162C92400EF770006A7D8 /* ViewController.swift in Sources */,
+				B5787763241105D3001AE704 /* CPUBarLayer.swift in Sources */,
+				B5F46D7F240E593D009F2961 /* CPUPowerStepView.swift in Sources */,
+				B568E7362414D174007CEEC1 /* CPUSpeedShiftView.swift in Sources */,
 				B56162C72400EF770006A7D8 /* AppDelegate.swift in Sources */,
+				B5F46D81240E6F19009F2961 /* ProcessorModel.swift in Sources */,
 				B561633524010C050006A7D8 /* GraphView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,13 +309,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"VERSION_STRING=$(CURRENT_PROJECT_VERSION)",
+				);
 				INFOPLIST_FILE = "AMD Power Gadget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -288,13 +337,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = "VERSION_STRING=$(CURRENT_PROJECT_VERSION)";
 				INFOPLIST_FILE = "AMD Power Gadget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -417,7 +467,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.1.1;
+				CURRENT_PROJECT_VERSION = 0.3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -431,13 +481,27 @@
 				INFOPLIST_FILE = SMCAMDProcessor/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 0.3;
 				MODULE_NAME = wtf.spinach.SMCAMDProcessor;
-				MODULE_VERSION = 1.0.0d1;
-				OTHER_CPLUSPLUSFLAGS = "-Wno-inconsistent-missing-override";
+				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				OTHER_CFLAGS = (
+					"-mmmx",
+					"-msse",
+					"-msse2",
+					"-msse3",
+					"-mfpmath=sse",
+					"-mssse3",
+					"-ftree-vectorize",
+					"-fno-non-call-exceptions",
+					"-fno-builtin",
+					"-fno-asynchronous-unwind-tables",
+					"-O3",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-static";
 				PRODUCT_BUNDLE_IDENTIFIER = wtf.spinach.SMCAMDProcessor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -447,7 +511,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.1.1;
+				CURRENT_PROJECT_VERSION = 0.3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -459,13 +523,27 @@
 				INFOPLIST_FILE = SMCAMDProcessor/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 0.3;
 				MODULE_NAME = wtf.spinach.SMCAMDProcessor;
-				MODULE_VERSION = 1.0.0d1;
-				OTHER_CPLUSPLUSFLAGS = "-Wno-inconsistent-missing-override";
+				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				OTHER_CFLAGS = (
+					"-mmmx",
+					"-msse",
+					"-msse2",
+					"-msse3",
+					"-mfpmath=sse",
+					"-mssse3",
+					"-ftree-vectorize",
+					"-fno-non-call-exceptions",
+					"-fno-builtin",
+					"-fno-asynchronous-unwind-tables",
+					"-O3",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-static";
 				PRODUCT_BUNDLE_IDENTIFIER = wtf.spinach.SMCAMDProcessor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
