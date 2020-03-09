@@ -6,10 +6,11 @@ AMD Processor system monitoring plugin for [VirtualSMC](https://github.com/acida
 
 Please note that this release is at very initial stage of development, make sure you have a proper backup of your EFI folder and never run on any system that matters. 
 
-### Now introducing "AMD Power Gadget". Just like the Intel one!
+### Now with AMD Power Tool
+<img src="imgs/all.png" width="80%">
 
+<img src="imgs/ani.gif" width="100%">
 
-<img src="imgs/APG.png" width="40%">
 
 ## Features
 * Supports for reading of temperature, energy and clock data on AMD 17h Processors.
