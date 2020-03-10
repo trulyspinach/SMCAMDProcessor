@@ -35,7 +35,7 @@ I have been exploring possibilities for implementing a real active power managem
 
 ## What's Coming?
 
-* PState Editing, a direct editing of PState definition may open up possibilities overclocking in macOS.
+* PState Editing, a direct editing of PState definition may open up possibilities for overclocking in macOS.
 * Active Power Management.
 
 
