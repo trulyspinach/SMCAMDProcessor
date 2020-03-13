@@ -49,6 +49,16 @@ class ProcessorModel {
         loadMetric()
         loadPStateDef()
         loadPStateDefClock()
+        
+        if numberOfCores < 1{
+            let alert = NSAlert()
+            alert.messageText = "Error reading CPU data."
+            alert.informativeText = "This application can not be launched due to SMCAMDProcessor is reporting incorrect data."
+            alert.alertStyle = .critical
+            alert.addButton(withTitle: "Quit")
+            alert.runModal()
+            NSApplication.shared.terminate(self)
+        }
     }
     
     func initDriver() -> Bool {
@@ -66,7 +76,7 @@ class ProcessorModel {
         let alert = NSAlert()
         alert.messageText = "No SMCAMDProcessor Found!"
         alert.informativeText = "Please download SMCAMDProcessor from the release page."
-        alert.alertStyle = .warning
+        alert.alertStyle = .critical
         alert.addButton(withTitle: "Quit")
         alert.addButton(withTitle: "Quit and Download")
         let res = alert.runModal()
@@ -147,7 +157,7 @@ class ProcessorModel {
     
     private func loadPStateDef(){
 
-        PStateDef = kernelGetUInt64(count: 10, selector: 0)
+        PStateDef = kernelGetUInt64(count: 8, selector: 0)
         
         var i = 0
         while i < 8 {
@@ -186,6 +196,10 @@ class ProcessorModel {
     
     func getPState() -> Int {
         return PStateCur
+    }
+    
+    func getPStateDef() -> [UInt64]{
+        return PStateDef
     }
     
     func getVaildPStateClocks() -> [Float] {
@@ -245,6 +259,27 @@ class ProcessorModel {
     func getInstructionDelta() -> [UInt64]{
         let o = kernelGetUInt64(count: numberOfCores, selector: 5)
         return Array(o[0...numberOfCores - 1])
+    }
+    
+    func setPState(def : [UInt64]) -> Int{
+        if def.count != 8 {
+            return -1
+        }
+        
+        var input: [UInt64] = def
+        let res = IOConnectCallMethod(connect, 15, &input, 8, nil, 0,
+                                      nil, nil,
+                                      nil, nil)
+        
+        
+        if res != KERN_SUCCESS {
+            print(String(cString: mach_error_string(res)))
+            return Int(res)
+        }
+        
+        loadPStateDef()
+        loadPStateDefClock()
+        return 0
     }
     
     static func sysctlString(key : String) -> String {

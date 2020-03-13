@@ -79,15 +79,11 @@ class PowerToolViewController: NSViewController {
         timer?.invalidate()
     }
     
-    
-    
     func sampleCPUGraph() {
         let metric = ProcessorModel.shared.getMetric(forced: true)
         let load = ProcessorModel.shared.getLoadIndex()
         let a = ProcessorModel.shared.getInstructionDelta()
-//        print(load)
         let freqs = Array(metric[3...metric.count-1])
-//        print(freqs)
         
         cpuFreqGraph.setFreqData(data: Array(metric[3...metric.count-1]),
                                  states: vaildStatesClock, load: load)

@@ -13,6 +13,21 @@
 OSDefineMetaClassAndStructors(SMCAMDProcessorUserClient, IOUserClient);
 
 
+bool SMCAMDProcessorUserClient::initWithTask(task_t owningTask,
+                                             void *securityToken,
+                                             UInt32 type,
+                                             OSDictionary *properties){
+    
+    if(!IOUserClient::initWithTask(owningTask, securityToken, type, properties)){
+        return false;
+    }
+    
+    token = securityToken;
+    
+    return true;
+
+}
+
 bool SMCAMDProcessorUserClient::start(IOService *provider){
     
     IOLog("AMDCPUSupportUserClient::start\n");
@@ -42,13 +57,22 @@ uint64_t multiply_two_numbers(uint64_t number_one, uint64_t number_two){
     return number_three;
 }
 
+bool SMCAMDProcessorUserClient::hasPrivilege(){
+    if(fProvider->disablePrivilegeCheck) return true;
+    
+    return clientHasPrivilege(token, kIOClientPrivilegeAdministrator) == kIOReturnSuccess;
+}
+
 IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *arguments,
-                                                 IOExternalMethodDispatch *dispatch, OSObject *target, void *reference){
+                                                 IOExternalMethodDispatch *dispatch,
+                                                   OSObject *target, void *reference){
     
     fProvider->registerRequest();
     
+    
+    
     switch (selector) {
-        
+            
         //Get PStateDef raw values for core 0
         case 0: {
             arguments->scalarOutputCount = 0;
@@ -276,6 +300,20 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
                 fProvider->PStateCtl = 0;
                 fProvider->applyPowerControl();
             }
+            
+            break;
+        }
+            
+        //Set PStateDef
+        case 15: {
+            if(!hasPrivilege())
+                return kIOReturnNotPrivileged;
+            
+            if(arguments->scalarInputCount != 8)
+                return kIOReturnBadArgument;
+            
+            
+            fProvider->writePstate(arguments->scalarInput);
             
             break;
         }

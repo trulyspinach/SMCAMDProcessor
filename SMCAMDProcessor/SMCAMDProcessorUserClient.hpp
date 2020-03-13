@@ -26,15 +26,21 @@ class SMCAMDProcessorUserClient : public IOUserClient
     
       
 public:
+    
+    bool initWithTask(task_t owningTask, void *securityToken, UInt32 type, OSDictionary *properties) override;
+    
     // IOUserClient methods
     virtual void stop(IOService* provider) override;
     virtual bool start(IOService* provider) override;
     
-
+    
     
 protected:
     
     SMCAMDProcessor *fProvider;
+    void *token;
+    
+    bool hasPrivilege();
     
     // KPI for supporting access from both 32-bit and 64-bit user processes beginning with Mac OS X 10.5.
     virtual IOReturn externalMethod(uint32_t selector, IOExternalMethodArguments* arguments,

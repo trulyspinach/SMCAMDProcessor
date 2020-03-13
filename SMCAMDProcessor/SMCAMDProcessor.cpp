@@ -20,6 +20,7 @@ bool SMCAMDProcessor::setupKeysVsmc(){
     vsmcNotifier = VirtualSMCAPI::registerHandler(vsmcNotificationHandler, this);
     
     
+    
     bool suc = true;
     
     //    suc &= VirtualSMCAPI::addKey(KeyTCxD(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
@@ -124,15 +125,14 @@ bool SMCAMDProcessor::getPCIService(){
 
 bool SMCAMDProcessor::start(IOService *provider){
     
+    
     bool success = IOService::start(provider);
     if(!success){
         IOLog("AMDCPUSupport::start failed to start. :(\n");
         return false;
     }
-    registerService();
     
-    
-    
+    disablePrivilegeCheck = checkKernelArgument("-amdpnopchk");
     
     uint32_t cpuid_eax = 0;
     uint32_t cpuid_ebx = 0;
@@ -181,10 +181,17 @@ bool SMCAMDProcessor::start(IOService *provider){
     totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
     totalNumberOfLogicalCores = cpuTopology.totalLogical();
     
+    void *safe_wrmsr = lookup_symbol("_wrmsr_carefully");
+    if(!safe_wrmsr){
+        IOLog("AMDCPUSupport::start WARN: Can't find _wrmsr_carefully, proceeding with unsafe wrmsr\n");
+    }
+    wrmsr_carefully = (int(*)(uint32_t,uint32_t,uint32_t)) safe_wrmsr;
     
+    mpLock = IOSimpleLockAlloc();
     workLoop = IOWorkLoop::workLoop();
     timerEventSource = IOTimerEventSource::timerEventSource(this, [](OSObject *object, IOTimerEventSource *sender) {
         SMCAMDProcessor *provider = OSDynamicCast(SMCAMDProcessor, object);
+        IOSimpleLockLock(provider->mpLock);
         
         //Run initialization
         if(!provider->serviceInitialized){
@@ -231,6 +238,7 @@ bool SMCAMDProcessor::start(IOService *provider){
                 
             }, provider);
             
+            IOSimpleLockUnlock(provider->mpLock);
             provider->serviceInitialized = true;
             provider->timerEventSource->setTimeoutMS(1);
             return;
@@ -253,6 +261,7 @@ bool SMCAMDProcessor::start(IOService *provider){
             provider->updateInstructionDelta(physical);
             
         }, provider);
+        IOSimpleLockUnlock(provider->mpLock);
         
         if(provider->PPMEnabled) provider->updatePowerControl();
         
@@ -276,10 +285,12 @@ bool SMCAMDProcessor::start(IOService *provider){
 //        for (int i = 0; i < provider->totalNumberOfPhysicalCores; i++) {
 //            IOLog("Core %d: %llu\n", i, (uint64_t)(provider->PStateCur_perCore[i]));
 //        }
+        
+        
     });
     
 
-    
+    registerService();
     
     IOLog("AMDCPUSupport::start trying to init PCI service...\n");
     if(!getPCIService()){
@@ -287,15 +298,15 @@ bool SMCAMDProcessor::start(IOService *provider){
         return false;
     }
     
-    
     lastUpdateTime = getCurrentTimeNs();
     
     workLoop->addEventSource(timerEventSource);
     timerEventSource->setTimeoutMS(1);
     
+    
     IOLog("AMDCPUSupport::start registering VirtualSMC keys...\n");
     setupKeysVsmc();
-    
+
     return success;
 }
 
@@ -303,6 +314,8 @@ void SMCAMDProcessor::stop(IOService *provider){
     IOLog("AMDCPUSupport stopped, you have no more support :(\n");
     
     timerEventSource->cancelTimeout();
+    workLoop->removeEventSource(timerEventSource);
+    timerEventSource->release();
     
     IOService::stop(provider);
 }
@@ -320,6 +333,13 @@ bool SMCAMDProcessor::read_msr(uint32_t addr, uint64_t *value){
 }
 
 bool SMCAMDProcessor::write_msr(uint32_t addr, uint64_t value){
+    if(wrmsr_carefully){
+        uint32_t lo = value & 0xffffffff;
+        uint32_t hi = value >> 32;
+        return (*wrmsr_carefully)(addr, lo, hi) == 0;
+    }
+    
+    //Fall back with unsafe method
     wrmsr64(addr, value);
     return true;
 }
@@ -358,10 +378,31 @@ void SMCAMDProcessor::updateClockSpeed(uint8_t physical){
 
 void SMCAMDProcessor::calculateEffectiveFrequency(uint8_t physical){
     
-    uint64_t APERF, MPERF;
-    if(!read_msr(kMSR_APERF, &APERF) || !read_msr(kMSR_MPERF, &MPERF))
-        panic("AMDCPUSupport::calculateEffectiveFrequency: fucked up");
+    uint32_t APERF_lo, APERF_hi;
+    uint32_t MPERF_lo, MPERF_hi;
     
+    /**
+     * The effective frequency interface provides +/- 50MHz accuracy if the following constraints are met:
+     * • Effective frequency is read at most one time per millisecond.
+     * • When reading or writing Core::X86::Msr::MPERF and Core::X86::Msr::APERF software executes only
+     *  MOV instructions, and no more than 3 MOV instructions, between the two RDMSR or WRMSR
+     *  instructions.
+     * • Core::X86::Msr::MPERF and Core::X86::Msr::APERF are invalid if an overflow occurs.
+    */
+    __asm__ volatile("movl $0xe8, %%ecx;"
+                     "rdmsr;"
+                     "movl %%eax, %0;"
+                     "movl %%edx, %1;"
+                     "movl $0xe7, %%ecx;"
+                     "rdmsr;"
+                     : "=r"(APERF_lo), "=r"(APERF_hi), "=a"(MPERF_lo), "=d"(MPERF_hi)
+                     :
+                     : "%ecx"
+                    );
+    
+    uint64_t APERF = APERF_lo | ((uint64_t)APERF_hi << 32);
+    uint64_t MPERF = MPERF_lo | ((uint64_t)MPERF_hi << 32);;
+        
     uint64_t lastAPERF = lastAPERF_PerCore[physical];
     uint64_t lastMPERF = lastMPERF_PerCore[physical];
     
@@ -376,8 +417,6 @@ void SMCAMDProcessor::calculateEffectiveFrequency(uint8_t physical){
     deltaAPERF_PerCore[physical] = deltaAPERF;
     deltaMPERF_PerCore[physical] = MPERF - lastMPERF;
     float effFreq = ((float)deltaAPERF / (float)(MPERF - lastMPERF)) * freqP0;
-    
-    //    IOLog("AMDCPUSupport::calculateEffectiveFrequency: core %u, %u\n", physical, (uint32_t)freqP0);
     
     effFreq_perCore[physical] = effFreq;
     
@@ -413,10 +452,12 @@ void SMCAMDProcessor::updateInstructionDelta(uint8_t physical){
 }
 
 void SMCAMDProcessor::applyPowerControl(){
-    mp_rendezvous_no_intrs([](void *obj) {
+    IOSimpleLockLock(mpLock);
+    mp_rendezvous(nullptr, [](void *obj) {
         auto provider = static_cast<SMCAMDProcessor*>(obj);
         provider->write_msr(kMSR_PSTATE_CTL, (uint64_t)(provider->PStateCtl & 0x7));
-    }, this);
+    }, nullptr, this);
+    IOSimpleLockUnlock(mpLock);
 }
 
 void SMCAMDProcessor::updatePowerControl(){
@@ -459,11 +500,13 @@ void SMCAMDProcessor::setCPBState(bool enabled){
     //A bit hacky but at least works for now.
     void* args[] = {this, &hwConfig};
     
-    mp_rendezvous_no_intrs([](void *obj) {
+    IOSimpleLockLock(mpLock);
+    mp_rendezvous(nullptr, [](void *obj) {
         auto v = static_cast<uint64_t*>(*((uint64_t**)obj+1));
-        auto provider = static_cast<SMCAMDProcessor*>(obj);
+        auto provider = static_cast<SMCAMDProcessor*>(*((SMCAMDProcessor**)obj));
         provider->write_msr(kMSR_HWCR, *v);
-    }, args);
+    }, nullptr, args);
+    IOSimpleLockUnlock(mpLock);
 }
 
 bool SMCAMDProcessor::getCPBState(){
@@ -557,11 +600,50 @@ void SMCAMDProcessor::dumpPstate(uint8_t physical){
     PStateEnabledLen = max(PStateEnabledLen, len);
 }
 
+void SMCAMDProcessor::writePstate(const uint64_t *buf){
+    
+    PStateEnabledLen = 0;
+    
+    //A bit hacky but at least works for now.
+    void* args[] = {this, (void*)buf};
+    
+
+    
+    IOSimpleLockLock(mpLock);
+    mp_rendezvous(nullptr, [](void *obj) {
+        auto v = static_cast<uint64_t*>(((uint64_t**)obj)[1]);
+        auto provider = static_cast<SMCAMDProcessor*>(*((SMCAMDProcessor**)obj));
+
+        for (uint32_t i = 0; i < kMSR_PSTATE_LEN; i++) {
+            uint64_t def = v[i];
+            
+            uint64_t curCpuDfsId = ((def >> 8) & 0x3f);
+            uint64_t curCpuFid = (def & 0xff);
+            if(!def || !curCpuDfsId || !curCpuFid)
+                continue;
+            
+            provider->write_msr(provider->kMSR_PSTATE_0 + i, def);
+            
+        }
+        
+        uint32_t cpu_num = cpu_number();
+        uint8_t package = provider->cpuTopology.numberToPackage[cpu_num];
+        uint8_t logical = provider->cpuTopology.numberToLogical[cpu_num];
+        if (logical >= provider->cpuTopology.physicalCount[package])
+            return;
+        uint8_t physical = provider->cpuTopology.numberToPhysicalUnique(cpu_num);
+        provider->dumpPstate(physical);
+        
+    }, nullptr, args);
+        
+    IOSimpleLockUnlock(mpLock);
+}
+
 EXPORT extern "C" kern_return_t ADDPR(kern_start)(kmod_info_t *, void *) {
     // Report success but actually do not start and let I/O Kit unload us.
     // This works better and increases boot speed in some cases.
     PE_parse_boot_argn("liludelay", &ADDPR(debugPrintDelay), sizeof(ADDPR(debugPrintDelay)));
-    ADDPR(debugEnabled) = checkKernelArgument("-amdcpudbg");
+    ADDPR(debugEnabled) = checkKernelArgument("-amdpdbg");
     return KERN_SUCCESS;
 }
 

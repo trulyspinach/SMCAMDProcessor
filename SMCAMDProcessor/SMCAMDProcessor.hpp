@@ -7,8 +7,6 @@
 //#include <IOKit/IOService.h>
 //#include <IOKit/IOLib.h>
 
-
-
 #include <math.h>
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/IOTimerEventSource.h>
@@ -26,10 +24,20 @@
 
 #include "KeyImplementations.hpp"
 
+#include "symresolver/kernel_resolver.h"
+
 
 extern "C" {
     int cpu_number(void);
     void mp_rendezvous_no_intrs(void (*action_func)(void *), void *arg);
+
+    void
+    mp_rendezvous(void (*setup_func)(void *),
+                  void (*action_func)(void *),
+                  void (*teardown_func)(void *),
+                  void *arg);
+
+//    int wrmsr_carefully(uint32_t msr, uint64_t val);
 };
 
 
@@ -157,6 +165,7 @@ public:
     void registerRequest();
     
     void dumpPstate(uint8_t cpu_num);
+    void writePstate(const uint64_t *buf);
     
     uint32_t totalNumberOfPhysicalCores;
     uint32_t totalNumberOfLogicalCores;
@@ -205,7 +214,8 @@ public:
     
     double uniPackageEnegry;
     
-
+    
+    bool disablePrivilegeCheck = false;
 
     
     
@@ -213,6 +223,7 @@ private:
     
     IOWorkLoop *workLoop;
     IOTimerEventSource *timerEventSource;
+    IOSimpleLock *mpLock {nullptr};
     
     bool serviceInitialized = false;
     
@@ -222,7 +233,8 @@ private:
     uint32_t estimatedRequestTimeInterval = 0;
     uint32_t timeOfLastMissedRequest = 0;
     
-
+    
+    int (*wrmsr_carefully)(uint32_t, uint32_t, uint32_t) {nullptr};
     
     CPUInfo::CpuTopology cpuTopology {};
     

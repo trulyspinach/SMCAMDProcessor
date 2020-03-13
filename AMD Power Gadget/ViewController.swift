@@ -37,27 +37,11 @@ class ViewController: NSViewController, NSWindowDelegate {
         
         scrollView.scroll(NSPoint(x: 0,y: 0))
         
+        
         subtitleLabel.stringValue = ProcessorModel.sysctlString(key: "machdep.cpu.brand_string")
         sampleData(forced: true)
         sampleData(forced: true)
         sampleData(forced: true)
-        
-    }
-    
-    func alertAndQuit(){
-        let alert = NSAlert()
-        alert.messageText = "No SMCAMDProcessor Found!"
-        alert.informativeText = "Please download SMCAMDProcessor from the release page."
-        alert.alertStyle = .warning
-        alert.addButton(withTitle: "Quit")
-        alert.addButton(withTitle: "Quit and Download")
-        let res = alert.runModal()
-        
-        if res == .alertSecondButtonReturn {
-            NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
-        }
-        
-        NSApplication.shared.terminate(self)
     }
     
     override var representedObject: Any? {
