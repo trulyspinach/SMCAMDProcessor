@@ -25,6 +25,7 @@ class ProcessorModel {
     private var PStateDefClock : [Float] = []
     private var vaildPStateLength : Int = 0
     
+    private var cpuListedAsSupported : Bool = false
     
     var SMCAMDProcessorVersion : String = ""
     var cpuidBasic : [UInt64] = []
@@ -59,6 +60,8 @@ class ProcessorModel {
             alert.runModal()
             NSApplication.shared.terminate(self)
         }
+        
+        fetchSupportedProcessor()
     }
     
     func initDriver() -> Bool {
@@ -295,5 +298,24 @@ class ProcessorModel {
         var size = MemoryLayout<Int64>.size
         sysctlbyname(key, &v, &size, nil, 0)
         return v
+    }
+    
+    func fetchSupportedProcessor() {
+        let url = URL(string: "https://trulyspinach.github.io/SMCAMDProcessor/testeddevices.json")!
+
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            let s = String(data: data!, encoding: .utf8)!
+            let supported = s.components(separatedBy: "\n")
+                
+            self.cpuListedAsSupported = supported.contains(
+                ProcessorModel.sysctlString(key: "machdep.cpu.brand_string"))
+//            print(supported)
+//            print(self.cpuListedAsSupported)
+        }
+
+        task.resume()
+        
+       
+        
     }
 }
