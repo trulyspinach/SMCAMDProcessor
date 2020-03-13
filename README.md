@@ -10,6 +10,18 @@ Please note that this release is at very initial stage of development, make sure
 ### Now with AMD Power Tool
 <img src="imgs/all.png" width="80%">
 
+## Installation
+
+1. Download kext and application from [Release](https://github.com/trulyspinach/SMCAMDProcessor/releases) page
+2. Add SMCAMDProcessor.kext to kext folder of your bootloader.
+3. Edit your bootloader's config file to make sure the kext is enabled.
+4. Done!
+
+## Features
+* Passive CPU power management. 
+* Supports for reading of temperature, energy and clock data on AMD 17h Processors.
+* Manual switching of processor speed with AMD Power Tool.
+
 ## Passive Power Management
 This options serves as a temporary solution to CPU power management due to no active solution are currently available. Comparing to a true active power managment implementation, this option works in a passive way which results in less sensitivity, accuracy and a slow down in performance.
 
@@ -18,10 +30,20 @@ I have been exploring possibilities for implementing a real active power managem
 <img src="imgs/ani.gif" width="100%">
 
 
-## Features
-* Passive CPU power management. 
-* Supports for reading of temperature, energy and clock data on AMD 17h Processors.
-* Manual switching of processor speed with AMD Power Tool.
+## Editing PState
+
+Since the release 0.3.1, you can now edit your CPU PState using AMD Power Tool.
+<img src="imgs/pe.png" width="60%">
+
+To access PState editor:
+1. Open AMD Power Tool
+2. Go to 'Speed' tab
+3. Click 'Advanced Options'
+
+#### Safety Notes
+* Incorrect PState setting can potentially cause permanent damage to your computer hardware.
+* For safety concern, this function was limited to root user only. You can either launch AMD Power Gadget with root user or use `-amdpnopchk` to disable this check.
+
 
 
 ## Tested Processors
