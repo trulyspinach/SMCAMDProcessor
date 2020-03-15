@@ -318,6 +318,26 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
             break;
         }
             
+        //get board info
+        case 16: {
+            arguments->scalarOutputCount = 1;
+            arguments->scalarOutput[0] = fProvider->boardInfoValid ? 1 : 0;
+            
+            arguments->structureOutputSize = 128;
+
+            char *dataOut = (char*) arguments->structureOutput;
+            
+            for(uint32_t i = 0; i < 64; i++){
+                dataOut[i] = fProvider->boardVender[i];
+            }
+            
+            for(uint32_t i = 0; i < 64; i++){
+                dataOut[i+64] = fProvider->boardName[i];
+            }
+            
+            break;
+        }
+            
         default: {
             IOLog("AMDCPUSupportUserClient::externalMethod: invalid method.\n");
             break;

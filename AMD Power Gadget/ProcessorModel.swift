@@ -27,8 +27,13 @@ class ProcessorModel {
     
     private var cpuListedAsSupported : Bool = false
     
+    var systemConfig : [String : String] = [:]
+    
     var SMCAMDProcessorVersion : String = ""
     var cpuidBasic : [UInt64] = []
+    var boardValid = false
+    var boardName : String = "Unknown"
+    var boardVender : String = "Unknown"
     
     init() {
         if !initDriver() {
@@ -47,9 +52,12 @@ class ProcessorModel {
         SMCAMDProcessorVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
         
         loadCPUID()
+        loadBaseBoardInfo()
         loadMetric()
+        loadSystemConfig()
         loadPStateDef()
         loadPStateDefClock()
+        
         
         if numberOfCores < 1{
             let alert = NSAlert()
@@ -177,6 +185,29 @@ class ProcessorModel {
         cpuidBasic = kernelGetUInt64(count: 8, selector: 7)
     }
     
+    private func loadBaseBoardInfo(){
+        var scalerOut: [UInt64] = [UInt64](repeating: 0, count: 1)
+        var outputCount: UInt32 = 1
+
+        let maxStrLength = 128
+        var outputStr: [CChar] = [CChar](repeating: 0, count: maxStrLength)
+        var outputStrCount: Int = maxStrLength
+        let _ = IOConnectCallMethod(connect, 16, nil, 0, nil, 0,
+                                      &scalerOut, &outputCount,
+                                      &outputStr, &outputStrCount)
+        
+        if scalerOut[0] == 1 {
+            boardValid = true
+            boardVender = String(cString: Array(outputStr[0...64-1]))
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .trimmingCharacters(in: .controlCharacters)
+            boardName = String(cString: Array(outputStr[64...128-1]))
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .trimmingCharacters(in: .controlCharacters)
+        }
+        
+    }
+    
     private func loadPStateDefClock(){
         PStateDefClock = kernelGetFloats(count: 10, selector: 1)
     }
@@ -300,22 +331,75 @@ class ProcessorModel {
         return v
     }
     
+    func loadSystemConfig() {
+        systemConfig["ver"] = SMCAMDProcessorVersion
+        systemConfig["cpu"] = ProcessorModel.sysctlString(key: "machdep.cpu.brand_string")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        systemConfig["os"] = ProcessorModel.sysctlString(key: "kern.osproductversion")
+        systemConfig["mem"] = "\(Int(ProcessorModel.sysctlInt64(key: "hw.memsize") / 1024 / 1024))"
+        
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        if let dictionary = try? FileManager.default.attributesOfFileSystem(forPath: paths.last!) {
+            if let size = dictionary[FileAttributeKey.systemSize] as? NSNumber {
+                systemConfig["rs"] = "\(Int(Int(truncating: size) / 1024 / 1024))"
+            }
+        }
+        
+        if boardValid {
+            systemConfig["mb"] = "\(boardName) \(boardVender)";
+        }
+        
+        var iter : io_iterator_t = 0
+        let err = IOServiceGetMatchingServices(kIOMasterPortDefault,
+                                               IOServiceMatching("IOPCIDevice"), &iter)
+        if err != kIOReturnSuccess {return}
+        while true {
+            let reg = IOIteratorNext(iter);
+            if reg == 0 { break}
+            var serviceDictionary : Unmanaged<CFMutableDictionary>? = nil;
+            let e = IORegistryEntryCreateCFProperties(reg, &serviceDictionary, kCFAllocatorDefault, .zero)
+            
+            if e != kIOReturnSuccess {continue}
+            if let dic : NSDictionary = serviceDictionary?.takeRetainedValue(){
+                if let type = dic.object(forKey: "IOName") as? String {
+                    if type != "display" {continue}
+                    
+                    if let model = dic.object(forKey: "model") as? Data {
+                        systemConfig["gpu"] = String(data: model, encoding: .ascii)!
+                            .trimmingCharacters(in: .controlCharacters)
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                }
+            }
+        }
+    }
+    
     func fetchSupportedProcessor() {
-        let url = URL(string: "https://trulyspinach.github.io/SMCAMDProcessor/testeddevices.json")!
+        
+        let url = URL(string: "https://bot1.spinach.wtf/chksupport")
 
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            let s = String(data: data!, encoding: .utf8)!
-            let supported = s.components(separatedBy: "\n")
-                
-            self.cpuListedAsSupported = supported.contains(
-                ProcessorModel.sysctlString(key: "machdep.cpu.brand_string"))
-//            print(supported)
-//            print(self.cpuListedAsSupported)
+        guard let requestUrl = url else { fatalError() }
+
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "POST"
+        
+        
+        let postString = systemConfig.reduce(into: "") { (r, arg1) in
+            let (key, value) = arg1
+            r += "&\(key)=\(value)"
         }
 
+        request.httpBody = postString.data(using: String.Encoding.utf8);
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {return}
+         
+                
+            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                self.cpuListedAsSupported = dataString == "true"
+            }
+        }
         task.resume()
-        
-       
         
     }
 }

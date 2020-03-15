@@ -153,4 +153,25 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
         
         presentingViewController?.dismiss(self)
     }
+    
+    @IBAction func `import`(_ sender: Any) {
+        let op = NSOpenPanel()
+        op.runModal()
+        
+        let arr = NSArray.init(contentsOf: op.url!) as! [UInt64]
+
+        data = arr.map({value2Dict(v: $0)})
+        tableView.reloadData()
+    }
+    
+    @IBAction func export(_ sender: Any) {
+        let op = NSSavePanel()
+        op.isExtensionHidden = false
+        op.allowedFileTypes = ["pstate"]
+        
+        op.runModal()
+        
+        let arr = data.map{ dict2Value(d: $0) }
+        (arr as NSArray).write(to: op.url!, atomically: true)
+    }
 }

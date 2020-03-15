@@ -709,6 +709,28 @@
                                     <action selector="revert:" target="arI-oH-4xY" id="Pno-Uv-T2l"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pNv-Gc-cHo">
+                                <rect key="frame" x="92" y="13" width="80" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Import" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zct-1P-oFp">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="import:" target="arI-oH-4xY" id="BIR-4A-yry"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R8Z-Yp-tyN">
+                                <rect key="frame" x="173" y="13" width="80" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bsR-em-SBO">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="export:" target="arI-oH-4xY" id="3hX-63-diF"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -912,27 +934,8 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jah-fU-9WT">
-                                                                            <rect key="frame" x="25" y="9" width="365" height="50"/>
-                                                                            <autoresizingMask key="autoresizingMask"/>
-                                                                            <textFieldCell key="cell" selectable="YES" id="HmI-x3-4Ci">
-                                                                                <font key="font" metaFont="systemMedium" size="8"/>
-                                                                                <string key="title">FPU, VME, DE, PSE, TSC, MSR, PAE, MCE, CX8, APIC, SEP, MTRR, PGE, MCA, CMOV, PAT, PSE36, CLFSH, MMX, FXSR, SSE, SSE2, HTT, SSE3, PCLMULQDQ, MON, SSSE3, FMA, CX16, SSE4.1, SSE4.2, MOVBE, POPCNT, AES, XSAVE, OSXSAVE, AVX1.0, RDRAND, F16C, RDWRFSGS, BMI1, AVX2, SMEP, BMI2, PQM, PQE, RDSEED, ADX, SMAP, CLFSOPT, CLWB, SHA, UMIP, RDPID</string>
-                                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.59641835389999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                        </textField>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ze-2r-CBU">
-                                                                            <rect key="frame" x="18" y="62" width="140" height="17"/>
-                                                                            <autoresizingMask key="autoresizingMask"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Supported Features:" id="fOd-f9-OKT">
-                                                                                <font key="font" metaFont="systemMedium" size="14"/>
-                                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                        </textField>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvS-BL-onx">
-                                                                            <rect key="frame" x="18" y="79" width="307" height="175"/>
+                                                                            <rect key="frame" x="18" y="20" width="372" height="242"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <textFieldCell key="cell" selectable="YES" alignment="left" id="g3v-Pl-VUX">
                                                                                 <font key="font" metaFont="systemMedium" size="13"/>
@@ -980,6 +983,17 @@
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                         </textField>
+                                                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k7R-ib-Cnn">
+                                                                            <rect key="frame" x="12" y="7" width="283" height="32"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                            <buttonCell key="cell" type="push" title="Fix motherboard displays as 'Unknown'?" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xeA-Lk-bKK">
+                                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                            <connections>
+                                                                                <action selector="boardHelp:" target="rDh-aT-nig" id="s63-7f-Ob1"/>
+                                                                            </connections>
+                                                                        </button>
                                                                     </subviews>
                                                                 </view>
                                                             </tabViewItem>
@@ -1116,12 +1130,12 @@ A better solution is still in development.</string>
                     <connections>
                         <outlet property="asaBox" destination="0lB-ss-dpq" id="pLi-pS-Hgp"/>
                         <outlet property="basicLabel" destination="IvS-BL-onx" id="YHX-hZ-cyr"/>
+                        <outlet property="boardHelpButton" destination="k7R-ib-Cnn" id="89p-zX-fWV"/>
                         <outlet property="configControl" destination="mWw-zl-STF" id="lK7-f9-mmi"/>
                         <outlet property="configTabView" destination="pJK-Iy-0Pe" id="5w4-9P-5N2"/>
                         <outlet property="cpbEnabledBox" destination="hck-n7-ZB8" id="9Wm-qW-Otj"/>
                         <outlet property="cpbSupportedBox" destination="XVJ-1V-MPd" id="GbR-et-p38"/>
                         <outlet property="cpuFreqGraph" destination="5PL-lX-mWT" id="va5-5g-BLH"/>
-                        <outlet property="featuresLabel" destination="Jah-fU-9WT" id="QDm-P6-EI7"/>
                         <outlet property="overviewSpeedShift" destination="LRK-w5-6Kx" id="sBA-SR-DsA"/>
                         <outlet property="topLabel1" destination="VGI-us-87W" id="OQ9-dq-3xk"/>
                         <outlet property="topLabel2" destination="f05-q5-Exd" id="QDN-jE-Rag"/>

@@ -27,6 +27,17 @@ class ViewController: NSViewController, NSWindowDelegate {
 
     var timer : Timer?
     
+    static var activeSelf : ViewController?
+    static func launch() {
+        if let vc = ViewController.activeSelf {
+            vc.view.window?.orderFrontRegardless()
+        } else {
+            let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
+            let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("AMDPowerGadget")) as! NSWindowController
+            controller.showWindow(self)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.window?.delegate = self;
@@ -42,6 +53,12 @@ class ViewController: NSViewController, NSWindowDelegate {
         sampleData(forced: true)
         sampleData(forced: true)
         sampleData(forced: true)
+        
+        ViewController.activeSelf = self
+    }
+    
+    override func viewWillAppear() {
+        view.window?.delegate = self
     }
     
     override var representedObject: Any? {
@@ -77,17 +94,11 @@ class ViewController: NSViewController, NSWindowDelegate {
     }
     
     @IBAction func launchPowerTool(_ sender: Any) {
-        let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
-        let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("AMDPowerTool")) as! NSWindowController
-        controller.showWindow(self)
-
-        controller.window?.isMovableByWindowBackground = true
+        PowerToolViewController.launch()
     }
 
-    
-    func windowDidResize(_ notification: Notification) {
-        print(scrollView.frame.size)
-        print(contentView.frame.size)
+    func windowWillClose(_ notification: Notification) {
+        ViewController.activeSelf = nil
     }
     
     @IBAction func buttonPressed(_ sender: Any) {

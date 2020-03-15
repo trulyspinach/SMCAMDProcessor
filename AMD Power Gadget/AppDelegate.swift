@@ -16,17 +16,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func gadget(_ sender: Any) {
-        let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
-        let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("AMDPowerGadget")) as! NSWindowController
-        controller.showWindow(self)
+        ViewController.launch()
     }
     
     @IBAction func tool(_ sender: Any) {
-        let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
-        let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("AMDPowerTool")) as! NSWindowController
-        controller.showWindow(self)
-
-        controller.window?.isMovableByWindowBackground = true
+        PowerToolViewController.launch()
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {

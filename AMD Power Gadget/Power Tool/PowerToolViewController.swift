@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PowerToolViewController: NSViewController {
+class PowerToolViewController: NSViewController, NSWindowDelegate {
 
     @IBOutlet weak var cpuFreqGraph: CPUPowerStepView!
     
@@ -17,7 +17,6 @@ class PowerToolViewController: NSViewController {
     var vaildStatesClock : [Float] = []
     
     @IBOutlet weak var basicLabel: NSTextField!
-    @IBOutlet weak var featuresLabel: NSTextField!
     @IBOutlet weak var overviewSpeedShift: CPUSpeedShiftView!
     
     @IBOutlet weak var configTabView: NSTabView!
@@ -31,6 +30,23 @@ class PowerToolViewController: NSViewController {
         
     }
     
+    
+    
+    @IBOutlet weak var boardHelpButton: NSButton!
+    @IBAction func boardHelp(_ sender: Any) {
+        let alert = NSAlert()
+        alert.messageText = "To enable motherboard display:"
+        alert.informativeText = """
+        Open your OpenCore config file,
+        
+        Go to Misc -> Security -> ExposeSensitiveData,
+        
+        Set the value to 0x08 to expose board information.
+        """
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "Done")
+        alert.beginSheetModal(for: view.window!, completionHandler: nil)
+    }
     @IBOutlet weak var cpbSupportedBox: NSButton!
     @IBOutlet weak var cpbEnabledBox: NSButton!
     @IBAction func cpbEnabledBox(_ sender: Any) {
@@ -53,6 +69,19 @@ class PowerToolViewController: NSViewController {
     var instDelta : UInt64 = 0
     var sumCount = 0
     
+    static var activeSelf : PowerToolViewController?
+    static func launch() {
+        if let vc = PowerToolViewController.activeSelf {
+            vc.view.window?.orderFrontRegardless()
+        } else {
+            let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
+            let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("AMDPowerTool")) as! NSWindowController
+            controller.showWindow(self)
+
+            controller.window?.isMovableByWindowBackground = true
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -73,10 +102,20 @@ class PowerToolViewController: NSViewController {
         
         topLabel1.font = NSFont(name: "SF Pro Rounded", size: 32)
         topLabel2.font = NSFont(name: "SF Pro Rounded", size: 32)
+        
+        PowerToolViewController.activeSelf = self
+    }
+    
+    override func viewWillAppear() {
+        view.window?.delegate = self
     }
     
     override func viewWillDisappear() {
         timer?.invalidate()
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        PowerToolViewController.activeSelf = nil
     }
     
     func sampleCPUGraph() {
@@ -112,23 +151,31 @@ class PowerToolViewController: NSViewController {
         let id = ProcessorModel.shared.cpuidBasic
         let supported = id[7] == 1 ? "Yes" : "Not yet :)"
         
+        let memGB = Int(ProcessorModel.shared.systemConfig["mem"]!)! / 1024
+        var storageGB = "?"
+        if let rs = ProcessorModel.shared.systemConfig["rs"] {
+            storageGB = "\(Int(rs)! / 1024)"
+        }
+         
         basicLabel.stringValue = """
-        \(ProcessorModel.sysctlString(key: "machdep.cpu.brand_string"))
+        \(ProcessorModel.shared.systemConfig["cpu"]!)
         Family: \(String(format:"%02X", id[0]))h, Model: \(String(format:"%02X", id[1]))h
-        
         Physical: \(id[2]), Logical: \(id[3])
         L1(Total): \(id[4] * id[2]) KB, L2(Total): \(id[5] * id[2] / 1024) MB
         L3(Shared): \(id[6] / 1024) MB
         
-        macOS Version: \(ProcessorModel.sysctlString(key: "kern.osproductversion"))
+        Motherboard: \(ProcessorModel.shared.boardName)
+        \(ProcessorModel.shared.boardVender)
+        Memory: \(memGB)GB, Storage: \(storageGB)GB
+        
+        macOS Version: \(ProcessorModel.shared.systemConfig["os"]!)
         SMCAMDProcessor:
           Version: \(ProcessorModel.shared.SMCAMDProcessorVersion), CPU Supported: \(supported)
           
         """
-        
-        let features = ProcessorModel.sysctlString(key: "machdep.cpu.features") + " " +
-        ProcessorModel.sysctlString(key: "machdep.cpu.leaf7_features")
-        featuresLabel.stringValue = features.replacingOccurrences(of: " ", with: ", ")
+        if ProcessorModel.shared.boardValid {
+            boardHelpButton.removeFromSuperview()
+        }
     }
     
     func updatePStateDef() {

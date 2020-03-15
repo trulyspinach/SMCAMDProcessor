@@ -14,6 +14,7 @@
 #include <i386/proc_reg.h>
 #include <libkern/libkern.h>
 
+#include <Headers/kern_efi.hpp>
 
 #include <Headers/kern_util.hpp>
 #include <Headers/kern_cpu.hpp>
@@ -25,6 +26,11 @@
 #include "KeyImplementations.hpp"
 
 #include "symresolver/kernel_resolver.h"
+
+
+
+#define OC_OEM_VENDOR_VARIABLE_NAME        u"oem-vendor"
+#define OC_OEM_BOARD_VARIABLE_NAME         u"oem-board"
 
 
 extern "C" {
@@ -66,7 +72,6 @@ public:
     
     static constexpr char const *kMODULE_VERSION = xStringify(MODULE_VERSION);
     
-    
     /**
      *  MSRs supported by AMD 17h CPU from:
      *  https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/blob/master/LibreHardwareMonitorLib/Hardware/Cpu/Amd17Cpu.cs
@@ -97,7 +102,13 @@ public:
     static constexpr uint32_t kMSR_PERF_CTR_0 = 0xC0010004;
     static constexpr uint32_t kMSR_PERF_IRPC = 0xC00000E9;
     
-
+    
+//    static constexpr uint32_t EF = 0x88;
+    
+    static constexpr uint32_t kEFI_VARIABLE_NON_VOLATILE = 0x00000001;
+    static constexpr uint32_t kEFI_VARIABLE_BOOTSERVICE_ACCESS = 0x00000002;
+    static constexpr uint32_t kEFI_VARIABLE_RUNTIME_ACCESS = 0x00000004;
+    
     
     /**
      *  Key name index mapping
@@ -178,6 +189,11 @@ public:
     uint32_t cpuCacheL1_perCore;
     uint32_t cpuCacheL2_perCore;
     uint32_t cpuCacheL3;
+    
+    char boardVender[64]{};
+    char boardName[64]{};
+    bool boardInfoValid;
+    
     
     /**
      *  Hard allocate space for cached readings.

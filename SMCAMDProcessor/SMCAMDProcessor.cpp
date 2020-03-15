@@ -125,7 +125,6 @@ bool SMCAMDProcessor::getPCIService(){
 
 bool SMCAMDProcessor::start(IOService *provider){
     
-    
     bool success = IOService::start(provider);
     if(!success){
         IOLog("AMDCPUSupport::start failed to start. :(\n");
@@ -186,6 +185,20 @@ bool SMCAMDProcessor::start(IOService *provider){
         IOLog("AMDCPUSupport::start WARN: Can't find _wrmsr_carefully, proceeding with unsafe wrmsr\n");
     }
     wrmsr_carefully = (int(*)(uint32_t,uint32_t,uint32_t)) safe_wrmsr;
+    
+    
+    
+    auto efiRT = EfiRuntimeServices::get();
+    uint32_t att = 0;
+    uint64_t sizee = 64;
+    uint64_t efistat;
+    efistat = efiRT->getVariable(OC_OEM_VENDOR_VARIABLE_NAME, &EfiRuntimeServices::LiluVendorGuid,
+                                 &att, &sizee, boardVender);
+    efistat = efiRT->getVariable(OC_OEM_BOARD_VARIABLE_NAME, &EfiRuntimeServices::LiluVendorGuid,
+                                 &att, &sizee, boardName);
+    boardInfoValid = efistat == EFI_SUCCESS;
+    IOLog("MB: %s %s\n", boardName, boardVender);
+    
     
     mpLock = IOSimpleLockAlloc();
     workLoop = IOWorkLoop::workLoop();
@@ -303,7 +316,7 @@ bool SMCAMDProcessor::start(IOService *provider){
     workLoop->addEventSource(timerEventSource);
     timerEventSource->setTimeoutMS(1);
     
-    
+//    
     IOLog("AMDCPUSupport::start registering VirtualSMC keys...\n");
     setupKeysVsmc();
 
