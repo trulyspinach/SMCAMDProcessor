@@ -24,6 +24,9 @@ bool SMCAMDProcessorUserClient::initWithTask(task_t owningTask,
     
     token = securityToken;
     
+    proc_t proc = get_bsdtask_info(owningTask);
+    proc_name(proc_pid(proc), taskProcessBinaryName, 32);
+    
     return true;
 
 }
@@ -59,8 +62,22 @@ uint64_t multiply_two_numbers(uint64_t number_one, uint64_t number_two){
 
 bool SMCAMDProcessorUserClient::hasPrivilege(){
     if(fProvider->disablePrivilegeCheck) return true;
+    if(clientHasPrivilege(token, kIOClientPrivilegeAdministrator) == kIOReturnSuccess) return true;
     
-    return clientHasPrivilege(token, kIOClientPrivilegeAdministrator) == kIOReturnSuccess;
+    
+    char buf[128];
+    snprintf(buf, 128,
+             "A process is trying to make changes to your system.\n\nAffected process name: %s",
+             taskProcessBinaryName);
+    
+    unsigned int rf;
+    (*(fProvider->kunc_alert))(0, 0, NULL, NULL, NULL,
+                  "SMCAMDProcessor", buf, "Deny", "I'm not sure.", "Authorize", &rf);
+    
+    
+    if(rf == 2) return true;
+    
+    return false;
 }
 
 IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *arguments,
@@ -209,11 +226,11 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
         case 8: {
             arguments->scalarOutputCount = 0;
             
-            arguments->structureOutputSize = (uint32_t)strlen(fProvider->kMODULE_VERSION);
+            arguments->structureOutputSize = (uint32_t)strlen(xStringify(MODULE_VERSION));
             char *dataOut = (char*) arguments->structureOutput;
             
             for(uint32_t i = 0; i < arguments->structureOutputSize; i++){
-                dataOut[i] = fProvider->kMODULE_VERSION[i];
+                dataOut[i] = xStringify(MODULE_VERSION)[i];
             }
             
             break;

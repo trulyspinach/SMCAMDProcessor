@@ -114,8 +114,12 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
         alert.messageText = "Unable to Set PStateDef"
         alert.informativeText = """
         Action was denied by kernel as current user does not have enough privilege.
+        Or was canceled by current user.
+        
         
         Run AMD Power Gadget as root user or disable privilege check with boot-arg '-amdpnopchk'
+        
+        Otherwise, click 'Authorize' to in the warning message to allow this change.
         """
         alert.alertStyle = .critical
         alert.addButton(withTitle: "Done")

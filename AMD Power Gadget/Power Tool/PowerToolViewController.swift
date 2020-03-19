@@ -161,11 +161,11 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         \(ProcessorModel.shared.systemConfig["cpu"]!)
         Family: \(String(format:"%02X", id[0]))h, Model: \(String(format:"%02X", id[1]))h
         Physical: \(id[2]), Logical: \(id[3])
-        L1(Total): \(id[4] * id[2]) KB, L2(Total): \(id[5] * id[2] / 1024) MB
-        L3(Shared): \(id[6] / 1024) MB
+        L1(Total): \(id[4] * id[2]) KB, L2(Total): \(id[5] * id[2] / 1024) MB, L3(Shared): \(id[6] / 1024) MB
         
         Motherboard: \(ProcessorModel.shared.boardName)
         \(ProcessorModel.shared.boardVender)
+        Graphics: \(ProcessorModel.shared.systemConfig["gpu"]!)
         Memory: \(memGB)GB, Storage: \(storageGB)GB
         
         macOS Version: \(ProcessorModel.shared.systemConfig["os"]!)

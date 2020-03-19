@@ -35,6 +35,9 @@ class ProcessorModel {
     var boardName : String = "Unknown"
     var boardVender : String = "Unknown"
     
+    var fetchRetry : Int = 10
+    var retryTimer : Timer?
+    
     init() {
         if !initDriver() {
             alertAndQuit()
@@ -376,7 +379,6 @@ class ProcessorModel {
     }
     
     func fetchSupportedProcessor() {
-        
         let url = URL(string: "https://bot1.spinach.wtf/chksupport")
 
         guard let requestUrl = url else { fatalError() }
@@ -392,9 +394,18 @@ class ProcessorModel {
 
         request.httpBody = postString.data(using: String.Encoding.utf8);
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if error != nil {return}
+            if error != nil {
+                if self.fetchRetry > 0 {
+                    self.fetchRetry -= 1
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
+                        self.fetchSupportedProcessor()
+                    })
+                }
+                return
+            }
          
-                
+            
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
                 self.cpuListedAsSupported = dataString == "true"
             }

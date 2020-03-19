@@ -13,11 +13,19 @@
 #include <Library/LegacyIOService.h>
 #include "LegacyHeaders/LegacyIOUserClient.h"
 
+#include <sys/proc.h>
+
 //#include <IOKit/IOService.h>
 //#include <IOKit/IOUserClient.h>
 //#include <IOKit/IOLib.h>
 
 #include "SMCAMDProcessor.hpp"
+
+extern "C" {
+    proc_t get_bsdtask_info(task_t t);
+};
+
+
 
 class SMCAMDProcessorUserClient : public IOUserClient
 {
@@ -45,7 +53,9 @@ protected:
     // KPI for supporting access from both 32-bit and 64-bit user processes beginning with Mac OS X 10.5.
     virtual IOReturn externalMethod(uint32_t selector, IOExternalMethodArguments* arguments,
                                     IOExternalMethodDispatch* dispatch, OSObject* target, void* reference) override;
-
+    
+    
+    char taskProcessBinaryName[32]{};
 };
 
 #endif

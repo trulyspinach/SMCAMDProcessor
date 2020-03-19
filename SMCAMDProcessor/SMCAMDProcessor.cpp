@@ -3,11 +3,24 @@
 
 OSDefineMetaClassAndStructors(SMCAMDProcessor, IOService);
 
+#define TCTL_OFFSET_TABLE_LEN 6
+static constexpr const struct tctl_offset tctl_offset_table[] = {
+    { 0x17, "AMD Ryzen 5 1600X", 20 },
+    { 0x17, "AMD Ryzen 7 1700X", 20 },
+    { 0x17, "AMD Ryzen 7 1800X", 20 },
+    { 0x17, "AMD Ryzen 7 2700X", 10 },
+    { 0x17, "AMD Ryzen Threadripper 19", 27 }, /* 19{00,20,50}X */
+    { 0x17, "AMD Ryzen Threadripper 29", 27 }, /* 29{20,50,70,90}[W]X */
+};
+
 bool ADDPR(debugEnabled) = false;
 uint32_t ADDPR(debugPrintDelay) = 0;
 
 bool SMCAMDProcessor::init(OSDictionary *dictionary){
-    IOLog("AMDCPUSupport v%s, %u, init\n", kMODULE_VERSION, (uint32_t)strlen(kMODULE_VERSION));
+//    strcpy((char*)kMODULE_VERSION, xStringify(MODULE_VERSION), (uint32_t)strlen(xStringify(MODULE_VERSION)));
+    IOLog("AMDCPUSupport v%s, init\n", xStringify(MODULE_VERSION));
+    
+    
     return IOService::init(dictionary);
 }
 
@@ -170,6 +183,27 @@ bool SMCAMDProcessor::start(IOService *provider){
     CPUInfo::getCpuid(0x80000007, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
     cpbSupported = (cpuid_edx >> 9) & 0x1;
     
+    uint32_t nameString[12]{};
+    CPUInfo::getCpuid(0x80000002, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
+    nameString[0] = cpuid_eax; nameString[1] = cpuid_ebx; nameString[2] = cpuid_ecx; nameString[3] = cpuid_edx;
+    CPUInfo::getCpuid(0x80000003, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
+    nameString[4] = cpuid_eax; nameString[5] = cpuid_ebx; nameString[6] = cpuid_ecx; nameString[7] = cpuid_edx;
+    CPUInfo::getCpuid(0x80000004, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
+    nameString[8] = cpuid_eax; nameString[9] = cpuid_ebx; nameString[10] = cpuid_ecx; nameString[11] = cpuid_edx;
+    
+    IOLog("AMDCPUSupport::start Processor: %s))\n", (char*)nameString);
+    
+    //Check tctl temperature offset
+    for(int i = 0; i < TCTL_OFFSET_TABLE_LEN; i++){
+        const TempOffset *to = tctl_offset_table + i;
+        IOLog("############%s##########\n", to->id);
+        if(cpuFamily == to->model && strstr((char*)nameString, to->id)){
+            
+            tempOffset = (float)to->offset;
+            break;
+        }
+    }
+    
     
     if(!CPUInfo::getCpuTopology(cpuTopology)){
         IOLog("AMDCPUSupport::start unable to get CPU Topology.\n");
@@ -183,9 +217,19 @@ bool SMCAMDProcessor::start(IOService *provider){
     void *safe_wrmsr = lookup_symbol("_wrmsr_carefully");
     if(!safe_wrmsr){
         IOLog("AMDCPUSupport::start WARN: Can't find _wrmsr_carefully, proceeding with unsafe wrmsr\n");
+    } else {
+        wrmsr_carefully = (int(*)(uint32_t,uint32_t,uint32_t)) safe_wrmsr;
     }
-    wrmsr_carefully = (int(*)(uint32_t,uint32_t,uint32_t)) safe_wrmsr;
     
+    void *_kunc_alert = lookup_symbol("_KUNCUserNotificationDisplayAlert");
+    IOLog("kunc_alert %p\n", kunc_alert);
+    if(!_kunc_alert){
+        IOLog("AMDCPUSupport::start WARN: Can't find _KUNCUserNotificationDisplayAlert.\n");
+    } else {
+        kunc_alert =
+        (kern_return_t(*)(int,unsigned,const char*,const char*,const char*,
+        const char*,const char*,const char*,const char*,const char*,unsigned*))_kunc_alert;
+    }
     
     
     auto efiRT = EfiRuntimeServices::get();
@@ -317,9 +361,9 @@ bool SMCAMDProcessor::start(IOService *provider){
     timerEventSource->setTimeoutMS(1);
     
 //    
-    IOLog("AMDCPUSupport::start registering VirtualSMC keys...\n");
-    setupKeysVsmc();
-
+//    IOLog("AMDCPUSupport::start registering VirtualSMC keys...\n");
+//    setupKeysVsmc();
+    
     return success;
 }
 
@@ -541,26 +585,12 @@ void SMCAMDProcessor::updatePackageTemp(){
     bool tempOffsetFlag = (temperature & kF17H_TEMP_OFFSET_FLAG) != 0;
     temperature = (temperature >> 21) * 125;
     
-    float offset = 0.0f;
     float t = temperature * 0.001f;
     
-    // Offset table: https://github.com/torvalds/linux/blob/master/drivers/hwmon/k10temp.c#L78
-    uint32_t totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
+    t -= tempOffset;
     
-    if(tempOffsetFlag) {
-        if (totalNumberOfPhysicalCores == 6) // 1600X,1700X,1800X
-            offset = -20.0f;
-        else if (totalNumberOfPhysicalCores == 8) //  2700X
-            offset = -10.0f;
-        else if  (totalNumberOfPhysicalCores == 12 || totalNumberOfPhysicalCores == 32) // TR1900,2900
-            offset = -27.0f;
-        
-        if (tempOffsetFlag)
-            t += -49.0f;
-    }
-    
-    if (offset < 0)
-        t += offset;
+    if (tempOffsetFlag)
+        t -= 49.0f;
     
     
     PACKAGE_TEMPERATURE_perPackage[0] = t;

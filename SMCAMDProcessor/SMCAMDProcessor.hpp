@@ -47,6 +47,17 @@ extern "C" {
 };
 
 
+/**
+ * Offset table: https://github.com/torvalds/linux/blob/master/drivers/hwmon/k10temp.c#L78
+ */
+typedef struct tctl_offset {
+    uint8_t model;
+    char const *id;
+    int offset;
+} TempOffset;
+
+
+
 
 class SMCAMDProcessor : public IOService {
     OSDeclareDefaultStructors(SMCAMDProcessor)
@@ -70,7 +81,14 @@ class SMCAMDProcessor : public IOService {
     
 public:
     
-    static constexpr char const *kMODULE_VERSION = xStringify(MODULE_VERSION);
+    char kMODULE_VERSION[12]{};
+    
+    
+
+
+    
+    
+    
     
     /**
      *  MSRs supported by AMD 17h CPU from:
@@ -233,7 +251,8 @@ public:
     
     bool disablePrivilegeCheck = false;
 
-    
+    kern_return_t (*kunc_alert)(int,unsigned,const char*,const char*,const char*,
+                                const char*,const char*,const char*,const char*,const char*,unsigned*) {nullptr};
     
 private:
     
@@ -249,8 +268,10 @@ private:
     uint32_t estimatedRequestTimeInterval = 0;
     uint32_t timeOfLastMissedRequest = 0;
     
+    float tempOffset = 0;
     
     int (*wrmsr_carefully)(uint32_t, uint32_t, uint32_t) {nullptr};
+
     
     CPUInfo::CpuTopology cpuTopology {};
     
