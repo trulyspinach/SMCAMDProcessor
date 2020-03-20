@@ -72,6 +72,7 @@ To access PState editor:
 
 ## Credits
 * [necross2](https://github.com/necross2) for adding support to temperature sensor offset.
+* [Shaneee](https://github.com/Shaneee) for the beautiful icon.
 
 ## Notes
 * I am still fairly new to macOS kernel development, this software project was initally a hobby project to get some reading on my newly built AMD hackintosh computer.
