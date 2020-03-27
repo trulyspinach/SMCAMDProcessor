@@ -13,14 +13,14 @@
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
-	<string>KEXT</string>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>1</string>
 	<key>IOKitPersonalities</key>
 	<dict>
-		<key>wtf.spinach.AMDRyzenCPUPowerManagement</key>
+		<key>wtf.spinach.SMCAMDProcessor</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
@@ -28,25 +28,12 @@
 			<string>$(PRODUCT_NAME)</string>
 			<key>IOMatchCategory</key>
 			<string>$(PRODUCT_NAME)</string>
-			<key>IONameMatch</key>
-			<string>processor</string>
-			<key>IOPropertyMatch</key>
-			<dict>
-				<key>processor-index</key>
-				<integer>0</integer>
-			</dict>
 			<key>IOProviderClass</key>
-			<string>IOACPIPlatformDevice</string>
-			<key>IOResourceMatch</key>
-			<string>ACPI</string>
-			<key>IOUserClientClass</key>
-			<string>AMDRyzenCPUPMUserClient</string>
+			<string>AMDRyzenCPUPowerManagement</string>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2020 trulyspinach. All rights reserved.</string>
-	<key>OSBundleCompatibleVersion</key>
-	<string>0.6</string>
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>as.vit9696.Lilu</key>
@@ -69,8 +56,8 @@
 		<string>12.0.0</string>
 		<key>com.apple.kpi.unsupported</key>
 		<string>12.0.0</string>
+		<key>wtf.spinach.AMDRyzenCPUPowerManagement</key>
+		<string>0.6</string>
 	</dict>
-	<key>OSBundleRequired</key>
-	<string>Root</string>
 </dict>
 </plist>

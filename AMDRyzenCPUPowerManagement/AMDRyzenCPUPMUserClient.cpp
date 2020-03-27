@@ -99,7 +99,7 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
             
             for(uint32_t i = 0; i < fProvider->kMSR_PSTATE_LEN; i++){
-                dataOut[i] = fProvider->PStateDef_perCore[0][i];
+                dataOut[i] = fProvider->PStateDef_perCore[i];
             }
             
             break;
@@ -115,7 +115,7 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             float *dataOut = (float*) arguments->structureOutput;
             
             for(uint32_t i = 0; i < fProvider->kMSR_PSTATE_LEN; i++){
-                dataOut[i] = fProvider->PStateDefClock_perCore[0][i];
+                dataOut[i] = fProvider->PStateDefClock_perCore[i];
             }
             
             break;

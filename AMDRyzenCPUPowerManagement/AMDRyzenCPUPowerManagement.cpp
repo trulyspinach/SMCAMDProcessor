@@ -16,6 +16,13 @@ static constexpr const struct tctl_offset tctl_offset_table[] = {
 bool ADDPR(debugEnabled) = false;
 uint32_t ADDPR(debugPrintDelay) = 0;
 
+
+extern "C" {
+
+
+
+}
+
 bool AMDRyzenCPUPowerManagement::init(OSDictionary *dictionary){
 //    strcpy((char*)kMODULE_VERSION, xStringify(MODULE_VERSION), (uint32_t)strlen(xStringify(MODULE_VERSION)));
     IOLog("AMDCPUSupport v%s, init\n", xStringify(MODULE_VERSION));
@@ -26,75 +33,6 @@ bool AMDRyzenCPUPowerManagement::init(OSDictionary *dictionary){
 
 void AMDRyzenCPUPowerManagement::free(){
     IOService::free();
-}
-
-bool AMDRyzenCPUPowerManagement::setupKeysVsmc(){
-    
-    vsmcNotifier = VirtualSMCAPI::registerHandler(vsmcNotificationHandler, this);
-    
-    
-    
-    bool suc = true;
-    
-    //    suc &= VirtualSMCAPI::addKey(KeyTCxD(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-    suc &= VirtualSMCAPI::addKey(KeyTCxE(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-    suc &= VirtualSMCAPI::addKey(KeyTCxF(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-    //    suc &= VirtualSMCAPI::addKey(KeyTCxG(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78));
-    //    suc &= VirtualSMCAPI::addKey(KeyTCxH(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-    suc &= VirtualSMCAPI::addKey(KeyTCxJ(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78));
-    suc &= VirtualSMCAPI::addKey(KeyTCxP(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-    suc &= VirtualSMCAPI::addKey(KeyTCxT(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-    suc &= VirtualSMCAPI::addKey(KeyTCxp(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempPackage(this, 0)));
-    
-    
-    suc &= VirtualSMCAPI::addKey(KeyPCPR, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    suc &= VirtualSMCAPI::addKey(KeyPSTR, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    //    suc &= VirtualSMCAPI::addKey(KeyPCPT, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    //    suc &= VirtualSMCAPI::addKey(KeyPCTR, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    
-    
-    //    VirtualSMCAPI::addKey(KeyPC0C, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    //    VirtualSMCAPI::addKey(KeyPC0R, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    //    VirtualSMCAPI::addKey(KeyPCAM, vsmcPlugin.data, VirtualSMCAPI::valueWithFlt(0, new EnegryPackage(this, 0)));
-    //    VirtualSMCAPI::addKey(KeyPCPC, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    //
-    //    VirtualSMCAPI::addKey(KeyPC0G, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    //    VirtualSMCAPI::addKey(KeyPCGC, vsmcPlugin.data, VirtualSMCAPI::valueWithFlt(0, new EnegryPackage(this, 0)));
-    //    VirtualSMCAPI::addKey(KeyPCGM, vsmcPlugin.data, VirtualSMCAPI::valueWithFlt(0, new EnegryPackage(this, 0)));
-    //    VirtualSMCAPI::addKey(KeyPCPG, vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnegryPackage(this, 0)));
-    
-    //Since AMD cpu dont have temperature MSR for each core, we simply report the same package temperature for all cores.
-    //    for(int core = 0; core < totalNumberOfPhysicalCores; core++){
-    //        VirtualSMCAPI::addKey(KeyTCxC(core), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(this, 0, core)));
-    //        VirtualSMCAPI::addKey(KeyTCxc(core), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(this, 0, core)));
-    //    }
-    
-    if(!suc){
-        IOLog("AMDCPUSupport::setupKeysVsmc: VirtualSMCAPI::addKey returned false. \n");
-    } else {
-        IOLog("AMDCPUSupport::setupKeysVsmc: VirtualSMCAPI::addKey succeed!. \n");
-    }
-    
-    return suc;
-}
-
-bool AMDRyzenCPUPowerManagement::vsmcNotificationHandler(void *sensors, void *refCon, IOService *vsmc, IONotifier *notifier) {
-    if (sensors && vsmc) {
-        IOLog("AMDCPUSupport: got vsmc notification\n");
-        auto &plugin = static_cast<AMDRyzenCPUPowerManagement *>(sensors)->vsmcPlugin;
-        auto ret = vsmc->callPlatformFunction(VirtualSMCAPI::SubmitPlugin, true, sensors, &plugin, nullptr, nullptr);
-        if (ret == kIOReturnSuccess) {
-            IOLog("AMDCPUSupport: submitted plugin\n");
-            return true;
-        } else if (ret != kIOReturnUnsupported) {
-            IOLog("AMDCPUSupport: plugin submission failure %X\n", ret);
-        } else {
-            IOLog("AMDCPUSupport: plugin submission to non vsmc\n");
-        }
-    } else {
-        IOLog("AMDCPUSupport: got null vsmc notification\n");
-    }
-    return false;
 }
 
 
@@ -216,6 +154,7 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
     totalNumberOfLogicalCores = cpuTopology.totalLogical();
     
+    
     void *safe_wrmsr = lookup_symbol("_wrmsr_carefully");
     if(!safe_wrmsr){
         IOLog("AMDCPUSupport::start WARN: Can't find _wrmsr_carefully, proceeding with unsafe wrmsr\n");
@@ -233,68 +172,53 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         const char*,const char*,const char*,const char*,const char*,unsigned*))_kunc_alert;
     }
     
+    cpu_to_processor = (processor_t(*)(int))lookup_symbol("_cpu_to_processor");
+    processor_shutdown = (kern_return_t(*)(processor_t))lookup_symbol("_processor_exit_from_user");
+    processor_startup = (kern_return_t(*)(processor_t))lookup_symbol("_processor_start_from_user");
+    
+    
+    IOLog("AMDCPUSupport::start trying to init PCI service...\n");
+    if(!getPCIService()){
+        IOLog("AMDCPUSupport::start no PCI support found, failing...\n");
+        return false;
+    }
+    
+    pmRyzen_init(this);
+    
     mpLock = IOSimpleLockAlloc();
     workLoop = IOWorkLoop::workLoop();
     timerEventSource = IOTimerEventSource::timerEventSource(this, [](OSObject *object, IOTimerEventSource *sender) {
         AMDRyzenCPUPowerManagement *provider = OSDynamicCast(AMDRyzenCPUPowerManagement, object);
         IOSimpleLockLock(provider->mpLock);
         
-//
-//        if(cpu_number() == 2){
-//
-//            void(*fn)(void) = (void(*)(void))lookup_symbol("_i386_deactivate_cpu");
-//            if(fn){
-//                IOLog("Disabling cpu\n");
-//                (*fn)();
-//            } else {
-//                IOLog("No symbol\n");
-//            }
-//
-//
-//        }
         
         //Run initialization
         if(!provider->serviceInitialized){
-            
-//            provider->fnnnn = *((void**)lookup_symbol("_lapic_ops"));
-//
-//            if(!provider->fnnnn){
-//                IOLog("fuckedededed\n");
-//                return;
-//            }
             
             
             //Disable interrupts and sync all processor cores.
             mp_rendezvous_no_intrs([](void *obj) {
                 auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
-                
 
-                
                 uint64_t hwConfig;
                 if(!provider->read_msr(kMSR_HWCR, &hwConfig))
                     panic("AMDCPUSupport::start: wtf?");
                 
                 hwConfig |= (1 << 30);
-//                hwConfig &= ~(1 << 30);
                 provider->write_msr(kMSR_HWCR, hwConfig);
                 
                 
                 uint32_t cpu_num = cpu_number();
                 
-                
-                
-                // Ignore hyper-threaded cores
-                uint8_t package = provider->cpuTopology.numberToPackage[cpu_num];
-                uint8_t logical = provider->cpuTopology.numberToLogical[cpu_num];
-
-//                if (logical >= provider->cpuTopology.physicalCount[package])
-//                    return;
-                uint8_t physical = provider->cpuTopology.numberToPhysicalUnique(cpu_num);
-                
-                IOLog("Active CPU_Number %u\n", cpu_num);
                 //Read PStateDef generated by EFI.
-                provider->dumpPstate(cpu_num);
+                if(pmRyzen_cpu_is_master(cpu_num))
+                    provider->dumpPstate();
                 
+                
+                if(!pmRyzen_cpu_primary_in_core(cpu_num)) return;
+                uint8_t physical = pmRyzen_cpu_phys_num(cpu_num);
+                
+
                 //Init performance frequency counter.
                 uint64_t APERF, MPERF;
                 if(!provider->read_msr(kMSR_APERF, &APERF) || !provider->read_msr(kMSR_MPERF, &MPERF))
@@ -303,15 +227,12 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
                 provider->lastAPERF_PerCore[physical] = APERF;
                 provider->lastMPERF_PerCore[physical] = MPERF;
                 
-                
-//                IOLog("core: %llu\n", hwConfig);
-                
-                //Make all cores P0 state by default.
-                provider->PStateCtl = 0;
-                
             }, provider);
-            
             IOSimpleLockUnlock(provider->mpLock);
+            
+            //Make all cores P0 state by default.
+            provider->PStateCtl = 0;
+            
             provider->serviceInitialized = true;
             provider->timerEventSource->setTimeoutMS(1);
             return;
@@ -323,11 +244,8 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
             uint32_t cpu_num = cpu_number();
             
             // Ignore hyper-threaded cores
-            uint8_t package = provider->cpuTopology.numberToPackage[cpu_num];
-            uint8_t logical = provider->cpuTopology.numberToLogical[cpu_num];
-            if (logical >= provider->cpuTopology.physicalCount[package])
-                return;
-            uint8_t physical = provider->cpuTopology.numberToPhysicalUnique(cpu_num);
+            if(!pmRyzen_cpu_primary_in_core(cpu_num)) return;
+            uint8_t physical = pmRyzen_cpu_phys_num(cpu_num);
             
             
             provider->calculateEffectiveFrequency(physical);
@@ -365,91 +283,9 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
 
     registerService();
     
-    IOLog("AMDCPUSupport::start trying to init PCI service...\n");
-    if(!getPCIService()){
-        IOLog("AMDCPUSupport::start no PCI support found, failing...\n");
-        return false;
-    }
+
     
     lastUpdateTime = getCurrentTimeNs();
-    
-    
-    pmCallBacks_t cb {};
-    pmKextRegister(PM_DISPATCH_VERSION, nullptr, &cb);
-
-    auto pkg = cb.GetPkgRoot();
-
-    int pkgCount = 0;
-    IOLog("root %p\n", cb.GetPkgRoot);
-
-    processor_t(*c2p)(int) = (processor_t(*)(int))lookup_symbol("_cpu_to_processor");
-    kern_return_t(*sd)(processor_t) = (kern_return_t(*)(processor_t))lookup_symbol("_processor_exit_from_user");
-    kern_return_t(*su)(processor_t) = (kern_return_t(*)(processor_t))lookup_symbol("_processor_start_from_user");
-    
-    
-    while(pkg){
-        pkgCount++;
-
-        auto core = pkg->cores;
-        while (core) {
-            IOLog("pk %d pc %u\n", pkgCount, core->pcore_num);
-            auto lcpu = core->lcpus;
-            while (lcpu) {
-                
-                IOLog("LCPU: %u master:%u, primary:%u\n", lcpu->cpu_num, lcpu->master, lcpu->primary);
-                
-                processor_t p = (*c2p)(lcpu->cpu_num);
-                
-                if(lcpu->cpu_num > 4){
-                    (*sd)(p);
-                }
-                
-                lcpu = lcpu->next_in_core;
-            }
-            
-            core = core->next_in_pkg;
-        }
-
-        pkg = pkg->next;
-    }
-    IOLog("c %d\n", pkgCount);
-    
-    
-    
-//    i386_cpu_info_t*(*ffn)(void) = (i386_cpu_info_t*(*)(void))lookup_symbol("_cpuid_info");
-//    if(ffn){
-//        i386_cpu_info_t *cpuif = (*ffn)();
-//        if(cpuif){
-//            IOLog("cpu fucking core per package %u\n", cpuif->cpuid_logical_per_package);
-//        }
-//    }
-//
-//    x86_topology_parameters_t *topoParms = (x86_topology_parameters_t*)lookup_symbol("_topoParms");
-//    if(topoParms){
-//        IOLog("cpu npthread p pack %u\n", topoParms->nPThreadsPerPackage);
-//    }
-//
-//    void **cpudata_p = (void **)lookup_symbol("_cpu_data_ptr");
-//
-//    for(int i = 0; i < 24; i++){
-//        char* cpudataptr = (char*)cpudata_p[i];
-//        IOLog("cpu pnum %d\n", *((int*)(cpudataptr+0x1208)) );
-//    }
-//
-//
-//    int *l2cpu = (int *)lookup_symbol("_lapic_to_cpu");
-//    if(l2cpu){
-//        for(int i = 0; i < 64; i++){
-//
-//            IOLog("cpu l2c %d %d\n",i, l2cpu[i]);
-//        }
-//    }
-
-    
-    
-//    IOLog("AMDCPUSupport::start registering VirtualSMC keys...\n");
-//    setupKeysVsmc();
-    
     workLoop->addEventSource(timerEventSource);
     timerEventSource->setTimeoutMS(1);
     
@@ -457,6 +293,8 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
 }
 
 void AMDRyzenCPUPowerManagement::stop(IOService *provider){
+    pmRyzen_stop();
+    
     IOLog("AMDCPUSupport stopped\n");
     
     timerEventSource->cancelTimeout();
@@ -572,7 +410,7 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     //Yeah, so we will do nothing.
     if(APERF <= lastAPERF || MPERF <= lastMPERF) return;
     
-    float freqP0 = PStateDefClock_perCore[physical][0];
+    float freqP0 = PStateDefClock_perCore[0];
     
     uint64_t deltaAPERF = APERF - lastAPERF;
     deltaAPERF_PerCore[physical] = deltaAPERF;
@@ -719,7 +557,7 @@ void AMDRyzenCPUPowerManagement::updatePackageEnergy(){
     lastUpdateTime = time;
 }
 
-void AMDRyzenCPUPowerManagement::dumpPstate(uint8_t physical){
+void AMDRyzenCPUPowerManagement::dumpPstate(){
     
     uint8_t len = 0;
     for (uint32_t i = 0; i < kMSR_PSTATE_LEN; i++) {
@@ -737,8 +575,8 @@ void AMDRyzenCPUPowerManagement::dumpPstate(uint8_t physical){
         
         float clock = (float)((float)curCpuFid / (float)curCpuDfsId * 200.0);
         
-        PStateDef_perCore[physical][i] = msr_value_buf;
-        PStateDefClock_perCore[physical][i] = clock;
+        PStateDef_perCore[i] = msr_value_buf;
+        PStateDefClock_perCore[i] = clock;
         
         if(msr_value_buf & ((uint64_t)1 << 63)) len++;
         //        IOLog("a: %llu", msr_value_buf);
@@ -772,14 +610,10 @@ void AMDRyzenCPUPowerManagement::writePstate(const uint64_t *buf){
             provider->write_msr(provider->kMSR_PSTATE_0 + i, def);
             
         }
+    
         
-        uint32_t cpu_num = cpu_number();
-        uint8_t package = provider->cpuTopology.numberToPackage[cpu_num];
-        uint8_t logical = provider->cpuTopology.numberToLogical[cpu_num];
-        if (logical >= provider->cpuTopology.physicalCount[package])
-            return;
-        uint8_t physical = provider->cpuTopology.numberToPhysicalUnique(cpu_num);
-        provider->dumpPstate(physical);
+        if(!pmRyzen_cpu_is_master(cpu_number())) return;
+        provider->dumpPstate();
         
     }, nullptr, args);
         

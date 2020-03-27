@@ -55,36 +55,37 @@
  * pmCallBacks_t is the set of functions that the power management kext
  * can call to get at specific kernel functions.
  */
-typedef struct
-{
-    kern_return_t	(*pmCPUStateInit)(void);
-    void		(*cstateInit)(void);
-    uint64_t		(*MachineIdle)(uint64_t maxIdleDuration);
-    uint64_t		(*GetDeadline)(x86_lcpu_t *lcpu);
-    uint64_t		(*SetDeadline)(x86_lcpu_t *lcpu, uint64_t);
-    void		(*Deadline)(x86_lcpu_t *lcpu);
-    boolean_t		(*exitIdle)(x86_lcpu_t *lcpu);
-    void		(*markCPURunning)(x86_lcpu_t *lcpu);
-    int			(*pmCPUControl)(uint32_t cmd, void *datap);
-    void		(*pmCPUHalt)(void);
-    uint64_t		(*getMaxSnoop)(void);
-    void		(*setMaxBusDelay)(uint64_t time);
-    uint64_t		(*getMaxBusDelay)(void);
-    void		(*setMaxIntDelay)(uint64_t time);
-    uint64_t		(*getMaxIntDelay)(void);
-    void		(*pmCPUSafeMode)(x86_lcpu_t *lcpu, uint32_t flags);
-    void		(*pmTimerStateSave)(void);
-    void		(*pmTimerStateRestore)(void);
-    kern_return_t	(*exitHalt)(x86_lcpu_t *lcpu);
-    kern_return_t	(*exitHaltToOff)(x86_lcpu_t *lcpu);
-    void		(*markAllCPUsOff)(void);
-    void		(*pmSetRunCount)(uint32_t count);
-    boolean_t		(*pmIsCPUUnAvailable)(x86_lcpu_t *lcpu);
-    int			(*pmChooseCPU)(int startCPU, int endCPU, int preferredCPU);
-    int			(*pmIPIHandler)(void *state);
-    void		(*pmThreadTellUrgency)(int urgency, uint64_t rt_period, uint64_t rt_deadline);
-    void		(*pmActiveRTThreads)(boolean_t active);
+typedef struct{
+    kern_return_t       (*pmCPUStateInit)(void);
+    void                (*cstateInit)(void);
+    uint64_t            (*MachineIdle)(uint64_t maxIdleDuration);
+    uint64_t            (*GetDeadline)(x86_lcpu_t *lcpu);
+    uint64_t            (*SetDeadline)(x86_lcpu_t *lcpu, uint64_t);
+    void                (*Deadline)(x86_lcpu_t *lcpu);
+    boolean_t           (*exitIdle)(x86_lcpu_t *lcpu);
+    void                (*markCPURunning)(x86_lcpu_t *lcpu);
+    int                 (*pmCPUControl)(uint32_t cmd, void *datap);
+    void                (*pmCPUHalt)(void);
+    uint64_t            (*getMaxSnoop)(void);
+    void                (*setMaxBusDelay)(uint64_t time);
+    uint64_t            (*getMaxBusDelay)(void);
+    void                (*setMaxIntDelay)(uint64_t time);
+    uint64_t            (*getMaxIntDelay)(void);
+    void                (*pmCPUSafeMode)(x86_lcpu_t *lcpu, uint32_t flags);
+    void                (*pmTimerStateSave)(void);
+    void                (*pmTimerStateRestore)(void);
+    kern_return_t       (*exitHalt)(x86_lcpu_t *lcpu);
+    kern_return_t       (*exitHaltToOff)(x86_lcpu_t *lcpu);
+    void                (*markAllCPUsOff)(void);
+    void                (*pmSetRunCount)(uint32_t count);
+    boolean_t           (*pmIsCPUUnAvailable)(x86_lcpu_t *lcpu);
+    int                 (*pmChooseCPU)(int startCPU, int endCPU, int preferredCPU);
+    int                 (*pmIPIHandler)(void *state);
+    void                (*pmThreadTellUrgency)(int urgency, uint64_t rt_period, uint64_t rt_deadline);
+    void                (*pmActiveRTThreads)(boolean_t active);
     boolean_t           (*pmInterruptPrewakeApplicable)(void);
+    void                (*pmThreadGoingOffCore)(thread_t old_thread, boolean_t transfer_load,
+    uint64_t last_dispatch, boolean_t thread_runnable);
 } pmDispatch_t;
 
 /* common time fields exported to PM code. This structure may be

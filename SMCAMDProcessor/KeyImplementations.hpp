@@ -10,7 +10,11 @@
 #define KeyImplementations_hpp
 
 #include <VirtualSMCSDK/kern_vsmcapi.hpp>
-#include "AMDRyzenCPUPowerManagement.hpp"
+#include <VirtualSMCSDK/AppleSmc.h>
+
+#include "SMCAMDProcessor.hpp"
+
+
 
 class AMDRyzenCPUPowerManagement;
 
