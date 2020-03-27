@@ -178,10 +178,7 @@ class GraphView: NSView {
     }
     
     private func drawLine(in rect: CGRect, context: CGContext, colorSpace: CGColorSpace?) {
-        
-        let rectWidth = rect.size.width
-        
-        
+    
         guard let grad = CGGradient.init(colorsSpace: colorSpace,
                                          colors: [foregroundColor1.cgColor, foregroundColor2.cgColor] as CFArray,
                                          locations: [0, 1] as [CGFloat]) else {return}

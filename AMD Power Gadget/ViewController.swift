@@ -102,7 +102,7 @@ class ViewController: NSViewController, NSWindowDelegate {
     }
     
     @IBAction func buttonPressed(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
+        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/AMDRyzenCPUPowerManagement")!)
     }
     
     

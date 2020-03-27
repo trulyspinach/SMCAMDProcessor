@@ -1,17 +1,17 @@
 //
-//  SMCAMDProcessorUserClient.hpp
-//  SMCAMDProcessor
+//  AMDRyzenCPUPowerManagementUserClient.hpp
+//  AMDRyzenCPUPowerManagement
 //
 //  Created by Qi HaoYan on 2/4/20.
 //  Copyright © 2020 Qi HaoYan. All rights reserved.
 //
 
-#ifndef SMCAMDProcessorUserClient_hpp
-#define SMCAMDProcessorUserClient_hpp
+#ifndef AMDRyzenCPUPowerManagementUserClient_hpp
+#define AMDRyzenCPUPowerManagementUserClient_hpp
 
 //Support for macOS 10.13
 #include <Library/LegacyIOService.h>
-#include "LegacyHeaders/LegacyIOUserClient.h"
+#include "Headers/LegacyHeaders/LegacyIOUserClient.h"
 
 #include <sys/proc.h>
 
@@ -19,7 +19,7 @@
 //#include <IOKit/IOUserClient.h>
 //#include <IOKit/IOLib.h>
 
-#include "SMCAMDProcessor.hpp"
+#include "AMDRyzenCPUPowerManagement.hpp"
 
 extern "C" {
     proc_t get_bsdtask_info(task_t t);
@@ -27,10 +27,10 @@ extern "C" {
 
 
 
-class SMCAMDProcessorUserClient : public IOUserClient
+class AMDRyzenCPUPMUserClient : public IOUserClient
 {
 
-    OSDeclareDefaultStructors(SMCAMDProcessorUserClient)
+    OSDeclareDefaultStructors(AMDRyzenCPUPMUserClient)
     
       
 public:
@@ -45,7 +45,7 @@ public:
     
 protected:
     
-    SMCAMDProcessor *fProvider;
+    AMDRyzenCPUPowerManagement *fProvider;
     void *token;
     
     bool hasPrivilege();

@@ -1,5 +1,5 @@
-#ifndef SMCAMDProcessor_h
-#define SMCAMDProcessor_h
+#ifndef AMDRyzenCPUPowerManagement_h
+#define AMDRyzenCPUPowerManagement_h
 
 //Support for macOS 10.13
 #include <Library/LegacyIOService.h>
@@ -28,12 +28,18 @@
 #include "symresolver/kernel_resolver.h"
 
 
+#include <i386/cpuid.h>
 
 #define OC_OEM_VENDOR_VARIABLE_NAME        u"oem-vendor"
 #define OC_OEM_BOARD_VARIABLE_NAME         u"oem-board"
 
+#define BASEBOARD_STRING_MAX 64
 
 extern "C" {
+
+#include "Headers/osfmk/i386/pmCPU.h"
+#include "Headers/osfmk/i386/cpu_topology.h"
+
     int cpu_number(void);
     void mp_rendezvous_no_intrs(void (*action_func)(void *), void *arg);
 
@@ -43,7 +49,45 @@ extern "C" {
                   void (*teardown_func)(void *),
                   void *arg);
 
+    void
+    i386_deactivate_cpu(void);
 //    int wrmsr_carefully(uint32_t msr, uint64_t val);
+
+
+
+typedef enum {
+    ID                      = 0x02,
+    VERSION                 = 0x03,
+    TPR                     = 0x08,
+    APR                     = 0x09,
+    PPR                     = 0x0A,
+    EOI                     = 0x0B,
+    REMOTE_READ             = 0x0C,
+    LDR                     = 0x0D,
+    DFR                     = 0x0E,
+    SVR                     = 0x0F,
+    ISR_BASE                = 0x10,
+    TMR_BASE                = 0x18,
+    IRR_BASE                = 0x20,
+    ERROR_STATUS            = 0x28,
+    LVT_CMCI                = 0x2F,
+    ICR                     = 0x30,
+    ICRD                    = 0x31,
+    LVT_TIMER               = 0x32,
+    LVT_THERMAL             = 0x33,
+    LVT_PERFCNT             = 0x34,
+    LVT_LINT0               = 0x35,
+    LVT_LINT1               = 0x36,
+    LVT_ERROR               = 0x37,
+    TIMER_INITIAL_COUNT     = 0x38,
+    TIMER_CURRENT_COUNT     = 0x39,
+    TIMER_DIVIDE_CONFIG     = 0x3E,
+} lapic_register_t;
+
+
+kern_return_t
+processor_exit_from_user(processor_t     processor);
+
 };
 
 
@@ -59,8 +103,8 @@ typedef struct tctl_offset {
 
 
 
-class SMCAMDProcessor : public IOService {
-    OSDeclareDefaultStructors(SMCAMDProcessor)
+class AMDRyzenCPUPowerManagement : public IOService {
+    OSDeclareDefaultStructors(AMDRyzenCPUPowerManagement)
     
     /**
      *  VirtualSMC service registration notifier
@@ -86,7 +130,6 @@ public:
     
 
 
-    
     
     
     
@@ -173,7 +216,7 @@ public:
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
     
-    
+    void fetchOEMBaseBoardInfo();
 
     bool read_msr(uint32_t addr, uint64_t *value);
     bool write_msr(uint32_t addr, uint64_t value);
@@ -208,9 +251,9 @@ public:
     uint32_t cpuCacheL2_perCore;
     uint32_t cpuCacheL3;
     
-    char boardVender[64]{};
-    char boardName[64]{};
-    bool boardInfoValid;
+    char boardVender[BASEBOARD_STRING_MAX]{};
+    char boardName[BASEBOARD_STRING_MAX]{};
+    bool boardInfoValid = false;
     
     
     /**
@@ -247,7 +290,6 @@ public:
     uint64_t lastUpdateEnergyValue;
     
     double uniPackageEnegry;
-    
     
     bool disablePrivilegeCheck = false;
 

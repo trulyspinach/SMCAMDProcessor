@@ -169,8 +169,8 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         Memory: \(memGB)GB, Storage: \(storageGB)GB
         
         macOS Version: \(ProcessorModel.shared.systemConfig["os"]!)
-        SMCAMDProcessor:
-          Version: \(ProcessorModel.shared.SMCAMDProcessorVersion), CPU Supported: \(supported)
+        AMDRyzenCPUPowerManagement:
+          Version: \(ProcessorModel.shared.AMDRyzenCPUPowerManagementVersion), CPU Supported: \(supported)
           
         """
         if ProcessorModel.shared.boardValid {
@@ -201,7 +201,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     }
     
     @IBAction func openGithub(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
+        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/AMDRyzenCPUPowerManagement")!)
     }
     func suffixNumber(number:NSNumber) -> String {
 

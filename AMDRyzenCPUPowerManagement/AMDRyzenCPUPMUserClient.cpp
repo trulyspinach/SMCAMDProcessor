@@ -1,19 +1,19 @@
 //
-//  SMCAMDProcessorUserClient.cpp
-//  SMCAMDProcessor
+//  AMDRyzenCPUPowerManagementUserClient.cpp
+//  AMDRyzenCPUPowerManagement
 //
 //  Created by Qi HaoYan on 2/4/20.
 //  Copyright © 2020 Qi HaoYan. All rights reserved.
 //
 
-#include "SMCAMDProcessorUserClient.hpp"
+#include "AMDRyzenCPUPMUserClient.hpp"
 
 
 
-OSDefineMetaClassAndStructors(SMCAMDProcessorUserClient, IOUserClient);
+OSDefineMetaClassAndStructors(AMDRyzenCPUPMUserClient, IOUserClient);
 
 
-bool SMCAMDProcessorUserClient::initWithTask(task_t owningTask,
+bool AMDRyzenCPUPMUserClient::initWithTask(task_t owningTask,
                                              void *securityToken,
                                              UInt32 type,
                                              OSDictionary *properties){
@@ -24,27 +24,27 @@ bool SMCAMDProcessorUserClient::initWithTask(task_t owningTask,
     
     token = securityToken;
     
-    proc_t proc = get_bsdtask_info(owningTask);
+    proc_t proc = (proc_t)get_bsdtask_info(owningTask);
     proc_name(proc_pid(proc), taskProcessBinaryName, 32);
     
     return true;
 
 }
 
-bool SMCAMDProcessorUserClient::start(IOService *provider){
+bool AMDRyzenCPUPMUserClient::start(IOService *provider){
     
     IOLog("AMDCPUSupportUserClient::start\n");
     
     bool success = IOService::start(provider);
     
     if(success){
-        fProvider = OSDynamicCast(SMCAMDProcessor, provider);
+        fProvider = OSDynamicCast(AMDRyzenCPUPowerManagement, provider);
     }
     
     return success;
 }
 
-void SMCAMDProcessorUserClient::stop(IOService *provider){
+void AMDRyzenCPUPMUserClient::stop(IOService *provider){
     IOLog("AMDCPUSupportUserClient::stop\n");
     
     fProvider = nullptr;
@@ -60,7 +60,7 @@ uint64_t multiply_two_numbers(uint64_t number_one, uint64_t number_two){
     return number_three;
 }
 
-bool SMCAMDProcessorUserClient::hasPrivilege(){
+bool AMDRyzenCPUPMUserClient::hasPrivilege(){
     if(fProvider->disablePrivilegeCheck) return true;
     if(clientHasPrivilege(token, kIOClientPrivilegeAdministrator) == kIOReturnSuccess) return true;
     
@@ -72,7 +72,7 @@ bool SMCAMDProcessorUserClient::hasPrivilege(){
     
     unsigned int rf;
     (*(fProvider->kunc_alert))(0, 0, NULL, NULL, NULL,
-                  "SMCAMDProcessor", buf, "Deny", "I'm not sure.", "Authorize", &rf);
+                  "AMDRyzenCPUPowerManagement", buf, "Deny", "I'm not sure.", "Authorize", &rf);
     
     
     if(rf == 2) return true;
@@ -80,7 +80,7 @@ bool SMCAMDProcessorUserClient::hasPrivilege(){
     return false;
 }
 
-IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *arguments,
+IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *arguments,
                                                  IOExternalMethodDispatch *dispatch,
                                                    OSObject *target, void *reference){
     
@@ -222,11 +222,11 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
             break;
         }
         
-        //Get SMCAMDProcessor Version String
+        //Get AMDRyzenCPUPowerManagement Version String
         case 8: {
             arguments->scalarOutputCount = 0;
             
-            arguments->structureOutputSize = (uint32_t)strlen(xStringify(MODULE_VERSION));
+            arguments->structureOutputSize = sizeof(xStringify(MODULE_VERSION));
             char *dataOut = (char*) arguments->structureOutput;
             
             for(uint32_t i = 0; i < arguments->structureOutputSize; i++){
@@ -337,6 +337,10 @@ IOReturn SMCAMDProcessorUserClient::externalMethod(uint32_t selector, IOExternal
             
         //get board info
         case 16: {
+            //Let's give that one more try :)
+            if(!fProvider->boardInfoValid)
+                fProvider->fetchOEMBaseBoardInfo();
+            
             arguments->scalarOutputCount = 1;
             arguments->scalarOutput[0] = fProvider->boardInfoValid ? 1 : 0;
             

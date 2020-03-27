@@ -1,6 +1,6 @@
 //
 //  KeyImplementations.cpp
-//  SMCAMDProcessor
+//  AMDRyzenCPUPowerManagement
 //
 //  Created by Qi HaoYan on 2/12/20.
 //  Copyright © 2020 Qi HaoYan. All rights reserved.

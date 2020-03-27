@@ -12,11 +12,12 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func openPage(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
+        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/AMDRyzenCPUPowerManagement")!)
     }
     
     @IBAction func gadget(_ sender: Any) {
         ViewController.launch()
+        
     }
     
     @IBAction func tool(_ sender: Any) {

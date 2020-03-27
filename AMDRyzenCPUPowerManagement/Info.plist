@@ -40,7 +40,7 @@
 			<key>IOResourceMatch</key>
 			<string>ACPI</string>
 			<key>IOUserClientClass</key>
-			<string>SMCAMDProcessorUserClient</string>
+			<string>AMDRyzenCPUPMUserClient</string>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>

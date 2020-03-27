@@ -29,7 +29,7 @@ class ProcessorModel {
     
     var systemConfig : [String : String] = [:]
     
-    var SMCAMDProcessorVersion : String = ""
+    var AMDRyzenCPUPowerManagementVersion : String = ""
     var cpuidBasic : [UInt64] = []
     var boardValid = false
     var boardName : String = "Unknown"
@@ -40,7 +40,7 @@ class ProcessorModel {
     
     init() {
         if !initDriver() {
-            alertAndQuit()
+            alertAndQuit(message: "Please download AMDRyzenCPUPowerManagement from the release page.")
         }
         
         var scalerOut: UInt64 = 0
@@ -52,7 +52,12 @@ class ProcessorModel {
         let _ = IOConnectCallMethod(connect, 8, nil, 0, nil, 0,
                                       &scalerOut, &outputCount,
                                       &outputStr, &outputStrCount)
-        SMCAMDProcessorVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
+        AMDRyzenCPUPowerManagementVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
+        
+        if AMDRyzenCPUPowerManagementVersion != "0.6" {
+            alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated.\n\nPlease use the lastest version and start this application again.")
+        }
+        
         
         loadCPUID()
         loadBaseBoardInfo()
@@ -65,38 +70,39 @@ class ProcessorModel {
         if numberOfCores < 1{
             let alert = NSAlert()
             alert.messageText = "Error reading CPU data."
-            alert.informativeText = "This application can not be launched due to SMCAMDProcessor is reporting incorrect data."
+            alert.informativeText = "This application can not be launched due to AMDRyzenCPUPowerManagement is reporting incorrect data."
             alert.alertStyle = .critical
             alert.addButton(withTitle: "Quit")
             alert.runModal()
             NSApplication.shared.terminate(self)
         }
         
-        fetchSupportedProcessor()
+//        fetchSupportedProcessor()
     }
     
     func initDriver() -> Bool {
         let serviceObject = IOServiceGetMatchingService(kIOMasterPortDefault,
-                                                        IOServiceMatching("SMCAMDProcessor"))
+                                                        IOServiceMatching("AMDRyzenCPUPowerManagement"))
         if serviceObject == 0 {
             return false
         }
         
         let status = IOServiceOpen(serviceObject, mach_task_self_, 0, &connect)
+        print(status)
         return status == KERN_SUCCESS
     }
     
-    func alertAndQuit(){
+    func alertAndQuit(message : String){
         let alert = NSAlert()
-        alert.messageText = "No SMCAMDProcessor Found!"
-        alert.informativeText = "Please download SMCAMDProcessor from the release page."
+        alert.messageText = "No AMDRyzenCPUPowerManagement Found!"
+        alert.informativeText = message
         alert.alertStyle = .critical
         alert.addButton(withTitle: "Quit")
         alert.addButton(withTitle: "Quit and Download")
         let res = alert.runModal()
         
         if res == .alertSecondButtonReturn {
-            NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
+            NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/AMDRyzenCPUPowerManagement")!)
         }
         
         NSApplication.shared.terminate(self)
@@ -172,7 +178,7 @@ class ProcessorModel {
     private func loadPStateDef(){
 
         PStateDef = kernelGetUInt64(count: 8, selector: 0)
-        
+        print(PStateDef)
         var i = 0
         while i < 8 {
             if (PStateDef[i] & 0x8000000000000000) == 0 { //LOL Swift
@@ -335,7 +341,7 @@ class ProcessorModel {
     }
     
     func loadSystemConfig() {
-        systemConfig["ver"] = SMCAMDProcessorVersion
+        systemConfig["ver"] = AMDRyzenCPUPowerManagementVersion
         systemConfig["cpu"] = ProcessorModel.sysctlString(key: "machdep.cpu.brand_string")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         systemConfig["os"] = ProcessorModel.sysctlString(key: "kern.osproductversion")

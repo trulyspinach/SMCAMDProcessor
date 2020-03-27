@@ -1,6 +1,6 @@
 //
 //  KeyImplementations.hpp
-//  SMCAMDProcessor
+//  AMDRyzenCPUPowerManagement
 //
 //  Created by Qi HaoYan on 2/12/20.
 //  Copyright © 2020 Qi HaoYan. All rights reserved.
@@ -10,18 +10,18 @@
 #define KeyImplementations_hpp
 
 #include <VirtualSMCSDK/kern_vsmcapi.hpp>
-#include "SMCAMDProcessor.hpp"
+#include "AMDRyzenCPUPowerManagement.hpp"
 
-class SMCAMDProcessor;
+class AMDRyzenCPUPowerManagement;
 
 
 class AMDSupportVsmcValue : public VirtualSMCValue {
 protected:
-    SMCAMDProcessor *provider;
+    AMDRyzenCPUPowerManagement *provider;
     size_t package;
     size_t core;
 public:
-    AMDSupportVsmcValue(SMCAMDProcessor *provider, size_t package, size_t core=0) : provider(provider), package(package), core(core) {}
+    AMDSupportVsmcValue(AMDRyzenCPUPowerManagement *provider, size_t package, size_t core=0) : provider(provider), package(package), core(core) {}
 };
 
 
