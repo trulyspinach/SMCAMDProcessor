@@ -17,11 +17,13 @@ bool ADDPR(debugEnabled) = false;
 uint32_t ADDPR(debugPrintDelay) = 0;
 
 
-extern "C" {
-
-
+extern "C"{
+void pmRyzen_wrmsr_safe(void *handle, uint32_t addr, uint64_t value){
+    static_cast<AMDRyzenCPUPowerManagement*>(handle)->write_msr(addr, value);
+}
 
 }
+
 
 bool AMDRyzenCPUPowerManagement::init(OSDictionary *dictionary){
 //    strcpy((char*)kMODULE_VERSION, xStringify(MODULE_VERSION), (uint32_t)strlen(xStringify(MODULE_VERSION)));
@@ -122,6 +124,10 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     
     CPUInfo::getCpuid(0x80000007, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
     cpbSupported = (cpuid_edx >> 9) & 0x1;
+
+    
+    CPUInfo::getCpuid(0x00000005, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
+    IOLog("AMDCPUSupport::start CPUID MWait: %X %X %X %X\n", cpuid_eax, cpuid_ebx, cpuid_ecx, cpuid_edx);
     
     uint32_t nameString[12]{};
     CPUInfo::getCpuid(0x80000002, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
@@ -143,16 +149,25 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         }
     }
     
+    uint64_t rapl = 0;
+    if(!read_msr(kMSR_RAPL_PWR_UNIT, &rapl))
+        panic("AMDCPUSupport: unable to read power unit\n");
+    
+    pwrTimeUnit = pow((double)0.5, (double)((rapl >> 16) & 0xf));
+    pwrEnegryUnit = pow((double)0.5, (double)((rapl >> 8) & 0x1f));
+    IOLog("a %lld\n", (long long)(pwrTimeUnit * 10000000000));
+    IOLog("b %lld\n", (long long)(pwrEnegryUnit * 10000000000));
+    
     fetchOEMBaseBoardInfo();
     
-    if(!CPUInfo::getCpuTopology(cpuTopology)){
-        IOLog("AMDCPUSupport::start unable to get CPU Topology.\n");
-    }
-    IOLog("AMDCPUSupport::start got %hhu CPU(s): Physical Count: %hhu, Logical Count %hhu.\n",
-          cpuTopology.packageCount, cpuTopology.totalPhysical(), cpuTopology.totalLogical());
-    
-    totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
-    totalNumberOfLogicalCores = cpuTopology.totalLogical();
+//    if(!CPUInfo::getCpuTopology(cpuTopology)){
+//        IOLog("AMDCPUSupport::start unable to get CPU Topology.\n");
+//    }
+//    IOLog("AMDCPUSupport::start got %hhu CPU(s): Physical Count: %hhu, Logical Count %hhu.\n",
+//          cpuTopology.packageCount, cpuTopology.totalPhysical(), cpuTopology.totalLogical());
+//
+//    totalNumberOfPhysicalCores = cpuTopology.totalPhysical();
+//    totalNumberOfLogicalCores = cpuTopology.totalLogical();
     
     
     void *safe_wrmsr = lookup_symbol("_wrmsr_carefully");
@@ -175,7 +190,11 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     cpu_to_processor = (processor_t(*)(int))lookup_symbol("_cpu_to_processor");
     processor_shutdown = (kern_return_t(*)(processor_t))lookup_symbol("_processor_exit_from_user");
     processor_startup = (kern_return_t(*)(processor_t))lookup_symbol("_processor_start_from_user");
+    xnuTSCFreq = *((uint64_t*)lookup_symbol("_tscFreq"));
     
+//    for(int i = 4; i< 24; i++){
+//        (*processor_startup)((*cpu_to_processor)(i));
+//    }
     
     IOLog("AMDCPUSupport::start trying to init PCI service...\n");
     if(!getPCIService()){
@@ -185,11 +204,16 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     
     pmRyzen_init(this);
     
-    mpLock = IOSimpleLockAlloc();
+    totalNumberOfLogicalCores = pmRyzen_num_logi;
+    totalNumberOfPhysicalCores = pmRyzen_num_phys;
+    
+    IOLog("AMDCPUSupport::start, Physical Count: %u, Logical Count %u.\n",
+              totalNumberOfPhysicalCores, totalNumberOfLogicalCores);
+    
     workLoop = IOWorkLoop::workLoop();
     timerEventSource = IOTimerEventSource::timerEventSource(this, [](OSObject *object, IOTimerEventSource *sender) {
         AMDRyzenCPUPowerManagement *provider = OSDynamicCast(AMDRyzenCPUPowerManagement, object);
-        IOSimpleLockLock(provider->mpLock);
+
         
         
         //Run initialization
@@ -199,36 +223,45 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
             //Disable interrupts and sync all processor cores.
             mp_rendezvous_no_intrs([](void *obj) {
                 auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
-
+                provider->write_msr(kMSR_CSTATE_ADDR, 0xf0);
+                
+                uint64_t val = 0;
+                provider->read_msr(0xC0010292, &val);
+                provider->write_msr(0xC0010292, val | ((uint64_t)1 << 32));
+//                IOLog("C6 1, %llu\n", val);
+                provider->read_msr(0xC0010296, &val);
+                provider->write_msr(0xC0010296, val | (1 << 22) | (1 << 14) | (1 << 6));
+//                IOLog("C6 2, %llu\n", val);
+                
+                
                 uint64_t hwConfig;
                 if(!provider->read_msr(kMSR_HWCR, &hwConfig))
                     panic("AMDCPUSupport::start: wtf?");
-                
+
                 hwConfig |= (1 << 30);
                 provider->write_msr(kMSR_HWCR, hwConfig);
-                
-                
+
+
                 uint32_t cpu_num = cpu_number();
-                
+
                 //Read PStateDef generated by EFI.
                 if(pmRyzen_cpu_is_master(cpu_num))
                     provider->dumpPstate();
-                
-                
+
+
                 if(!pmRyzen_cpu_primary_in_core(cpu_num)) return;
                 uint8_t physical = pmRyzen_cpu_phys_num(cpu_num);
-                
+
 
                 //Init performance frequency counter.
                 uint64_t APERF, MPERF;
                 if(!provider->read_msr(kMSR_APERF, &APERF) || !provider->read_msr(kMSR_MPERF, &MPERF))
                     panic("AMDCPUSupport::start: wtf?");
-                
+
                 provider->lastAPERF_PerCore[physical] = APERF;
                 provider->lastMPERF_PerCore[physical] = MPERF;
-                
+
             }, provider);
-            IOSimpleLockUnlock(provider->mpLock);
             
             //Make all cores P0 state by default.
             provider->PStateCtl = 0;
@@ -242,24 +275,25 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         mp_rendezvous_no_intrs([](void *obj) {
             auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
             uint32_t cpu_num = cpu_number();
-            
+
             // Ignore hyper-threaded cores
             if(!pmRyzen_cpu_primary_in_core(cpu_num)) return;
             uint8_t physical = pmRyzen_cpu_phys_num(cpu_num);
-            
-            
+
+
             provider->calculateEffectiveFrequency(physical);
             provider->updateInstructionDelta(physical);
-            
+
         }, provider);
-        IOSimpleLockUnlock(provider->mpLock);
-        
+
         if(provider->PPMEnabled) provider->updatePowerControl();
         
         //Read stats from package.
         provider->updatePackageTemp();
         provider->updatePackageEnergy();
         
+        IOLog("exit idle: %llu, ipi: %llu, diff %llu, false %llu\n", pmRyzen_exit_idle_c, pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_c - pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_false_c);
+        pmRyzen_exit_idle_c = 0; pmRyzen_exit_idle_ipi_c = 0; pmRyzen_exit_idle_false_c = 0;
         
         uint32_t now = uint32_t(getCurrentTimeNs() / 1000000); //ms
         uint32_t newInt = max(now - provider->timeOfLastMissedRequest,
@@ -286,8 +320,11 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
 
     
     lastUpdateTime = getCurrentTimeNs();
+    pwrLastTSC = rdtsc64();
     workLoop->addEventSource(timerEventSource);
     timerEventSource->setTimeoutMS(1);
+    
+
     
     return success;
 }
@@ -340,6 +377,8 @@ bool AMDRyzenCPUPowerManagement::write_msr(uint32_t addr, uint64_t value){
     
     //Fall back with unsafe method
     wrmsr64(addr, value);
+    
+    //If failed, we've already panic and starting reboot. So just return true.
     return true;
 }
 
@@ -451,12 +490,10 @@ void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t physical){
 }
 
 void AMDRyzenCPUPowerManagement::applyPowerControl(){
-    IOSimpleLockLock(mpLock);
     mp_rendezvous(nullptr, [](void *obj) {
         auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
         provider->write_msr(kMSR_PSTATE_CTL, (uint64_t)(provider->PStateCtl & 0x7));
     }, nullptr, this);
-    IOSimpleLockUnlock(mpLock);
 }
 
 void AMDRyzenCPUPowerManagement::updatePowerControl(){
@@ -499,13 +536,11 @@ void AMDRyzenCPUPowerManagement::setCPBState(bool enabled){
     //A bit hacky but at least works for now.
     void* args[] = {this, &hwConfig};
     
-    IOSimpleLockLock(mpLock);
     mp_rendezvous(nullptr, [](void *obj) {
         auto v = static_cast<uint64_t*>(*((uint64_t**)obj+1));
         auto provider = static_cast<AMDRyzenCPUPowerManagement*>(*((AMDRyzenCPUPowerManagement**)obj));
         provider->write_msr(kMSR_HWCR, *v);
     }, nullptr, args);
-    IOSimpleLockUnlock(mpLock);
 }
 
 bool AMDRyzenCPUPowerManagement::getCPBState(){
@@ -536,25 +571,39 @@ void AMDRyzenCPUPowerManagement::updatePackageTemp(){
     
     
     PACKAGE_TEMPERATURE_perPackage[0] = t;
+    
+    
+    IOPCIAddressSpace space2;
+    space2.bits = 0;
+    space2.es.deviceNum = 0x18;
+    space2.es.functionNum = 3;
+    uint32_t nn = fIOPCIDevice->configRead32(space2, 0x00);
+    uint64_t ca = 0;
+    read_msr(kMSR_CSTATE_ADDR, &ca);
+    
+    IOLog("shit %u %llu\n", nn, ca);
 }
 
 void AMDRyzenCPUPowerManagement::updatePackageEnergy(){
     
-    uint64_t time = getCurrentTimeNs();
-    
+    uint64_t ctsc = rdtsc64();
+
     uint64_t msr_value_buf = 0;
     read_msr(kMSR_PKG_ENERGY_STAT, &msr_value_buf);
-    
+
     uint32_t enegryValue = (uint32_t)(msr_value_buf & 0xffffffff);
-    
+
     uint64_t enegryDelta = (lastUpdateEnergyValue <= enegryValue) ?
-    enegryValue - lastUpdateEnergyValue : UINT64_MAX - lastUpdateEnergyValue;
-    
-    double e = (0.0000153 * enegryDelta) / ((time - lastUpdateTime) / 1000000000.0);
+    enegryValue - lastUpdateEnergyValue : UINT32_MAX - lastUpdateEnergyValue;
+
+    double seconds = (ctsc - pwrLastTSC) / (double)(xnuTSCFreq);
+    double e = (pwrEnegryUnit * enegryDelta) / (seconds);
+    e *= pwrTimeUnit * 1000;
     uniPackageEnegry = e;
-    
+
+
     lastUpdateEnergyValue = enegryValue;
-    lastUpdateTime = time;
+    pwrLastTSC = rdtsc64();
 }
 
 void AMDRyzenCPUPowerManagement::dumpPstate(){
@@ -594,7 +643,6 @@ void AMDRyzenCPUPowerManagement::writePstate(const uint64_t *buf){
     
 
     
-    IOSimpleLockLock(mpLock);
     mp_rendezvous(nullptr, [](void *obj) {
         auto v = static_cast<uint64_t*>(((uint64_t**)obj)[1]);
         auto provider = static_cast<AMDRyzenCPUPowerManagement*>(*((AMDRyzenCPUPowerManagement**)obj));
@@ -617,7 +665,6 @@ void AMDRyzenCPUPowerManagement::writePstate(const uint64_t *buf){
         
     }, nullptr, args);
         
-    IOSimpleLockUnlock(mpLock);
 }
 
 EXPORT extern "C" kern_return_t ADDPR(kern_start)(kmod_info_t *, void *) {

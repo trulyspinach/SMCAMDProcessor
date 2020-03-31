@@ -648,6 +648,7 @@
 					"$(inherited)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
+					PMRYZEN_IDLE_IO_CSTATE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",
@@ -690,6 +691,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
+					PMRYZEN_IDLE_IO_CSTATE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",

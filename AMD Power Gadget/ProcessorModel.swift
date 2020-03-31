@@ -77,7 +77,7 @@ class ProcessorModel {
             NSApplication.shared.terminate(self)
         }
         
-//        fetchSupportedProcessor()
+        fetchSupportedProcessor()
     }
     
     func initDriver() -> Bool {

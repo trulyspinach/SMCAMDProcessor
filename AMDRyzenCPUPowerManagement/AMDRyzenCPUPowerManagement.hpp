@@ -39,6 +39,7 @@ extern "C" {
 
 #include "Headers/osfmk/i386/pmCPU.h"
 #include "Headers/osfmk/i386/cpu_topology.h"
+    
 
     int cpu_number(void);
     void mp_rendezvous_no_intrs(void (*action_func)(void *), void *arg);
@@ -53,6 +54,8 @@ extern "C" {
     i386_deactivate_cpu(void);
 //    int wrmsr_carefully(uint32_t msr, uint64_t val);
 
+
+    void pmRyzen_wrmsr_safe(void *, uint32_t, uint64_t);
 };
 
 
@@ -98,12 +101,13 @@ public:
     static constexpr uint32_t kMSR_PSTATE_LEN = 8;
     static constexpr uint32_t kMSR_PSTATE_STAT = 0xC0010063;
     static constexpr uint32_t kMSR_PSTATE_CTL = 0xC0010062;
-    static constexpr uint32_t kMSR_PWR_UNIT = 0xC0010299;
+    static constexpr uint32_t kMSR_RAPL_PWR_UNIT = 0xC0010299;
     static constexpr uint32_t kMSR_MPERF = 0x000000E7;
     static constexpr uint32_t kMSR_APERF = 0x000000E8;
     static constexpr uint32_t kMSR_PERF_CTL_0 = 0xC0010000;
     static constexpr uint32_t kMSR_PERF_CTR_0 = 0xC0010004;
     static constexpr uint32_t kMSR_PERF_IRPC = 0xC00000E9;
+    static constexpr uint32_t kMSR_CSTATE_ADDR = 0xC0010073;
     
     
 //    static constexpr uint32_t EF = 0x88;
@@ -206,7 +210,6 @@ public:
 private:
     IOWorkLoop *workLoop;
     IOTimerEventSource *timerEventSource;
-    IOSimpleLock *mpLock {nullptr};
     
     bool serviceInitialized = false;
     
@@ -217,7 +220,11 @@ private:
     uint32_t timeOfLastMissedRequest = 0;
     
     float tempOffset = 0;
+    double pwrTimeUnit = 0;
+    double pwrEnegryUnit = 0;
+    uint64_t pwrLastTSC = 0;
     
+    uint64_t xnuTSCFreq = 1;
     int (*wrmsr_carefully)(uint32_t, uint32_t, uint32_t) {nullptr};
     processor_t(*cpu_to_processor)(int);
     kern_return_t(*processor_shutdown)(processor_t);

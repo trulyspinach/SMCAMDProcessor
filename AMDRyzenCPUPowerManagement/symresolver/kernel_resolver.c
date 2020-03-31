@@ -38,8 +38,8 @@ void *lookup_symbol(const char *symbol)
     slide = (unsigned long long)(void *)printf - slide_address;
     int64_t base_address = slide + KERNEL_BASE;
     
-    IOLog("%s: aslr slide: 0x%0llx\n", __func__, slide);
-    IOLog("%s: base address: 0x%0llx\n", __func__, base_address);
+//    IOLog("%s: aslr slide: 0x%0llx\n", __func__, slide);
+//    IOLog("%s: base address: 0x%0llx\n", __func__, base_address);
     
     return find_symbol((struct mach_header_64 *)base_address, symbol);
 }
@@ -130,7 +130,7 @@ find_symbol(struct mach_header_64 *mh, const char *name)
         char *str = (char *)strtab + nl->n_un.n_strx;
         
         if (strcmp(str, name) == 0) {
-            IOLog("%s: symbol %s at address %llx\n", __func__, str, (uint64_t)nl->n_value);
+//            IOLog("%s: symbol %s at address %llx\n", __func__, str, (uint64_t)nl->n_value);
             addr = (void *)nl->n_value;
         }
     }
