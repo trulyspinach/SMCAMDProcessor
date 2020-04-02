@@ -57,9 +57,17 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var asaBox: NSButton!
     @IBAction func onASA(_ sender: Any) {
         ProcessorModel.shared.setPPM(enabled: asaBox.state == .on)
+
+        overviewSpeedShift.setOptions(newOptions: nil, selection: asaBox.state == .on ? -1 : 0)
+
         updateASA()
     }
     
+    @IBOutlet weak var lpmBox: NSButton!
+    @IBAction func onLPM(_ sender: Any) {
+        ProcessorModel.shared.setLPM(enabled: lpmBox.state == .on)
+        updateLPM()
+    }
     
     @IBOutlet weak var topLabel1: NSTextField!
     @IBOutlet weak var topLabel2: NSTextField!
@@ -131,6 +139,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         instDelta += a.reduce(0, +)
 
         if sumCount >= Int(1 / updateTime) {
+            
             topLabel1.stringValue = String(format: "%.1f Ghz", freqMax * 0.001)
             topLabel2.stringValue = suffixNumber(number: NSNumber(value: instDelta))
 
@@ -144,7 +153,9 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     }
     
     @IBAction func onOverviewSpeedStep(_ sender: Any) {
+        ProcessorModel.shared.setPPM(enabled: false)
         ProcessorModel.shared.setPState(state: overviewSpeedShift.selectedItem)
+        updateASA()
     }
     
     func setupOverview() {
@@ -171,7 +182,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         macOS Version: \(ProcessorModel.shared.systemConfig["os"]!)
         AMDRyzenCPUPowerManagement:
           Version: \(ProcessorModel.shared.AMDRyzenCPUPowerManagementVersion), CPU Supported: \(supported)
-          
+        
         """
         if ProcessorModel.shared.boardValid {
             boardHelpButton.removeFromSuperview()
@@ -182,9 +193,9 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         ProcessorModel.shared.refreshPStateDef()
         vaildStatesClock = ProcessorModel.shared.getVaildPStateClocks()
         let pstateCur = ProcessorModel.shared.getPState()
-        
+        let s = ProcessorModel.shared.getPPM()
         let pdt = vaildStatesClock.map{ "\(Int($0))Mhz" }
-        overviewSpeedShift.setOptions(newOptions: pdt, selection: pstateCur)
+        overviewSpeedShift.setOptions(newOptions: pdt, selection: s ? -1 : pstateCur)
     }
     
     func updateCPB() {
@@ -198,6 +209,15 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         let s = ProcessorModel.shared.getPPM()
         
         asaBox.state = s ? NSControl.StateValue.on : NSControl.StateValue.off
+        updateLPM()
+    }
+    
+    func updateLPM() {
+        lpmBox.isEnabled = ProcessorModel.shared.getPPM()
+        
+        let s = ProcessorModel.shared.getLPM()
+        
+        lpmBox.state = s ? NSControl.StateValue.on : NSControl.StateValue.off
     }
     
     @IBAction func openGithub(_ sender: Any) {

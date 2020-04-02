@@ -77,7 +77,7 @@ class ProcessorModel {
             NSApplication.shared.terminate(self)
         }
         
-//        fetchSupportedProcessor()
+        fetchSupportedProcessor()
     }
     
     func initDriver() -> Bool {
@@ -225,6 +225,11 @@ class ProcessorModel {
         loadPStateDefClock()
     }
     
+    func getHPCpus() -> Int{
+        let o = kernelGetUInt64(count: 1, selector: 17)
+        return Int(o[0])
+    }
+    
     func setPState(state : Int) {
         var input: [UInt64] = [UInt64(state)]
         let res = IOConnectCallMethod(connect, 10, &input, 1, nil, 0,
@@ -290,6 +295,23 @@ class ProcessorModel {
     func setPPM(enabled : Bool){
         var input: [UInt64] = [UInt64(enabled ? 1 : 0)]
         let res = IOConnectCallMethod(connect, 14, &input, 1, nil, 0,
+                                      nil, nil,
+                                      nil, nil)
+        
+        if res != KERN_SUCCESS {
+            print(String(cString: mach_error_string(res)))
+            return
+        }
+    }
+    
+    func getLPM() -> Bool {
+        let o = kernelGetUInt64(count: 1, selector: 18)
+        return o[0] == 0 ? false : true
+    }
+    
+    func setLPM(enabled : Bool){
+        var input: [UInt64] = [UInt64(enabled ? 1 : 0)]
+        let res = IOConnectCallMethod(connect, 19, &input, 1, nil, 0,
                                       nil, nil,
                                       nil, nil)
         

@@ -303,7 +303,7 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
                 
             uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
 
-            dataOut[0] = (uint64_t)fProvider->PPMEnabled;
+            dataOut[0] = (uint64_t)(fProvider->getPMPStateLimit() == 0 ? 0 : 1);
             break;
         }
             
@@ -315,12 +315,9 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             if(arguments->scalarInputCount != 1)
                 return kIOReturnBadArgument;
                 
-            fProvider->PPMEnabled = arguments->scalarInput[0]==1?true:false;
+            boolean_t enabled = arguments->scalarInput[0]==1?true:false;
             
-            if(!fProvider->PPMEnabled){
-                fProvider->PStateCtl = 0;
-                fProvider->applyPowerControl();
-            }
+            fProvider->setPMPStateLimit(enabled ? 1 : 0);
             
             break;
         }
@@ -359,6 +356,44 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             for(uint32_t i = 0; i < 64; i++){
                 dataOut[i+64] = fProvider->boardName[i];
             }
+            
+            break;
+        }
+            
+        case 17: {
+            arguments->scalarOutputCount = 0;
+                
+            arguments->structureOutputSize = 1 * sizeof(uint64_t);
+                
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+
+            dataOut[0] = (uint64_t)(fProvider->getHPcpus());
+            break;
+        }
+        
+        //Get LPM
+        case 18: {
+            arguments->scalarOutputCount = 0;
+                
+            arguments->structureOutputSize = 1 * sizeof(uint64_t);
+                
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+
+            dataOut[0] = (uint64_t)(fProvider->getPMPStateLimit() == 2 ? 1 : 0);
+            break;
+        }
+            
+        //Set LPM
+        case 19: {
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = 0;
+                
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+                
+            boolean_t enabled = arguments->scalarInput[0]==1?true:false;
+            
+            fProvider->setPMPStateLimit(enabled ? 2 : 1);
             
             break;
         }

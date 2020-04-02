@@ -134,7 +134,6 @@ public:
     void calculateEffectiveFrequency(uint8_t physical);
     void updateInstructionDelta(uint8_t physical);
     void applyPowerControl();
-    void updatePowerControl();
     
     void setCPBState(bool enabled);
     bool getCPBState();
@@ -146,6 +145,11 @@ public:
     
     void dumpPstate();
     void writePstate(const uint64_t *buf);
+    
+    uint32_t getPMPStateLimit();
+    void setPMPStateLimit(uint32_t);
+    
+    uint32_t getHPcpus();
     
     uint32_t totalNumberOfPhysicalCores;
     uint32_t totalNumberOfLogicalCores;
@@ -182,7 +186,6 @@ public:
     
     float loadIndex_PerCore[CPUInfo::MaxCpus];
     
-    bool PPMEnabled = false;
     float PStateStepUpRatio = 0.36;
     float PStateStepDownRatio = 0.05;
     

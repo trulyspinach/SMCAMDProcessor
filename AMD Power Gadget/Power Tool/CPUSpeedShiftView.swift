@@ -83,8 +83,10 @@ class CPUSpeedShiftView: NSControl {
         drawGrid(in: dirtyRect, ctx: context)
     }
     
-    func setOptions(newOptions : [String], selection : Int){
-        options = newOptions
+    func setOptions(newOptions : [String]?, selection : Int){
+        if newOptions != nil{
+            options = newOptions!
+        }
         selectedItem = selection
         setNeedsDisplay(bounds)
     }

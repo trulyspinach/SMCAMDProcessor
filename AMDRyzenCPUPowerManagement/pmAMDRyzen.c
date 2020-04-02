@@ -29,6 +29,7 @@ uint64_t pmRyzen_p_sdtsc;
 uint64_t pmRyzen_p_sutsc;
 
 uint32_t pmRyzen_hpcpus = 0;
+uint32_t pmRyzen_pstatelimit;
 
 void(*pmRyzen_pmUnRegister)(pmDispatch_t*) = 0;
 void(*pmRyzen_cpu_NMI)(int) = 0;
@@ -104,23 +105,39 @@ void pmRyzen_init_PState(){
     float p0spd = (p0 & 0xff) / ((p0 >> 8) & 0x1f) * 200.0F;
     
     uint64_t p1 = pmRyzen_rdmsr_safe(pmRyzen_io_service_handle, MSR_PSTATE_0 + 1);
-    uint64_t p1fid = (uint64_t)((p0spd * 0.8F) / 200.0F * (float)((p1 >> 8) & 0x1f));
+    uint64_t p1fid = (uint64_t)((p0spd * 0.80F) / 200.0F * (float)((p1 >> 8) & 0x1f));
     
     wrmsr64(MSR_PSTATE_0 + 1, (p1 & ~0xFFULL) | p1fid | (1ULL << 63));
 }
 
 inline void set_PState(pmProcessor_t *cpu, uint8_t state){
-    state = max(0, min(state, PSTATE_LIMIT));
+    if(pmRyzen_pstatelimit == 0) return;
+    state = min(pmRyzen_pstatelimit, state);
     if(cpu->PState == state) return;
+    
+    boolean_t from_hpstate = !cpu->PState;
     
     pmRyzen_wrmsr_safe(pmRyzen_io_service_handle, MSR_PSTATE_CTL, state);
     cpu->PState = state;
     
     if(!state){
         __asm__ volatile("lock incq (%0)"::"r"(&pmRyzen_hpcpus):"memory");
-    } else {
+    } else if(from_hpstate) {
         __asm__ volatile("lock decq (%0)"::"r"(&pmRyzen_hpcpus):"memory");
     }
+}
+
+void pmRyzen_doPState_reset(){
+    uint32_t cn = cpu_number();
+    pmProcessor_t *self = &pmRyzen_cpus[cn];
+    self->PState = 8;
+    set_PState(self, 0);
+}
+
+void pmRyzen_PState_reset(){
+    pmRyzen_hpcpus = 0;
+    if(pmRyzen_pstatelimit == 0) pmRyzen_pstatelimit = 1;
+    mp_rendezvous_no_intrs(&pmRyzen_doPState_reset, NULL);
 }
 
 void pmRyzen_init(void *handle){
@@ -147,6 +164,7 @@ void pmRyzen_init(void *handle){
     pmRyzen_num_phys = 0;
     pmRyzen_num_logi = 0;
     pmRyzen_hpcpus = 0;
+    pmRyzen_pstatelimit = PSTATE_LIMIT;
     
     while(pkg){
         pkgCount++;
@@ -158,7 +176,7 @@ void pmRyzen_init(void *handle){
             
             while (lcpu) {
                 pmRyzen_num_logi++;
-                IOLog("LCPU: %u master:%u, primary:%u\n", lcpu->cpu_num, lcpu->master, lcpu->primary);
+//                IOLog("LCPU: %u master:%u, primary:%u\n", lcpu->cpu_num, lcpu->master, lcpu->primary);
                 
                 pmRyzen_cpunum_to_lcpu[lcpu->cpu_num] = lcpu;
                 
@@ -168,9 +186,6 @@ void pmRyzen_init(void *handle){
                 cpu->arm_flag = 0;
                 cpu->cpu_awake = 1;
                 
-                cpu->PState = 8;
-                set_PState(cpu, 0);
-                
                 lcpu = lcpu->next_in_core;
             }
             
@@ -179,15 +194,16 @@ void pmRyzen_init(void *handle){
         
         pkg = pkg->next;
     }
-    IOLog("pkg c %d\n", pkgCount);
+//    IOLog("pkg c %d\n", pkgCount);
+
     
     pmRyzen_effective_timetsc = ((double)pmRyzen_tsc_freq * EFF_INTERVAL);
     pmRyzen_p_sdtsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_STEPDOWN_THRE);
     pmRyzen_p_sutsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_STEPUP_THRE);
     
-    IOLog("eff %llu sd %llu, su %llu\n",pmRyzen_effective_timetsc, pmRyzen_p_sdtsc, pmRyzen_p_sutsc);
-    
     pmRyzen_init_PState();
+    pmRyzen_PState_reset();
+    
     cb.initComplete();
 }
 
@@ -298,6 +314,7 @@ uint64_t pmRyzen_machine_idle(uint64_t maxDur){
         } else if(rt < pmRyzen_p_sdtsc){
             self->ll_count++;
             if(self->ll_count > PSTATE_STEPDOWN_TIME + pmRyzen_hpcpus * PSTATE_STEPDOWN_MP_GAIN){
+                self->ll_count = 0;
                 set_PState(self, self->PState+1);
             }
         }

@@ -293,8 +293,6 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
             provider->calculateEffectiveFrequency(physical);
 
         }, provider);
-
-        if(provider->PPMEnabled) provider->updatePowerControl();
         
         //Read stats from package.
         provider->updatePackageTemp();
@@ -314,7 +312,7 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         
         provider->actualUpdateTimeInterval = now - provider->timeOfLastUpdate;
         provider->timeOfLastUpdate = now;
-        provider->updateTimeInterval = min(provider->PPMEnabled? 320 : 1200, max(50, newInt));
+        provider->updateTimeInterval = min(1200, max(50, newInt));
         
         provider->timerEventSource->setTimeoutMS(provider->updateTimeInterval);
 //        IOLog("est time: %d\n", provider->estimatedRequestTimeInterval);
@@ -485,7 +483,7 @@ void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t cpu_num){
     //Skip if overflowed
     if(lastInstructionDelta_perCore[cpu_num] > insCount) return;
     
-    uint64_t delta = insCount - lastInstructionDelta_perCore[cpu_num];
+//    uint64_t delta = insCount - lastInstructionDelta_perCore[cpu_num];
     instructionDelta_PerCore[cpu_num] = insCount - lastInstructionDelta_perCore[cpu_num];
     
     lastInstructionDelta_perCore[cpu_num] = insCount;
@@ -507,30 +505,6 @@ void AMDRyzenCPUPowerManagement::applyPowerControl(){
         auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
         provider->write_msr(kMSR_PSTATE_CTL, (uint64_t)(provider->PStateCtl & 0x7));
     }, nullptr, this);
-}
-
-void AMDRyzenCPUPowerManagement::updatePowerControl(){
-    //Passive PM
-    float loadMax = 0;
-    bool inc = false;
-    int shouldStep = PStateCtl;
-    for (int i = 0; i < totalNumberOfPhysicalCores; i++) {
-        if(loadIndex_PerCore[i] >= PStateStepUpRatio){
-            shouldStep = max(shouldStep - 1, 0);
-            inc = true;
-            break;
-        }
-        
-        loadMax = max(loadMax, loadIndex_PerCore[i]);
-    }
-    if(!inc && loadMax <= PStateStepDownRatio)
-        shouldStep = min(PStateCtl + 1, PStateEnabledLen-1);
-    
-    if(shouldStep == PStateCtl) return;
-    
-    PStateCtl = shouldStep;
-    
-    applyPowerControl();
 }
 
 void AMDRyzenCPUPowerManagement::setCPBState(bool enabled){
@@ -654,7 +628,6 @@ void AMDRyzenCPUPowerManagement::writePstate(const uint64_t *buf){
     //A bit hacky but at least works for now.
     void* args[] = {this, (void*)buf};
     
-
     
     mp_rendezvous(nullptr, [](void *obj) {
         auto v = static_cast<uint64_t*>(((uint64_t**)obj)[1]);
@@ -678,6 +651,21 @@ void AMDRyzenCPUPowerManagement::writePstate(const uint64_t *buf){
         
     }, nullptr, args);
         
+}
+
+uint32_t AMDRyzenCPUPowerManagement::getPMPStateLimit(){
+    return pmRyzen_pstatelimit;
+}
+
+void AMDRyzenCPUPowerManagement::setPMPStateLimit(uint32_t state){
+    pmRyzen_pstatelimit = min(2, state);
+    if(state > 0){
+        pmRyzen_PState_reset();
+    }
+}
+
+uint32_t AMDRyzenCPUPowerManagement::getHPcpus(){
+    return pmRyzen_hpcpus;
 }
 
 EXPORT extern "C" kern_return_t ADDPR(kern_start)(kmod_info_t *, void *) {
