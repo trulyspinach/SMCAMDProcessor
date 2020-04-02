@@ -1,22 +1,22 @@
-SMCAMDProcessor & AMDRyzenCPUPowerManagement
+SMCAMDProcessor
 ========
 
-XNU kernel extension for AMD processor power management and monitoring.
-Also comes with a plugin for [VirtualSMC](https://github.com/acidanthera/VirtualSMC) to export readings to other application.
+XNU kernel extension for management and monitoring of AMD processors.
+Also comes with a plugin for [VirtualSMC](https://github.com/acidanthera/VirtualSMC) to export readings to other applications.
 
 Please note that this release is at very initial stage of development, make sure you have a proper backup of your EFI folder and never run on any system that matters. 
 
 ## Installation
 
 SMCAMDProcessor now comes in two separate binary(kernel extension):
-* AMDRyzenCPUPowerManagement.kext for all power management features. This kext is also required if you would like to use AMD Power Gadget.
-* SMCAMDProcessor.kext to publish readings to [VirtualSMC](https://github.com/acidanthera/VirtualSMC), which enables macOS applications like iStat to display sensor data. This kext depends on AMDRyzenCPUPowerManagement.kext to collect sensor data, thus must be loaded after.
+* `AMDRyzenCPUPowerManagement.kext` for all power management features. This kext is also required if you would like to use **AMD Power Gadget**.
+* `SMCAMDProcessor.kext` to publish readings to [VirtualSMC](https://github.com/acidanthera/VirtualSMC), which enables macOS applications like iStat to display sensor data. This kext depends on `AMDRyzenCPUPowerManagement.kext` to collect sensor data, thus must be loaded after.
 
 1. Download the kext(s) and application from [Release](https://github.com/trulyspinach/SMCAMDProcessor/releases) page
-2. Add AMDRyzenCPUPowerManagement.kext to kext folder of your bootloader.
+2. Add `AMDRyzenCPUPowerManagement.kext` to kext folder of your bootloader.
 3. Edit your bootloader's config file to make sure the kext is enabled.
-4. If you're using [VirtualSMC](https://github.com/acidanthera/VirtualSMC) you can also load SMCAMDProcessor.kext to publish sensor data.
-5. Bootloaders like OpenCore will link each kext in the order they present in config file, so make sure AMDRyzenCPUPowerManagement.kext comes before SMCAMDProcessor.kext as it serves as a dependency.
+4. If you're using [VirtualSMC](https://github.com/acidanthera/VirtualSMC) you can also load `SMCAMDProcessor.kext` to publish sensor data.
+5. Bootloaders like `OpenCore` will link each kext in the order they present in config file, so make sure `AMDRyzenCPUPowerManagement.kext` comes before `SMCAMDProcessor.kext` as it serves as a dependency.
 
 ### AMD Power Gadget
 <img src="imgs/all.png" width="80%">
@@ -27,11 +27,6 @@ SMCAMDProcessor now comes in two separate binary(kernel extension):
 * Supports for reading of temperature, energy and frequency data on AMD 17h Processors.
 * Manual switching of processor speed.
 * PState editing.
-
-## Passive Power Management
-This options serves as a temporary solution to CPU power management due to no active solution are currently available. Comparing to a true active power managment implementation, this option works in a passive way which results in less sensitivity, accuracy and a slow down in performance.
-
-I have been exploring possibilities for implementing a real active power management solution for AMD 17h platform. From what it looks like currently it is definitly possible. I will keep updating here with my latest progress.
 
 <img src="imgs/ani.gif" width="100%">
 
