@@ -1,14 +1,14 @@
 SMCAMDProcessor
 ========
 
-XNU kernel extension for management and monitoring of AMD processors.
+XNU kernel extension for power management and monitoring of AMD processors.
 Also comes with a plugin for [VirtualSMC](https://github.com/acidanthera/VirtualSMC) to export readings to other applications.
 
 Please note that this release is at very initial stage of development, make sure you have a proper backup of your EFI folder and never run on any system that matters. 
 
 ## Installation
 
-SMCAMDProcessor now comes in two separate binary(kernel extension):
+SMCAMDProcessor now comes in two separate binaries(kernel extensions):
 * `AMDRyzenCPUPowerManagement.kext` for all power management features. This kext is also required if you would like to use **AMD Power Gadget**.
 * `SMCAMDProcessor.kext` to publish readings to [VirtualSMC](https://github.com/acidanthera/VirtualSMC), which enables macOS applications like iStat to display sensor data. This kext depends on `AMDRyzenCPUPowerManagement.kext` to collect sensor data, thus must be loaded after.
 
