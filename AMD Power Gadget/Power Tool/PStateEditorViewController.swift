@@ -59,6 +59,22 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
         return Float(v["CpuFid"]!) / Float(v["CpuDfsId"]!) * 200.0
     }
     
+    func speed2Dict(v : [String: UInt32], speed : UInt32) -> [String: UInt32] {
+        var nd = v
+        let targetFid = Float(speed) / 200.0 * Float(v["CpuDfsId"]!)
+        nd["CpuFid"] = UInt32(targetFid)
+        
+        return nd
+    }
+    
+    func scale2Speed(scale : Float) -> UInt32 {
+        return UInt32(dict2Speed(v: data[0]) * scale)
+    }
+    
+    func dict2scale(v : [String: UInt32]) -> Float{
+        return dict2Speed(v: v) / dict2Speed(v: data[0])
+    }
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return 8
     }
@@ -73,6 +89,10 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
         }
     }
     
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+        return 24
+    }
+    
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
         if tableColumn!.identifier.rawValue == "id"{
@@ -83,6 +103,10 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
             return dict2Speed(v: data[row])
         }
         
+        if tableColumn!.identifier.rawValue == "scale"{
+            return dict2scale(v: data[row])
+        }
+        
         return String(format: "%X", data[row][tableColumn!.identifier.rawValue]!)
     }
     
@@ -90,6 +114,14 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
         if tableColumn!.identifier.rawValue == "enabled"{
             data[row]["enabled"] = (object as! UInt32)
             changed = true
+        } else if tableColumn!.identifier.rawValue == "scale"{
+            if row == 0 {
+                return
+            }
+            data[row] = speed2Dict(v: data[row], speed: scale2Speed(scale: Float(truncating: object as! NSNumber)))
+            changed = true
+            tableView.reloadData(forRowIndexes: IndexSet(arrayLiteral: row), columnIndexes: IndexSet(6...8))
+            
         } else {
             if let v = UInt32(object as! String, radix: 16){
                 data[row][tableColumn!.identifier.rawValue] = v

@@ -22,6 +22,12 @@ void pmRyzen_wrmsr_safe(void *handle, uint32_t addr, uint64_t value){
     static_cast<AMDRyzenCPUPowerManagement*>(handle)->write_msr(addr, value);
 }
 
+uint64_t pmRyzen_rdmsr_safe(void *handle, uint32_t addr){
+    uint64_t v = 0;
+    static_cast<AMDRyzenCPUPowerManagement*>(handle)->read_msr(addr, &v);
+    return v;
+}
+
 }
 
 
@@ -223,15 +229,16 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
             //Disable interrupts and sync all processor cores.
             mp_rendezvous_no_intrs([](void *obj) {
                 auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
+                
                 provider->write_msr(kMSR_CSTATE_ADDR, 0xf0);
                 
-                uint64_t val = 0;
-                provider->read_msr(0xC0010292, &val);
-                provider->write_msr(0xC0010292, val | ((uint64_t)1 << 32));
-//                IOLog("C6 1, %llu\n", val);
-                provider->read_msr(0xC0010296, &val);
-                provider->write_msr(0xC0010296, val | (1 << 22) | (1 << 14) | (1 << 6));
-//                IOLog("C6 2, %llu\n", val);
+//                uint64_t val = 0;
+//                provider->read_msr(0xC0010292, &val);
+//                provider->write_msr(0xC0010292, val | ((uint64_t)1 << 32));
+//
+//                provider->read_msr(0xC0010296, &val);
+//                provider->write_msr(0xC0010296, val | (1 << 22) | (1 << 14) | (1 << 6));
+
                 
                 
                 uint64_t hwConfig;
@@ -275,14 +282,15 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         mp_rendezvous_no_intrs([](void *obj) {
             auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
             uint32_t cpu_num = cpu_number();
-
+            
+            provider->updateInstructionDelta(cpu_num);
+            
             // Ignore hyper-threaded cores
             if(!pmRyzen_cpu_primary_in_core(cpu_num)) return;
             uint8_t physical = pmRyzen_cpu_phys_num(cpu_num);
 
 
             provider->calculateEffectiveFrequency(physical);
-            provider->updateInstructionDelta(physical);
 
         }, provider);
 
@@ -292,8 +300,13 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         provider->updatePackageTemp();
         provider->updatePackageEnergy();
         
-        IOLog("exit idle: %llu, ipi: %llu, diff %llu, false %llu\n", pmRyzen_exit_idle_c, pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_c - pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_false_c);
-        pmRyzen_exit_idle_c = 0; pmRyzen_exit_idle_ipi_c = 0; pmRyzen_exit_idle_false_c = 0;
+//        IOLog("exit idle: %llu, ipi: %llu, diff %llu, false %llu\n", pmRyzen_exit_idle_c, pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_c - pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_false_c);
+//        pmRyzen_exit_idle_c = 0; pmRyzen_exit_idle_ipi_c = 0; pmRyzen_exit_idle_false_c = 0;
+//
+//
+//        IOLog("time: 0.%llu, running: %llu\n", uint64_t(pmRyzen_get_processor(0)->eff_load * 1000000000), pmRyzen_get_processor(4)->stat_exit_idle);
+        
+//        IOLog("active p %u\n", pmRyzen_hpcpus);
         
         uint32_t now = uint32_t(getCurrentTimeNs() / 1000000); //ms
         uint32_t newInt = max(now - provider->timeOfLastMissedRequest,
@@ -462,7 +475,7 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     lastMPERF_PerCore[physical] = MPERF;
 }
 
-void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t physical){
+void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t cpu_num){
     uint64_t insCount;
     
     if(!read_msr(kMSR_PERF_IRPC, &insCount))
@@ -470,23 +483,23 @@ void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t physical){
     
     
     //Skip if overflowed
-    if(lastInstructionDelta_perCore[physical] > insCount) return;
+    if(lastInstructionDelta_perCore[cpu_num] > insCount) return;
     
-    uint64_t delta = insCount - lastInstructionDelta_perCore[physical];
-    instructionDelta_PerCore[physical] = insCount - lastInstructionDelta_perCore[physical];
+    uint64_t delta = insCount - lastInstructionDelta_perCore[cpu_num];
+    instructionDelta_PerCore[cpu_num] = insCount - lastInstructionDelta_perCore[cpu_num];
     
-    lastInstructionDelta_perCore[physical] = insCount;
+    lastInstructionDelta_perCore[cpu_num] = insCount;
     
     //write_msr(kMSR_PERF_IRPC, 0);
     
     
     //Calculate load index
-    float estimatedInstRet = (effFreq_perCore[physical] * 1000000);
-    estimatedInstRet = estimatedInstRet * (actualUpdateTimeInterval * 0.001);
-    float index = (float)delta / estimatedInstRet;
-    
-    float growth = 3200;
-    loadIndex_PerCore[physical] = log10f(min(index,1) * growth) / log10f(growth);
+//    float estimatedInstRet = (effFreq_perCore[cpu_num] * 1000000);
+//    estimatedInstRet = estimatedInstRet * (actualUpdateTimeInterval * 0.001);
+//    float index = (float)delta / estimatedInstRet;
+//
+//    float growth = 3200;
+//    loadIndex_PerCore[cpu_num] = log10f(min(index,1) * growth) / log10f(growth);
 }
 
 void AMDRyzenCPUPowerManagement::applyPowerControl(){
@@ -573,15 +586,15 @@ void AMDRyzenCPUPowerManagement::updatePackageTemp(){
     PACKAGE_TEMPERATURE_perPackage[0] = t;
     
     
-    IOPCIAddressSpace space2;
-    space2.bits = 0;
-    space2.es.deviceNum = 0x18;
-    space2.es.functionNum = 3;
-    uint32_t nn = fIOPCIDevice->configRead32(space2, 0x00);
-    uint64_t ca = 0;
-    read_msr(kMSR_CSTATE_ADDR, &ca);
-    
-    IOLog("shit %u %llu\n", nn, ca);
+//    IOPCIAddressSpace space2;
+//    space2.bits = 0;
+//    space2.es.deviceNum = 0x18;
+//    space2.es.functionNum = 3;
+//    uint32_t nn = fIOPCIDevice->configRead32(space2, 0x00);
+//    uint64_t ca = 0;
+//    read_msr(kMSR_CSTATE_ADDR, &ca);
+//
+//    IOLog("shit %u %llu\n", nn, ca);
 }
 
 void AMDRyzenCPUPowerManagement::updatePackageEnergy(){

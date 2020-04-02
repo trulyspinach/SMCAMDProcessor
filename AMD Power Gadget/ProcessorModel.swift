@@ -77,7 +77,7 @@ class ProcessorModel {
             NSApplication.shared.terminate(self)
         }
         
-        fetchSupportedProcessor()
+//        fetchSupportedProcessor()
     }
     
     func initDriver() -> Bool {
@@ -300,8 +300,8 @@ class ProcessorModel {
     }
     
     func getInstructionDelta() -> [UInt64]{
-        let o = kernelGetUInt64(count: numberOfCores, selector: 5)
-        return Array(o[0...numberOfCores - 1])
+        let o = kernelGetUInt64(count: 1, selector: 5)
+        return [o[0]]
     }
     
     func setPState(def : [UInt64]) -> Int{

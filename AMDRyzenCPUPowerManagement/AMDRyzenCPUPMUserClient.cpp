@@ -175,12 +175,14 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
         case 5: {
             arguments->scalarOutputCount = 0;
             
-            arguments->structureOutputSize = (fProvider->totalNumberOfPhysicalCores) * sizeof(uint64_t);
+            arguments->structureOutputSize = 1 * sizeof(uint64_t);
 
             uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
             
-            for(uint32_t i = 0; i < fProvider->totalNumberOfPhysicalCores; i++){
-                dataOut[i] = fProvider->instructionDelta_PerCore[i];
+            dataOut[0] = 0;
+            
+            for(uint32_t i = 0; i < fProvider->totalNumberOfLogicalCores; i++){
+                dataOut[0] += fProvider->instructionDelta_PerCore[i];
             }
             
             break;
@@ -195,7 +197,9 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             float *dataOut = (float*) arguments->structureOutput;
             
             for(uint32_t i = 0; i < fProvider->totalNumberOfPhysicalCores; i++){
-                dataOut[i] = fProvider->loadIndex_PerCore[i];
+                float l = pmRyzen_avgload_pcpu(i * 2);
+//                dataOut[i] = fProvider->loadIndex_PerCore[i];
+                dataOut[i] = l;
             }
             
             break;

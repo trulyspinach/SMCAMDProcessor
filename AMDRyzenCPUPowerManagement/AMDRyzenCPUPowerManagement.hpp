@@ -41,21 +41,21 @@ extern "C" {
 #include "Headers/osfmk/i386/cpu_topology.h"
     
 
-    int cpu_number(void);
-    void mp_rendezvous_no_intrs(void (*action_func)(void *), void *arg);
+int cpu_number(void);
+void mp_rendezvous_no_intrs(void (*action_func)(void *), void *arg);
 
-    void
-    mp_rendezvous(void (*setup_func)(void *),
+void mp_rendezvous(void (*setup_func)(void *),
                   void (*action_func)(void *),
                   void (*teardown_func)(void *),
                   void *arg);
 
-    void
-    i386_deactivate_cpu(void);
+void i386_deactivate_cpu(void);
 //    int wrmsr_carefully(uint32_t msr, uint64_t val);
 
 
-    void pmRyzen_wrmsr_safe(void *, uint32_t, uint64_t);
+void pmRyzen_wrmsr_safe(void *, uint32_t, uint64_t);
+uint64_t pmRyzen_rdmsr_safe(void *, uint32_t);
+
 };
 
 
