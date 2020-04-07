@@ -309,7 +309,11 @@ uint64_t pmRyzen_machine_idle(uint64_t maxDur){
         
         //Avoid using xmm registers shared within same core.
         if(rt > pmRyzen_p_sutsc){
-            set_PState(self, 0);
+            if (self->PState > 0) {
+                set_PState(self, self->PState-1);
+            } else {
+                set_PState(self, 0);
+            }
             self->ll_count = 0;
         } else if(rt < pmRyzen_p_sdtsc){
             self->ll_count++;
