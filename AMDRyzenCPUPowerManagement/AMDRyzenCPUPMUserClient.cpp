@@ -196,8 +196,10 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
 
             float *dataOut = (float*) arguments->structureOutput;
             
+            int lcpu_percore = fProvider->totalNumberOfLogicalCores / fProvider->totalNumberOfPhysicalCores;
+            
             for(uint32_t i = 0; i < fProvider->totalNumberOfPhysicalCores; i++){
-                float l = pmRyzen_avgload_pcpu(i * 2);
+                float l = pmRyzen_avgload_pcpu(i * lcpu_percore);
 //                dataOut[i] = fProvider->loadIndex_PerCore[i];
                 dataOut[i] = l;
             }
