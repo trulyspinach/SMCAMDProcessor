@@ -160,9 +160,9 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         panic("AMDCPUSupport: unable to read power unit\n");
     
     pwrTimeUnit = pow((double)0.5, (double)((rapl >> 16) & 0xf));
-    pwrEnegryUnit = pow((double)0.5, (double)((rapl >> 8) & 0x1f));
+    pwrEnergyUnit = pow((double)0.5, (double)((rapl >> 8) & 0x1f));
     IOLog("a %lld\n", (long long)(pwrTimeUnit * 10000000000));
-    IOLog("b %lld\n", (long long)(pwrEnegryUnit * 10000000000));
+    IOLog("b %lld\n", (long long)(pwrEnergyUnit * 10000000000));
     
     fetchOEMBaseBoardInfo();
     
@@ -578,18 +578,18 @@ void AMDRyzenCPUPowerManagement::updatePackageEnergy(){
     uint64_t msr_value_buf = 0;
     read_msr(kMSR_PKG_ENERGY_STAT, &msr_value_buf);
 
-    uint32_t enegryValue = (uint32_t)(msr_value_buf & 0xffffffff);
+    uint32_t energyValue = (uint32_t)(msr_value_buf & 0xffffffff);
 
-    uint64_t enegryDelta = (lastUpdateEnergyValue <= enegryValue) ?
-    enegryValue - lastUpdateEnergyValue : UINT32_MAX - lastUpdateEnergyValue;
+    uint64_t energyDelta = (lastUpdateEnergyValue <= energyValue) ?
+    energyValue - lastUpdateEnergyValue : UINT32_MAX - lastUpdateEnergyValue;
 
     double seconds = (ctsc - pwrLastTSC) / (double)(xnuTSCFreq);
-    double e = (pwrEnegryUnit * enegryDelta) / (seconds);
+    double e = (pwrEnergyUnit * energyDelta) / (seconds);
     e *= pwrTimeUnit * 1000;
-    uniPackageEnegry = e;
+    uniPackageEnergy = e;
 
 
-    lastUpdateEnergyValue = enegryValue;
+    lastUpdateEnergyValue = energyValue;
     pwrLastTSC = rdtsc64();
 }
 
