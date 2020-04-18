@@ -220,8 +220,8 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         lpmBox.state = s ? NSControl.StateValue.on : NSControl.StateValue.off
     }
     
-    @IBAction func openGithub(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/AMDRyzenCPUPowerManagement")!)
+    @IBAction func openGitHub(_ sender: Any) {
+        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
     }
     
     func suffixNumber(number:NSNumber) -> String {
