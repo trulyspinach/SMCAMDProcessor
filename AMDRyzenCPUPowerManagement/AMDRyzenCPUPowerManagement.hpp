@@ -200,7 +200,7 @@ public:
     uint64_t lastUpdateTime;
     uint64_t lastUpdateEnergyValue;
     
-    double uniPackageEnegry;
+    double uniPackageEnergy;
     
     bool disablePrivilegeCheck = false;
 
@@ -224,7 +224,7 @@ private:
     
     float tempOffset = 0;
     double pwrTimeUnit = 0;
-    double pwrEnegryUnit = 0;
+    double pwrEnergyUnit = 0;
     uint64_t pwrLastTSC = 0;
     
     uint64_t xnuTSCFreq = 1;

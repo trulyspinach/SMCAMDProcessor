@@ -32,7 +32,7 @@ public:
 class TempPackage : public AMDSupportVsmcValue { using AMDSupportVsmcValue::AMDSupportVsmcValue; protected: SMC_RESULT readAccess() override; };
 class TempCore    : public AMDSupportVsmcValue { using AMDSupportVsmcValue::AMDSupportVsmcValue; protected: SMC_RESULT readAccess() override; };
 
-class EnegryPackage: public AMDSupportVsmcValue
+class EnergyPackage: public AMDSupportVsmcValue
 { using AMDSupportVsmcValue::AMDSupportVsmcValue; protected: SMC_RESULT readAccess() override; };
 
 #endif /* KeyImplementations_hpp */

@@ -23,11 +23,11 @@ SMC_RESULT TempCore::readAccess() {
     return SmcSuccess;
 }
 
-SMC_RESULT EnegryPackage::readAccess(){
+SMC_RESULT EnergyPackage::readAccess(){
     if (type == SmcKeyTypeFloat)
-        *reinterpret_cast<uint32_t *>(data) = VirtualSMCAPI::encodeFlt(provider->uniPackageEnegry);
+        *reinterpret_cast<uint32_t *>(data) = VirtualSMCAPI::encodeFlt(provider->uniPackageEnergy);
     else
-        *reinterpret_cast<uint16_t *>(data) = VirtualSMCAPI::encodeSp(type, provider->uniPackageEnegry);
+        *reinterpret_cast<uint16_t *>(data) = VirtualSMCAPI::encodeSp(type, provider->uniPackageEnergy);
     
     return SmcSuccess;
 }
