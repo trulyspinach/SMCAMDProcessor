@@ -1021,7 +1021,7 @@
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
                                                                             <connections>
-                                                                                <action selector="openGithub:" target="rDh-aT-nig" id="KV5-np-1kQ"/>
+                                                                                <action selector="openGitHub:" target="rDh-aT-nig" id="KV5-np-1kQ"/>
                                                                             </connections>
                                                                         </button>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arp-oH-qjj">
@@ -1042,7 +1042,7 @@
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
                                                                             <connections>
-                                                                                <action selector="openGithub:" target="rDh-aT-nig" id="kTw-gG-4Yf"/>
+                                                                                <action selector="openGitHub:" target="rDh-aT-nig" id="kTw-gG-4Yf"/>
                                                                                 <segue destination="arI-oH-4xY" kind="sheet" id="PaB-YQ-pfi"/>
                                                                             </connections>
                                                                         </button>
