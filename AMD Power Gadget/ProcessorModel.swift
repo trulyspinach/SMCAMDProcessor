@@ -54,7 +54,7 @@ class ProcessorModel {
                                       &outputStr, &outputStrCount)
         AMDRyzenCPUPowerManagementVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
         
-        if AMDRyzenCPUPowerManagementVersion != "0.6" {
+        if AMDRyzenCPUPowerManagementVersion != "0.6.1" {
             alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated.\n\nPlease use the lastest version and start this application again.")
         }
         
@@ -102,7 +102,7 @@ class ProcessorModel {
         let res = alert.runModal()
         
         if res == .alertSecondButtonReturn {
-            NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/AMDRyzenCPUPowerManagement")!)
+            NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
         }
         
         NSApplication.shared.terminate(self)
