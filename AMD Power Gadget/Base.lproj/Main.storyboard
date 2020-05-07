@@ -903,18 +903,20 @@
                                             </userDefinedRuntimeAttributes>
                                         </customView>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OqB-AI-Q3l">
-                                            <rect key="frame" x="494" y="567" width="93" height="25"/>
+                                            <rect key="frame" x="475" y="567" width="112" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Fastest" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" inset="2" pullsDown="YES" preferredEdge="maxX" selectedItem="JPo-Oe-VZY" id="Q1A-AK-67E">
+                                            <popUpButtonCell key="cell" type="push" title="Fastest" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" pullsDown="YES" preferredEdge="maxX" selectedItem="JPo-Oe-VZY" id="Q1A-AK-67E">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <menu key="menu" id="M04-GL-LJW">
                                                     <items>
-                                                        <menuItem title="Fastest" state="on" hidden="YES" id="JPo-Oe-VZY"/>
-                                                        <menuItem title="Item 2" id="Hn8-Ks-uXq"/>
-                                                        <menuItem title="Item 3" id="n9B-MP-DFG"/>
+                                                        <menuItem title="Fastest" state="on" id="JPo-Oe-VZY"/>
+                                                        <menuItem title="Balanced" id="Hn8-Ks-uXq"/>
                                                     </items>
                                                 </menu>
+                                                <connections>
+                                                    <action selector="onPP:" target="rDh-aT-nig" id="RaG-UF-eCI"/>
+                                                </connections>
                                             </popUpButtonCell>
                                         </popUpButton>
                                         <box fixedFrame="YES" boxType="custom" cornerRadius="5" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="4We-9B-XwG">

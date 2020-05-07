@@ -400,6 +400,33 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             break;
         }
             
+        //Get PP
+        case 20: {
+            arguments->scalarOutputCount = 0;
+                
+            arguments->structureOutputSize = 1 * sizeof(uint64_t);
+                
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+
+            dataOut[0] = (uint64_t)(fProvider->getPowerPlan());
+            break;
+        }
+        
+        //Set PP
+        case 21: {
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = 0;
+                
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+                
+            uint32_t powerplan = arguments->scalarInput[0];
+            
+            fProvider->setPowerPlan(powerplan);
+            
+            break;
+        }
+            
         default: {
             IOLog("AMDCPUSupportUserClient::externalMethod: invalid method.\n");
             break;

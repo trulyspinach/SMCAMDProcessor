@@ -664,6 +664,18 @@ void AMDRyzenCPUPowerManagement::setPMPStateLimit(uint32_t state){
     }
 }
 
+uint32_t AMDRyzenCPUPowerManagement::getPowerPlan(){
+    return pmRyzen_powerplan;
+}
+
+void AMDRyzenCPUPowerManagement::setPowerPlan(uint32_t powerplan){
+    if(pmRyzen_powerplan != powerplan) {
+        pmRyzen_powerplan = powerplan;
+        // recalculate thresholds
+        pmRyzen_powerplan_reset();
+    }
+}
+
 uint32_t AMDRyzenCPUPowerManagement::getHPcpus(){
     return pmRyzen_hpcpus;
 }

@@ -321,6 +321,23 @@ class ProcessorModel {
         }
     }
     
+    func getPP() -> UInt64 {
+        let o = kernelGetUInt64(count: 1, selector: 20)
+        return o[0];
+    }
+    
+    func setPP(powerplan: UInt64){
+        var input: [UInt64] = [UInt64(powerplan)]
+        let res = IOConnectCallMethod(connect, 21, &input, 1, nil, 0,
+                                      nil, nil,
+                                      nil, nil)
+        
+        if res != KERN_SUCCESS {
+            print(String(cString: mach_error_string(res)))
+            return
+        }
+    }
+    
     func getInstructionDelta() -> [UInt64]{
         let o = kernelGetUInt64(count: 1, selector: 5)
         return [o[0]]

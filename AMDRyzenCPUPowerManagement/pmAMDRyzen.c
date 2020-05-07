@@ -27,9 +27,12 @@ uint64_t pmRyzen_exit_idle_false_c;
 
 uint64_t pmRyzen_p_sdtsc;
 uint64_t pmRyzen_p_sutsc;
+uint64_t pmRyzen_p_sdt;
+uint64_t pmRyzen_p_sdmpg;
 
 uint32_t pmRyzen_hpcpus = 0;
 uint32_t pmRyzen_pstatelimit;
+uint32_t pmRyzen_powerplan;
 
 void(*pmRyzen_pmUnRegister)(pmDispatch_t*) = 0;
 void(*pmRyzen_cpu_NMI)(int) = 0;
@@ -165,6 +168,7 @@ void pmRyzen_init(void *handle){
     pmRyzen_num_logi = 0;
     pmRyzen_hpcpus = 0;
     pmRyzen_pstatelimit = PSTATE_LIMIT;
+    pmRyzen_powerplan = 0; // fastest
     
     while(pkg){
         pkgCount++;
@@ -195,16 +199,29 @@ void pmRyzen_init(void *handle){
         pkg = pkg->next;
     }
 //    IOLog("pkg c %d\n", pkgCount);
-
     
     pmRyzen_effective_timetsc = ((double)pmRyzen_tsc_freq * EFF_INTERVAL);
-    pmRyzen_p_sdtsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_STEPDOWN_THRE);
-    pmRyzen_p_sutsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_STEPUP_THRE);
+    pmRyzen_powerplan = 0; // fastest
+    pmRyzen_powerplan_reset();
     
     pmRyzen_init_PState();
     pmRyzen_PState_reset();
     
     cb.initComplete();
+}
+
+void pmRyzen_powerplan_reset(){
+    if (pmRyzen_powerplan == 0) { // fastest
+        pmRyzen_p_sdtsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_STEPDOWN_THRE);
+        pmRyzen_p_sutsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_STEPUP_THRE);
+        pmRyzen_p_sdt = PSTATE_STEPDOWN_TIME;
+        pmRyzen_p_sdmpg = PSTATE_STEPDOWN_MP_GAIN;
+    } else if (pmRyzen_powerplan == 1) { // balanced
+        pmRyzen_p_sdtsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_BALANCED_STEPDOWN_THRE);
+        pmRyzen_p_sutsc = (uint64_t)((double)pmRyzen_effective_timetsc * PSTATE_BALANCED_STEPUP_THRE);
+        pmRyzen_p_sdt = PSTATE_BALANCED_STEPDOWN_TIME;
+        pmRyzen_p_sdmpg = PSTATE_BALANCED_STEPDOWN_MP_GAIN;
+    }
 }
 
 void pmRyzen_stop(){
@@ -317,7 +334,7 @@ uint64_t pmRyzen_machine_idle(uint64_t maxDur){
             self->ll_count = 0;
         } else if(rt < pmRyzen_p_sdtsc){
             self->ll_count++;
-            if(self->ll_count > PSTATE_STEPDOWN_TIME + pmRyzen_hpcpus * PSTATE_STEPDOWN_MP_GAIN){
+            if(self->ll_count > pmRyzen_p_sdt + pmRyzen_hpcpus * pmRyzen_p_sdmpg){
                 self->ll_count = 0;
                 set_PState(self, self->PState+1);
             }

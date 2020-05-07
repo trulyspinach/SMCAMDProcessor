@@ -149,6 +149,9 @@ public:
     uint32_t getPMPStateLimit();
     void setPMPStateLimit(uint32_t);
     
+    uint32_t getPowerPlan();
+    void setPowerPlan(uint32_t);
+    
     uint32_t getHPcpus();
     
     uint32_t totalNumberOfPhysicalCores;

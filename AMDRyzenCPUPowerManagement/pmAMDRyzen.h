@@ -29,10 +29,16 @@
 
 #define EFF_INTERVAL 0.15
 #define PSTATE_LIMIT 1
-#define PSTATE_STEPDOWN_THRE 0.25
-#define PSTATE_STEPUP_THRE 0.45
-#define PSTATE_STEPDOWN_TIME 5
-#define PSTATE_STEPDOWN_MP_GAIN 1
+
+#define PSTATE_STEPDOWN_THRE 0.12
+#define PSTATE_STEPUP_THRE 0.38
+#define PSTATE_STEPDOWN_TIME 16
+#define PSTATE_STEPDOWN_MP_GAIN 5
+
+#define PSTATE_BALANCED_STEPDOWN_THRE 0.25
+#define PSTATE_BALANCED_STEPUP_THRE 0.45
+#define PSTATE_BALANCED_STEPDOWN_TIME 5
+#define PSTATE_BALANCED_STEPDOWN_MP_GAIN 1
 
 
 extern int cpu_number(void);
@@ -50,6 +56,8 @@ extern uint64_t pmRyzen_exit_idle_false_c;
 extern uint32_t pmRyzen_hpcpus;
 
 extern uint32_t pmRyzen_pstatelimit;
+
+extern uint32_t pmRyzen_powerplan;
 
 extern void pmRyzen_wrmsr_safe(void *, uint32_t, uint64_t);
 extern uint64_t pmRyzen_rdmsr_safe(void *, uint32_t);
@@ -88,6 +96,7 @@ typedef struct pmProcessor{
 void pmRyzen_init(void*);
 void pmRyzen_stop(void);
 void pmRyzen_PState_reset(void);
+void pmRyzen_powerplan_reset(void);
 float pmRyzen_avgload_pcpu(uint32_t);
 
 uint64_t pmRyzen_machine_idle(uint64_t);

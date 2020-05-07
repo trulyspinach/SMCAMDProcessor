@@ -69,6 +69,12 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         updateLPM()
     }
     
+    @IBOutlet weak var ppSelect: NSPopUpButton!
+    @IBAction func onPP(_ sender: Any) {
+        ProcessorModel.shared.setPP(powerplan: ppSelect.indexOfSelectedItem)
+        updatePP()
+    }
+    
     @IBOutlet weak var topLabel1: NSTextField!
     @IBOutlet weak var topLabel2: NSTextField!
     
@@ -218,6 +224,12 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         let s = ProcessorModel.shared.getLPM()
         
         lpmBox.state = s ? NSControl.StateValue.on : NSControl.StateValue.off
+    }
+    
+    func updatePP() {
+        let s = ProcessorModel.shared.getPP()
+        
+        ppSelect.selectItem(at: s)
     }
     
     @IBAction func openGitHub(_ sender: Any) {
