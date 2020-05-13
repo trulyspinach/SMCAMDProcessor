@@ -194,6 +194,10 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
         let op = NSOpenPanel()
         op.runModal()
         
+        if op.url == nil {
+            return;
+        }
+        
         let arr = NSArray.init(contentsOf: op.url!) as! [UInt64]
 
         data = arr.map({value2Dict(v: $0)})
