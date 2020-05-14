@@ -11,7 +11,6 @@ import IOKit
 
 class ViewController: NSViewController, NSWindowDelegate {
     
-    @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var contentView: NSView!
     
     @IBOutlet weak var subtitleLabel: NSTextField!
@@ -45,8 +44,6 @@ class ViewController: NSViewController, NSWindowDelegate {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (t) in
             self.sampleData(forced: true)
         })
-        
-        scrollView.scroll(NSPoint(x: 0,y: 0))
         
         
         subtitleLabel.stringValue = ProcessorModel.sysctlString(key: "machdep.cpu.brand_string")
@@ -102,7 +99,7 @@ class ViewController: NSViewController, NSWindowDelegate {
     }
     
     @IBAction func buttonPressed(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/AMDRyzenCPUPowerManagement")!)
+        NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
     }
     
     
