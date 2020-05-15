@@ -84,7 +84,7 @@ class GraphView: NSView {
                 let foregroundColors = getForegroundColors(index: index)
                 let lineColor = getLineColors(index: index)
                 drawLine(in: dirtyRect, context: context, points: points, foregroundColors: foregroundColors, lineColor: lineColor)
-                drawDataPoint(in: dirtyRect, context: context, points: points)
+                drawDataPoint(in: dirtyRect, context: context, points: points, pointColor: lineColor)
             }
         }
         
@@ -251,7 +251,7 @@ class GraphView: NSView {
                                    end: CGPoint(x: 0, y: 0), options: [])
     }
     
-    private func drawDataPoint(in rect: CGRect, context: CGContext, points: [Double]){
+    private func drawDataPoint(in rect: CGRect, context: CGContext, points: [Double], pointColor: CGColor){
         
         let xStep : Double = Double(rect.size.width) / Double(points.count - 1)
         
@@ -268,7 +268,7 @@ class GraphView: NSView {
             context.fillPath();
             
             context.addPath(path);
-            context.setStrokeColor(dotStrokeColor.cgColor)
+            context.setStrokeColor(pointColor)
             context.setLineWidth(lineWidth)
             context.strokePath()
         }
