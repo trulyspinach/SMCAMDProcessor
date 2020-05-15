@@ -223,7 +223,10 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
                                                             <real key="value" value="0.40000000000000002"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
+                                                            <color key="value" red="0.60658193008497407" green="0.19099316342017622" blue="0.17632566652203388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor2">
                                                             <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
@@ -293,7 +296,7 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
                                                             <real key="value" value="0.40000000000000002"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
                                                             <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
@@ -360,7 +363,7 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
                                                             <real key="value" value="0.40000000000000002"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
                                                             <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">

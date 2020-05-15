@@ -27,7 +27,9 @@ class GraphView: NSView {
     @IBInspectable var gridWidth: CGFloat = 1;
     @IBInspectable var gridColor: NSColor = NSColor.highlightColor
     
-    @IBInspectable var lineColor: NSColor = NSColor.highlightColor
+    @IBInspectable var lineColor1: NSColor = NSColor.highlightColor
+    @IBInspectable var lineColor2: NSColor = NSColor.highlightColor
+    @IBInspectable var lineColorX: NSColor = NSColor.highlightColor
     @IBInspectable var lineWidth: CGFloat = 1;
     @IBInspectable var lineCurviness: CGFloat = 0.1
     
@@ -79,8 +81,9 @@ class GraphView: NSView {
         if dataPoints[0].count > 2 {
             drawGrid(in: dirtyRect, context: context)
             for (index, points) in dataPoints.enumerated() {
-                let colors = getForegroundColors(index: index)
-                drawLine(in: dirtyRect, context: context, points: points, foregroundColors: colors)
+                let foregroundColors = getForegroundColors(index: index)
+                let lineColor = getLineColors(index: index)
+                drawLine(in: dirtyRect, context: context, points: points, foregroundColors: foregroundColors, lineColor: lineColor)
                 drawDataPoint(in: dirtyRect, context: context, points: points)
             }
         }
@@ -91,10 +94,15 @@ class GraphView: NSView {
         layer?.masksToBounds = true
     }
     
-    private func getForegroundColors(index: Int)  -> [CGColor] {
+    private func getForegroundColors(index: Int) -> [CGColor] {
         if index == 0 { return [foregroundColor1_1.cgColor, foregroundColor1_2.cgColor] }
         else if index == 1 { return [foregroundColor2_1.cgColor, foregroundColor2_2.cgColor] }
         else { return [foregroundColorX_1.cgColor, foregroundColorX_2.cgColor] }
+    }
+    private func getLineColors(index: Int) -> CGColor {
+        if index == 0 { return lineColor1.cgColor}
+        else if index == 1 { return lineColor2.cgColor }
+        else { return lineColorX.cgColor }
     }
     
     private func fillWithDummyData(){
@@ -137,7 +145,7 @@ class GraphView: NSView {
         for (index, value) in values.enumerated() {
             dataPoints[index].append(value)
             if dataPoints[index].count > maxDataPoints {
-                dataPoints.remove(at: 0)
+                dataPoints[index].remove(at: 0)
             }
         }
                 
@@ -195,7 +203,7 @@ class GraphView: NSView {
 
     }
     
-private func drawLine(in rect: CGRect, context: CGContext, points: [Double], foregroundColors: [CGColor]) {
+    private func drawLine(in rect: CGRect, context: CGContext, points: [Double], foregroundColors: [CGColor], lineColor: CGColor) {
         guard let grad = CGGradient.init(colorsSpace: colorSpace,
                                          colors: foregroundColors as CFArray,
                                          locations: [0, 1] as [CGFloat]) else {return}
@@ -232,7 +240,7 @@ private func drawLine(in rect: CGRect, context: CGContext, points: [Double], for
         path.addLine(to: CGPoint(x: rect.size.width, y: 0))
         
         context.addPath(path)
-        context.setStrokeColor(lineColor.cgColor)
+        context.setStrokeColor(lineColor)
         context.setLineWidth(lineWidth)
         context.strokePath()
         
