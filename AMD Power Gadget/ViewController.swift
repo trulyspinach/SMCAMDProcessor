@@ -79,13 +79,14 @@ class ViewController: NSViewController, NSWindowDelegate {
         }
 
         if power < 1000 {
-            powerGraphView.addData(value: Double(power))
+            powerGraphView.addData(values: [Double(power)])
         }
 
-        temperatureGraphView.addData(value: Double(temperature))
+        temperatureGraphView.addData(values: [Double(temperature)])
 
         let meanFre = Double(frequencies.reduce(0, +) / Float(frequencies.count))
-        frequencyGraphView.addData(value: meanFre)
+        let maxFre = Double(frequencies.max()!)
+        frequencyGraphView.addData(values: [maxFre, meanFre])
         frequencyLabel.stringValue = String(format: "Average of %d Cores: %.2f Ghz, Max: %.2f Ghz", numberOfCores, meanFre * 0.001, frequencies.max()! * 0.001)
 
 

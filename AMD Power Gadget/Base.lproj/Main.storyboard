@@ -214,8 +214,11 @@
                                                         <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
                                                             <color key="value" red="0.3411764705882353" green="0.12156862745098039" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1">
-                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
+                                                            <color key="value" red="0.30944381476683935" green="0.099611292638569604" blue="0.090447132345899739" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2_1">
+                                                            <color key="value" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -226,7 +229,10 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
                                                             <real key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
+                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2_2">
                                                             <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
@@ -281,7 +287,7 @@
                                                         <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
                                                             <color key="value" red="0.15746571779473817" green="0.21726086654867266" blue="0.42159164507875635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
                                                             <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
@@ -293,7 +299,7 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
                                                             <real key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
                                                             <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
@@ -348,7 +354,7 @@
                                                         <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
                                                             <color key="value" red="0.3294342314" green="0.3246774563" blue="0.34255586139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
                                                             <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
@@ -360,7 +366,7 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
                                                             <real key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2">
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
                                                             <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
