@@ -33,12 +33,11 @@ class GraphView: NSView {
     @IBInspectable var viewBottomPercentage: CGFloat = 0;
     
     var dataPoints : [Double] = []
-    var sortedDataPoint : [Double] = []
     var viewTop : CGFloat = 100;
     var viewBottom : CGFloat = 0;
     var viewHeight : CGFloat = 100;
     
-    let gridDivLines: [Double] = [0, 0.15, 0.25, 0.35, 0.5, 0.6, 0.8, 0.9, 1]
+    let gridDivLines: [Double] = [0, 0.2, 0.4, 0.6, 0.8, 1]
     let maxDataPoints = 30
     
     let dummyData: [Double] = [1,3,2]
@@ -113,28 +112,21 @@ class GraphView: NSView {
     
     func addData(value: Double){
         dataPoints.append(value);
-        sortedDataPoint.append(value.rounded())
         
         if dataPoints.count > maxDataPoints {
             dataPoints.remove(at: 0)
         }
-        
-        if sortedDataPoint.count > maxDataPoints {
-            let countedSet = NSCountedSet(array: sortedDataPoint)
-            let mostFrequent = countedSet.max { countedSet.count(for: $0) < countedSet.count(for: $1) }
-            
-            sortedDataPoint.remove(at: sortedDataPoint.firstIndex(of: mostFrequent as! Double)!)
+                
+        if (value < dataMin || dataMin == 0) {
+            dataMin = value.rounded(FloatingPointRoundingRule.down)
         }
-        
-        sortedDataPoint = sortedDataPoint.sorted()
-        
-        dataMax = sortedDataPoint.max()!
-        dataMin = sortedDataPoint.min()!
+        if (value > dataMax) {
+            dataMax = value.rounded(FloatingPointRoundingRule.up)
+        }
         
         //thanks to yurkins for the fix
         dataDiff = max(dataMax - dataMin, 1)
 
-        
         setNeedsDisplay(bounds)
     }
     
@@ -153,7 +145,7 @@ class GraphView: NSView {
         var lastHeight : CGFloat = -1000;
         let minSpacing : CGFloat = 20;
         for v in gridDivLines{
-            let valueOfV = sortedDataPoint[Int(Double(sortedDataPoint.count-1) * v)]
+            let valueOfV = dataMin + dataDiff * v
             let lineHeight = viewHeight * CGFloat((valueOfV - dataMin) / (dataDiff)) + viewBottom
             
             if abs(lineHeight - lastHeight)  < minSpacing {
