@@ -212,11 +212,11 @@ class GraphView: NSView {
         defer { context.restoreGState() }
         
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: 0, y: 0), transform: .identity)
+        path.move(to: CGPoint(x: -1, y: -1), transform: .identity)
         
         
         let xStep : Double = Double(rect.size.width) / Double(points.count - 1)
-        var lastPoint = CGPoint(x:0,y:0);
+        var lastPoint = CGPoint(x:-dotRadius * 2,y:-1);
         
         for (i, v) in points.enumerated(){
             let newPoint = CGPoint(x: CGFloat(Double(i) * xStep),
@@ -237,7 +237,8 @@ class GraphView: NSView {
             lastPoint = newPoint;
         }
         
-        path.addLine(to: CGPoint(x: rect.size.width, y: 0))
+        path.addLine(to: CGPoint(x: rect.size.width + dotRadius*2, y: lastPoint.y))
+        path.addLine(to: CGPoint(x: rect.size.width + dotRadius*2, y: -1))
         
         context.addPath(path)
         context.setStrokeColor(lineColor)
