@@ -36,6 +36,7 @@ class ProcessorModel {
     var boardVender : String = "Unknown"
     
     var fetchRetry : Int = 10
+    var fetchRetry2 : Int = 10
     var retryTimer : Timer?
     
     init() {
@@ -167,7 +168,8 @@ class ProcessorModel {
             return ""
         }
         
-        return String(cString: Array(outputStr[0...outbuffersize-1]))
+        
+        return String(String(cString: Array(outputStr[0...outbuffersize-1])).prefix(outbuffersize))
     }
     
     func kernelSetUInt64(selector : UInt32, args : [UInt64]) -> Bool {
@@ -473,5 +475,43 @@ class ProcessorModel {
         }
         task.resume()
         
+    }
+    
+    func fetchSMCChipSupport(chipIntel : Int, working : Bool) {
+        let url = URL(string: "https://bot1.spinach.wtf/chksmcchipsupport")
+
+        guard let requestUrl = url else { fatalError() }
+
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "POST"
+        
+        var smcConfig = systemConfig
+        smcConfig["smc"] = String(format: "%X", chipIntel)
+        smcConfig["smcloaded"] = working ? "Yes" : "No"
+        
+        let postString = smcConfig.reduce(into: "") { (r, arg1) in
+            let (key, value) = arg1
+            r += "&\(key)=\(value)"
+        }
+
+        request.httpBody = postString.data(using: String.Encoding.utf8);
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                if self.fetchRetry2 > 0 {
+                    self.fetchRetry2 -= 1
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
+                        self.fetchSMCChipSupport(chipIntel: chipIntel, working: working)
+                    })
+                }
+                return
+            }
+         
+            
+//            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+//
+//            }
+        }
+        task.resume()
     }
 }

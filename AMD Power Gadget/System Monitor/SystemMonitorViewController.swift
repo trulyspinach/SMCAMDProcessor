@@ -55,6 +55,8 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
             
         } else {driverLoaded = true}
         
+        ProcessorModel.shared.fetchSMCChipSupport(chipIntel: Int(initRes[1]), working: initRes[0] == 1)
+        
         chipIntelLabel.stringValue =
             String(format: "Chip ID: %X, Revision: %X, \(driverLoaded ? "Connected" : "Not yet supported")",
                     initRes[1] >> 8, initRes[1] & 0xff)

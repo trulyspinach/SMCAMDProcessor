@@ -94,7 +94,7 @@ ISSuperIONCT67XXFamily* ISSuperIONCT67XXFamily::getDevice(uint16_t *chipIntel){
     //verify addr
     IOSleep(100);
     if(ISLPCPort::readWord(portSel, ISLPCPort::kBASE_ADDRESS_REGISTER) != devAddr){
-        IOLog("Fuck me your fucking address is not vaild. Go and fuck yourself");
+        IOLog("NCT67XX address verify failed");
     }
     
     IOLog("Chip address: 0x%X\n", devAddr);

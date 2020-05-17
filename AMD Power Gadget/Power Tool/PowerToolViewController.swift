@@ -90,6 +90,10 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         }
     }
     
+    @IBAction func fanControlButton(_ sender: Any) {
+        SystemMonitorViewController.launch()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
