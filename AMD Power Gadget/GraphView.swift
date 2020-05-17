@@ -15,13 +15,21 @@ class GraphView: NSView {
     @IBInspectable var backgroundColor1: NSColor = NSColor.highlightColor
     @IBInspectable var backgroundColor2: NSColor = NSColor.highlightColor
     
-    @IBInspectable var foregroundColor1: NSColor = NSColor.highlightColor
-    @IBInspectable var foregroundColor2: NSColor = NSColor.highlightColor
+    @IBInspectable var foregroundColor1_1: NSColor = NSColor.highlightColor
+    @IBInspectable var foregroundColor1_2: NSColor = NSColor.highlightColor
+    
+    @IBInspectable var foregroundColor2_1: NSColor = NSColor.highlightColor
+    @IBInspectable var foregroundColor2_2: NSColor = NSColor.highlightColor
+    
+    @IBInspectable var foregroundColorX_1: NSColor = NSColor.highlightColor
+    @IBInspectable var foregroundColorX_2: NSColor = NSColor.highlightColor
     
     @IBInspectable var gridWidth: CGFloat = 1;
     @IBInspectable var gridColor: NSColor = NSColor.highlightColor
     
-    @IBInspectable var lineColor: NSColor = NSColor.highlightColor
+    @IBInspectable var lineColor1: NSColor = NSColor.highlightColor
+    @IBInspectable var lineColor2: NSColor = NSColor.highlightColor
+    @IBInspectable var lineColorX: NSColor = NSColor.highlightColor
     @IBInspectable var lineWidth: CGFloat = 1;
     @IBInspectable var lineCurviness: CGFloat = 0.1
     
@@ -32,13 +40,14 @@ class GraphView: NSView {
     @IBInspectable var viewTopPercentage: CGFloat = 1;
     @IBInspectable var viewBottomPercentage: CGFloat = 0;
     
-    var dataPoints : [Double] = []
-    var sortedDataPoint : [Double] = []
+    let colorSpace = CGColorSpaceCreateDeviceRGB()
+    
+    var dataPoints : [[Double]] = []
     var viewTop : CGFloat = 100;
     var viewBottom : CGFloat = 0;
     var viewHeight : CGFloat = 100;
     
-    let gridDivLines: [Double] = [0, 0.15, 0.25, 0.35, 0.5, 0.6, 0.8, 0.9, 1]
+    let gridDivLines: [Double] = [0, 0.18, 0.38, 0.68, 1]
     let maxDataPoints = 30
     
     let dummyData: [Double] = [1,3,2]
@@ -48,7 +57,8 @@ class GraphView: NSView {
     var dataMax : Double = 0
     var dataMin : Double = 0
     var dataDiff : Double = 0
-    
+   
+  
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
@@ -65,13 +75,17 @@ class GraphView: NSView {
         
 //        fillWithDummyData()
 
-        drawBackground(in: dirtyRect, context: context, colorSpace: CGColorSpaceCreateDeviceRGB())
+        drawBackground(in: dirtyRect, context: context)
 
         
-        if dataPoints.count > 2 {
+        if dataPoints[0].count > 2 {
             drawGrid(in: dirtyRect, context: context)
-            drawLine(in: dirtyRect, context: context, colorSpace: CGColorSpaceCreateDeviceRGB())
-            drawDataPoint(in: dirtyRect, context: context)
+            for (index, points) in dataPoints.enumerated() {
+                let foregroundColors = getForegroundColors(index: index)
+                let lineColor = getLineColors(index: index)
+                drawLine(in: dirtyRect, context: context, points: points, foregroundColors: foregroundColors, lineColor: lineColor)
+                drawDataPoint(in: dirtyRect, context: context, points: points, pointColor: lineColor)
+            }
         }
         
         self.layer = layer
@@ -80,14 +94,24 @@ class GraphView: NSView {
         layer?.masksToBounds = true
     }
     
+    private func getForegroundColors(index: Int) -> [CGColor] {
+        if index == 0 { return [foregroundColor1_1.cgColor, foregroundColor1_2.cgColor] }
+        else if index == 1 { return [foregroundColor2_1.cgColor, foregroundColor2_2.cgColor] }
+        else { return [foregroundColorX_1.cgColor, foregroundColorX_2.cgColor] }
+    }
+    private func getLineColors(index: Int) -> CGColor {
+        if index == 0 { return lineColor1.cgColor}
+        else if index == 1 { return lineColor2.cgColor }
+        else { return lineColorX.cgColor }
+    }
+    
     private func fillWithDummyData(){
         for d in dummyData {
-            addData(value: d)
+            addData(values: [d])
         }
     }
     
-    private func drawBackground(in rect: CGRect, context: CGContext, colorSpace: CGColorSpace?) {
-
+    private func drawBackground(in rect: CGRect, context: CGContext) {
         context.saveGState()
         defer { context.restoreGState() }
         
@@ -111,30 +135,32 @@ class GraphView: NSView {
         context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [])
     }
     
-    func addData(value: Double){
-        dataPoints.append(value);
-        sortedDataPoint.append(value.rounded())
-        
-        if dataPoints.count > maxDataPoints {
-            dataPoints.remove(at: 0)
+    func addData(values: [Double]){
+        if dataPoints.isEmpty {
+            for _ in 0...values.count {
+                dataPoints.append([])
+            }
         }
         
-        if sortedDataPoint.count > maxDataPoints {
-            let countedSet = NSCountedSet(array: sortedDataPoint)
-            let mostFrequent = countedSet.max { countedSet.count(for: $0) < countedSet.count(for: $1) }
-            
-            sortedDataPoint.remove(at: sortedDataPoint.firstIndex(of: mostFrequent as! Double)!)
+        for (index, value) in values.enumerated() {
+            dataPoints[index].append(value)
+            if dataPoints[index].count > maxDataPoints {
+                dataPoints[index].remove(at: 0)
+            }
         }
-        
-        sortedDataPoint = sortedDataPoint.sorted()
-        
-        dataMax = sortedDataPoint.max()!
-        dataMin = sortedDataPoint.min()!
+                
+        let valueMin = values.min()!
+        if (valueMin < dataMin || dataMin == 0) {
+            dataMin = valueMin.rounded(FloatingPointRoundingRule.down)
+        }
+        let valueMax = values.max()!
+        if (valueMax > dataMax) {
+            dataMax = valueMax.rounded(FloatingPointRoundingRule.up)
+        }
         
         //thanks to yurkins for the fix
         dataDiff = max(dataMax - dataMin, 1)
 
-        
         setNeedsDisplay(bounds)
     }
     
@@ -153,7 +179,7 @@ class GraphView: NSView {
         var lastHeight : CGFloat = -1000;
         let minSpacing : CGFloat = 20;
         for v in gridDivLines{
-            let valueOfV = sortedDataPoint[Int(Double(sortedDataPoint.count-1) * v)]
+            let valueOfV = dataMin + dataDiff * v
             let lineHeight = viewHeight * CGFloat((valueOfV - dataMin) / (dataDiff)) + viewBottom
             
             if abs(lineHeight - lastHeight)  < minSpacing {
@@ -177,12 +203,10 @@ class GraphView: NSView {
 
     }
     
-    private func drawLine(in rect: CGRect, context: CGContext, colorSpace: CGColorSpace?) {
-    
+    private func drawLine(in rect: CGRect, context: CGContext, points: [Double], foregroundColors: [CGColor], lineColor: CGColor) {
         guard let grad = CGGradient.init(colorsSpace: colorSpace,
-                                         colors: [foregroundColor1.cgColor, foregroundColor2.cgColor] as CFArray,
+                                         colors: foregroundColors as CFArray,
                                          locations: [0, 1] as [CGFloat]) else {return}
-        
         
         context.saveGState()
         defer { context.restoreGState() }
@@ -191,10 +215,10 @@ class GraphView: NSView {
         path.move(to: CGPoint(x: 0, y: 0), transform: .identity)
         
         
-        let xStep : Double = Double(rect.size.width) / Double(dataPoints.count - 1)
+        let xStep : Double = Double(rect.size.width) / Double(points.count - 1)
         var lastPoint = CGPoint(x:0,y:0);
         
-        for (i, v) in dataPoints.enumerated(){
+        for (i, v) in points.enumerated(){
             let newPoint = CGPoint(x: CGFloat(Double(i) * xStep),
                                    y: viewBottom + (CGFloat((v - dataMin) / (dataDiff)) * viewHeight))
             
@@ -216,7 +240,7 @@ class GraphView: NSView {
         path.addLine(to: CGPoint(x: rect.size.width, y: 0))
         
         context.addPath(path)
-        context.setStrokeColor(lineColor.cgColor)
+        context.setStrokeColor(lineColor)
         context.setLineWidth(lineWidth)
         context.strokePath()
         
@@ -227,11 +251,11 @@ class GraphView: NSView {
                                    end: CGPoint(x: 0, y: 0), options: [])
     }
     
-    private func drawDataPoint(in rect: CGRect, context: CGContext){
+    private func drawDataPoint(in rect: CGRect, context: CGContext, points: [Double], pointColor: CGColor){
         
-        let xStep : Double = Double(rect.size.width) / Double(dataPoints.count - 1)
+        let xStep : Double = Double(rect.size.width) / Double(points.count - 1)
         
-        for (i, v) in dataPoints.enumerated(){
+        for (i, v) in points.enumerated(){
             let newPoint = CGPoint(x: CGFloat(Double(i) * xStep),
                                    y: viewBottom + (CGFloat((v - dataMin) / (dataDiff)) * viewHeight))
             
@@ -244,7 +268,7 @@ class GraphView: NSView {
             context.fillPath();
             
             context.addPath(path);
-            context.setStrokeColor(dotStrokeColor.cgColor)
+            context.setStrokeColor(pointColor)
             context.setLineWidth(lineWidth)
             context.strokePath()
         }
