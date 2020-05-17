@@ -297,7 +297,7 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         //Read stats from package.
         provider->updatePackageTemp();
         provider->updatePackageEnergy();
-        
+//        if(provider->superIO) provider->superIO->updateFanControl();
 //        IOLog("exit idle: %llu, ipi: %llu, diff %llu, false %llu\n", pmRyzen_exit_idle_c, pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_c - pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_false_c);
 //        pmRyzen_exit_idle_c = 0; pmRyzen_exit_idle_ipi_c = 0; pmRyzen_exit_idle_false_c = 0;
 //
@@ -335,7 +335,10 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     workLoop->addEventSource(timerEventSource);
     timerEventSource->setTimeoutMS(1);
     
-
+    
+    //SuperIO Init
+//    initSuperIO(&savedSMCChipIntel);
+    
     
     return success;
 }
@@ -349,7 +352,16 @@ void AMDRyzenCPUPowerManagement::stop(IOService *provider){
     workLoop->removeEventSource(timerEventSource);
     timerEventSource->release();
     
+    if(superIO){
+        for (int i = 0; i < superIO->getNumberOfFans(); i++) {
+            superIO->setDefaultFanControl(i);
+        }
+        
+        delete superIO;
+    }
+    
     IOService::stop(provider);
+    
 }
 
 void AMDRyzenCPUPowerManagement::fetchOEMBaseBoardInfo(){
@@ -651,6 +663,17 @@ void AMDRyzenCPUPowerManagement::writePstate(const uint64_t *buf){
         
     }, nullptr, args);
         
+}
+
+bool AMDRyzenCPUPowerManagement::initSuperIO(uint16_t *chipIntel){
+    
+    superIO = nullptr;
+    if(!superIO) superIO = ISSuperIONCT668X::getDevice(&savedSMCChipIntel);
+    if(!superIO) superIO = ISSuperIONCT67XXFamily::getDevice(&savedSMCChipIntel);
+    
+    *chipIntel = savedSMCChipIntel;
+    
+    return superIO != nullptr;
 }
 
 uint32_t AMDRyzenCPUPowerManagement::getPMPStateLimit(){

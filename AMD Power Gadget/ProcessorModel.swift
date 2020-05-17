@@ -54,7 +54,7 @@ class ProcessorModel {
                                       &outputStr, &outputStrCount)
         AMDRyzenCPUPowerManagementVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
         
-        if AMDRyzenCPUPowerManagementVersion != "0.6.1" {
+        if AMDRyzenCPUPowerManagementVersion != "0.6.2" {
             alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated.\n\nPlease use the lastest version and start this application again.")
         }
         
@@ -108,7 +108,7 @@ class ProcessorModel {
         NSApplication.shared.terminate(self)
     }
     
-    private func kernelGetFloats(count : Int, selector : UInt32) -> [Float] {
+    func kernelGetFloats(count : Int, selector : UInt32) -> [Float] {
         var scalerOut: UInt64 = 0
         var outputCount: UInt32 = 1
 
@@ -127,7 +127,7 @@ class ProcessorModel {
         return outputStr
     }
     
-    private func kernelGetUInt64(count : Int, selector : UInt32) -> [UInt64] {
+    func kernelGetUInt64(count : Int, selector : UInt32) -> [UInt64] {
         var scalerOut: UInt64 = 0
         var outputCount: UInt32 = 1
 
@@ -144,6 +144,39 @@ class ProcessorModel {
         }
         
         return outputStr
+    }
+    
+    func kernelGetString(selector : UInt32, args : [UInt64]) -> String {
+        
+        var argcpy = args
+        var outbuffersize = 16;
+        var outputStr: [CChar] = [CChar](repeating: 0, count: outbuffersize)
+        
+        var res = IOConnectCallMethod(connect, selector, &argcpy, UInt32(args.count), nil, 0,
+                                      nil, nil,
+                                      &outputStr, &outbuffersize)
+        
+        if res == MIG_ARRAY_TOO_LARGE{
+            outputStr = [CChar](repeating: 0, count: outbuffersize)
+            res = IOConnectCallMethod(connect, selector, &argcpy, UInt32(args.count), nil, 0,
+                                      nil, nil,
+                                      &outputStr, &outbuffersize)
+        }
+        else if res != KERN_SUCCESS {
+            print(String(cString: mach_error_string(res)))
+            return ""
+        }
+        
+        return String(cString: Array(outputStr[0...outbuffersize-1]))
+    }
+    
+    func kernelSetUInt64(selector : UInt32, args : [UInt64]) -> Bool {
+        var argcpy = args
+        let res = IOConnectCallMethod(connect, selector, &argcpy, UInt32(args.count), nil, 0,
+                                      nil, nil,
+                                      nil, nil)
+        
+        return res == KERN_SUCCESS
     }
     
     private func loadMetric(){

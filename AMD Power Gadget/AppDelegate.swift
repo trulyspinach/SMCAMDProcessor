@@ -24,6 +24,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         PowerToolViewController.launch()
     }
     
+    @IBAction func sysmonitor(_ sender: Any) {
+        SystemMonitorViewController.launch()
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
     }

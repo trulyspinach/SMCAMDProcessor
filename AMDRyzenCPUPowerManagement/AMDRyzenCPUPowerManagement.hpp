@@ -26,6 +26,8 @@
 
 #include "symresolver/kernel_resolver.h"
 
+#include "SuperIO/ISSuperIONCT668X.hpp"
+#include "SuperIO/ISSuperIONCT67XXFamily.hpp"
 
 #include <i386/cpuid.h>
 
@@ -146,6 +148,8 @@ public:
     void dumpPstate();
     void writePstate(const uint64_t *buf);
     
+    bool initSuperIO(uint16_t* chipIntel);
+    
     uint32_t getPMPStateLimit();
     void setPMPStateLimit(uint32_t);
     
@@ -203,12 +207,13 @@ public:
     double uniPackageEnergy;
     
     bool disablePrivilegeCheck = false;
+    uint16_t savedSMCChipIntel = 0;
 
     kern_return_t (*kunc_alert)(int,unsigned,const char*,const char*,const char*,
                                 const char*,const char*,const char*,const char*,const char*,unsigned*) {nullptr};
     
     
-
+    ISSuperIOSMCFamily *superIO{nullptr};
     
 private:
     IOWorkLoop *workLoop;
@@ -237,8 +242,6 @@ private:
     
     IOPCIDevice *fIOPCIDevice;
     bool getPCIService();
-    
-    
     
     
     

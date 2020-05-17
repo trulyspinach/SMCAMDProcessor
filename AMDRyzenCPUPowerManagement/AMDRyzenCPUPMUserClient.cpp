@@ -26,6 +26,7 @@ bool AMDRyzenCPUPMUserClient::initWithTask(task_t owningTask,
     
     proc_t proc = (proc_t)get_bsdtask_info(owningTask);
     proc_name(proc_pid(proc), taskProcessBinaryName, 32);
+    clientAuthorizedByUser = false;
     
     return true;
 
@@ -63,19 +64,26 @@ uint64_t multiply_two_numbers(uint64_t number_one, uint64_t number_two){
 bool AMDRyzenCPUPMUserClient::hasPrivilege(){
     if(fProvider->disablePrivilegeCheck) return true;
     if(clientHasPrivilege(token, kIOClientPrivilegeAdministrator) == kIOReturnSuccess) return true;
-    
+    if(clientAuthorizedByUser) return true;
     
     char buf[128];
     snprintf(buf, 128,
-             "A process is trying to make changes to your system.\n\nAffected process name: %s",
+             "A process is trying to make changes to your system.\n\nAffected process name: %s\nAuthorize?",
              taskProcessBinaryName);
     
     unsigned int rf;
     (*(fProvider->kunc_alert))(0, 0, NULL, NULL, NULL,
-                  "AMDRyzenCPUPowerManagement", buf, "Deny", "I'm not sure.", "Authorize", &rf);
+                  "AMDRyzenCPUPowerManagement", buf, "Deny", "Until Process Terminate", "Once", &rf);
     
     
-    if(rf == 2) return true;
+    if(rf == 1){
+        clientAuthorizedByUser = true;
+        return true;
+    }
+    
+    if(rf == 2){
+        return true;
+    }
     
     return false;
 }
@@ -399,9 +407,159 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             
             break;
         }
+        
+        //Try load SMC driver
+        case 90: {
+            
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = 2 * sizeof(uint64_t);
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            
+            if(fProvider->superIO != nullptr){
+                dataOut[0] = (uint64_t)(1);
+                dataOut[1] = (uint64_t)(fProvider->savedSMCChipIntel);
+                break;
+            }
+            
+            uint16_t ci = 0;
+            bool found = fProvider->initSuperIO(&ci);
+            
+            dataOut[0] = (uint64_t)(found ? 1 : 0);
+            dataOut[1] = (uint64_t)(ci);
+            break;
+        }
+        
+        //SMC load number of fans
+        case 91: {
+            
+            if(!fProvider->superIO)
+                return kIOReturnNoDevice;
+
+            
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = 1 * sizeof(uint64_t);
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            
+            dataOut[0] = (uint64_t)(fProvider->superIO->getNumberOfFans());
+            break;
+        }
+        
+        //SMC load readable desc for fan
+        case 92: {
+            if(!fProvider->superIO)
+                return kIOReturnNoDevice;
+
+            arguments->scalarOutputCount = 0;
+                
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+                
+            
+            const char *str = fProvider->superIO->getReadableStringForFan((int)arguments->scalarInput[0]);
+            arguments->structureOutputSize = (uint32_t)strlen(str);
+            
+            char *dataOut = (char*) arguments->structureOutput;
+            strcpy(dataOut, str, strlen(str));
+            
+            
+            break;
+        }
+            
+        //SMC fan rpms
+        case 93: {
+            if(!fProvider->superIO)
+                return kIOReturnNoDevice;
+            
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = fProvider->superIO->getNumberOfFans() * sizeof(uint64_t);
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            
+            fProvider->superIO->updateFanRPMS();
+            for (int i = 0; i < fProvider->superIO->getNumberOfFans(); i++) {
+                dataOut[i] = fProvider->superIO->getRPMForFan(i);
+            }
+            
+            break;
+        }
             
         default: {
             IOLog("AMDCPUSupportUserClient::externalMethod: invalid method.\n");
+            break;
+        }
+        
+        //SMC fan throttles and control mode
+        case 94: {
+            if(!fProvider->superIO)
+                return kIOReturnNoDevice;
+            
+            arguments->scalarOutputCount = 0;
+            arguments->structureOutputSize = fProvider->superIO->getNumberOfFans() * sizeof(uint64_t);
+            uint64_t *dataOut = (uint64_t*) arguments->structureOutput;
+            
+            fProvider->superIO->updateFanControl();
+            for (int i = 0; i < fProvider->superIO->getNumberOfFans(); i++) {
+                dataOut[i] = fProvider->superIO->getFanThrottle(i) << 8 | (fProvider->superIO->getFanAutoControlMode(i) ? 1 : 0);
+            }
+            
+            break;
+        }
+        
+        //SMC fan overrride control
+        case 95: {
+            if(!fProvider->superIO)
+                return kIOReturnNoDevice;
+            
+            if(!hasPrivilege())
+                return kIOReturnNotPrivileged;
+            
+            if(arguments->scalarInputCount != 2)
+                return kIOReturnBadArgument;
+            
+            int fanSel = (int)arguments->scalarInput[0];
+            uint8_t pwm = (uint8_t)arguments->scalarInput[1];
+            
+            fProvider->superIO->overrideFanControl(fanSel, pwm);
+            
+            break;
+        }
+        
+        //SMC fan default control
+        case 96: {
+            if(!fProvider->superIO)
+                return kIOReturnNoDevice;
+            
+            if(!hasPrivilege())
+                return kIOReturnNotPrivileged;
+            
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+            
+            int fanSel = (int)arguments->scalarInput[0];
+            
+            fProvider->superIO->setDefaultFanControl(fanSel);
+            
+            break;
+        }
+        
+        //SMC Secret Undocumented feature (⁎⁍̴̛ᴗ⁍̴̛⁎)
+        case 97: {
+            if(!fProvider->superIO)
+                return kIOReturnNoDevice;
+            
+            if(!hasPrivilege())
+                return kIOReturnNotPrivileged;
+            
+            if(arguments->scalarInputCount != 1)
+                return kIOReturnBadArgument;
+            
+            int numFan = fProvider->superIO->getNumberOfFans();
+            for (int i = 0; i < numFan; i++) {
+                if(arguments->scalarInput[0])
+                    fProvider->superIO->overrideFanControl(i, 0xff);
+                else
+                    fProvider->superIO->setDefaultFanControl(i);
+            }
+            
             break;
         }
     }
