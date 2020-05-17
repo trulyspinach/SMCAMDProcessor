@@ -18,6 +18,10 @@ SMCAMDProcessor now comes in two separate binaries(kernel extensions):
 4. If you're using [VirtualSMC](https://github.com/acidanthera/VirtualSMC) you can also load `SMCAMDProcessor.kext` to publish sensor data.
 5. Bootloaders like `OpenCore` will link each kext in the order they present in config file, so make sure `AMDRyzenCPUPowerManagement.kext` comes before `SMCAMDProcessor.kext` as it serves as a dependency.
 
+## Experimental Features
+### Fan Control
+<img src="imgs/fans.png" width="80%">
+
 ### AMD Power Gadget
 <img src="imgs/all.png" width="80%">
 
