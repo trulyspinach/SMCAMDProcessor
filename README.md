@@ -20,10 +20,12 @@ SMCAMDProcessor now comes in two separate binaries(kernel extensions):
 
 ## Experimental Features
 ### Fan Control
-<img src="imgs/fans.png" width="80%">
 
-### AMD Power Gadget
-<img src="imgs/all.png" width="80%">
+Due to the amount of request an experimental feature for reading and overriding fan speed is out!
+<img src="imgs/fans.png" width="60%">
+
+You can access this menu from menu bar "Open -> SMC Fans" or the button in Power Tool.
+
 
 
 ## Features
@@ -34,6 +36,8 @@ SMCAMDProcessor now comes in two separate binaries(kernel extensions):
 
 <img src="imgs/ani.gif" width="100%">
 
+### AMD Power Gadget
+<img src="imgs/all.png" width="80%">
 
 ## Editing PState
 
@@ -71,6 +75,7 @@ To access PState editor:
 * If you like to help with some coding, feel free to submit any pull request or just DM me on Discord.
 
 ## Credits
+* [aluveitie](https://github.com/aluveitie) for various enhancements and fixes.
 * [necross2](https://github.com/necross2) for adding support to temperature sensor offset.
 * [Shaneee](https://github.com/Shaneee) for the beautiful icon.
 
