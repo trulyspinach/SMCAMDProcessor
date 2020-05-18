@@ -21,8 +21,8 @@ public:
     static constexpr i386_ioport_t kCHIP_DEV_SEL_REG = 0x07;
     static constexpr i386_ioport_t kBASE_ADDRESS_REGISTER = 0x60;
     
-    static constexpr i386_ioport_t kREGISTER_PORTS[] = {0x2E, 0x4E};
-    static constexpr i386_ioport_t kVALUE_PORTS[] = {0x2F, 0x4F};
+    static constexpr i386_ioport_t kREGISTER_PORTS[] = {0x4E, 0x2E};
+    static constexpr i386_ioport_t kVALUE_PORTS[] = {0x4F, 0x2F};
     
     
     static uint8_t readByte(int portSelect, uint8_t reg){

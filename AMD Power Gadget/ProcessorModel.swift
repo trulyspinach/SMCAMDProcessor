@@ -55,7 +55,7 @@ class ProcessorModel {
                                       &outputStr, &outputStrCount)
         AMDRyzenCPUPowerManagementVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
         
-        if AMDRyzenCPUPowerManagementVersion != "0.6.2" {
+        if AMDRyzenCPUPowerManagementVersion != "0.6.3" {
             alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated.\n\nPlease use the lastest version and start this application again.")
         }
         

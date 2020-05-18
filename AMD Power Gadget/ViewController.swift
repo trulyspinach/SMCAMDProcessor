@@ -27,6 +27,12 @@ class ViewController: NSViewController, NSWindowDelegate {
 
     var timer : Timer?
     
+    var freqLine : Int = 0
+    var freqMaxLine : Int = 0
+    var tempLine : Int = 0
+    var pwrLine : Int = 0
+    
+    var timeStart : Double = 0
     static var activeSelf : ViewController?
     static func launch() {
         if let vc = ViewController.activeSelf {
@@ -50,11 +56,24 @@ class ViewController: NSViewController, NSWindowDelegate {
         
         
         subtitleLabel.stringValue = ProcessorModel.sysctlString(key: "machdep.cpu.brand_string")
-        sampleData(forced: true)
-        sampleData(forced: true)
-        sampleData(forced: true)
+        
+        frequencyGraphView.setup()
+        freqMaxLine = frequencyGraphView.addLine()
+        freqLine = frequencyGraphView.addLine()
+        
+        powerGraphView.setup()
+        pwrLine = powerGraphView.addLine()
+        
+        temperatureGraphView.setup()
+        tempLine = temperatureGraphView.addLine()
         
         ViewController.activeSelf = self
+        
+        timeStart = Date.timeIntervalSinceReferenceDate
+        
+        sampleData(forced: true)
+        sampleData(forced: true)
+        sampleData(forced: true)
     }
     
     override func viewWillAppear() {
@@ -77,16 +96,19 @@ class ViewController: NSViewController, NSWindowDelegate {
         for i in 0...(numberOfCores-1) {
             frequencies.append(outputStr[Int(i + 3)])
         }
-
+        
+        let relTime = Date.timeIntervalSinceReferenceDate - timeStart
         if power < 1000 {
-            powerGraphView.addData(values: [Double(power)])
+            powerGraphView.addData(forline: pwrLine, x: relTime, y: Double(power))
         }
 
-        temperatureGraphView.addData(values: [Double(temperature)])
-
+        temperatureGraphView.addData(forline: tempLine, x: relTime, y: Double(temperature))
+        
         let meanFre = Double(frequencies.reduce(0, +) / Float(frequencies.count))
         let maxFre = Double(frequencies.max()!)
-        frequencyGraphView.addData(values: [maxFre, meanFre])
+        frequencyGraphView.addData(forline: freqMaxLine, x: relTime, y: maxFre)
+        frequencyGraphView.addData(forline: freqLine, x: relTime, y: meanFre)
+        
         frequencyLabel.stringValue = String(format: "Average of %d Cores: %.2f Ghz, Max: %.2f Ghz", numberOfCores, meanFre * 0.001, frequencies.max()! * 0.001)
 
 

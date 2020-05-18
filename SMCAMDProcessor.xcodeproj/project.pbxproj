@@ -17,6 +17,7 @@
 		B56164A02470308C001806DC /* SystemMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B561649F2470308C001806DC /* SystemMonitorViewController.swift */; };
 		B564A5CA240B8256000FF929 /* LegacyIOUserClient.h in Headers */ = {isa = PBXBuildFile; fileRef = B564A5C9240B8256000FF929 /* LegacyIOUserClient.h */; };
 		B568E7362414D174007CEEC1 /* CPUSpeedShiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B568E7352414D174007CEEC1 /* CPUSpeedShiftView.swift */; };
+		B5735D3B24724B23002BA4DE /* GraphViewLineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5735D3A24724B23002BA4DE /* GraphViewLineLayer.swift */; };
 		B5787763241105D3001AE704 /* CPUBarLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5787762241105D3001AE704 /* CPUBarLayer.swift */; };
 		B57C7E962424EFFF00C86B68 /* pmCPU.h in Headers */ = {isa = PBXBuildFile; fileRef = B57C7E942424EFFF00C86B68 /* pmCPU.h */; };
 		B57C7E972424EFFF00C86B68 /* cpu_topology.h in Headers */ = {isa = PBXBuildFile; fileRef = B57C7E952424EFFF00C86B68 /* cpu_topology.h */; };
@@ -31,6 +32,7 @@
 		B584F5CC242E2CBE007DEA77 /* pmAMDRyzen.c in Sources */ = {isa = PBXBuildFile; fileRef = B584F5CA242E2CBE007DEA77 /* pmAMDRyzen.c */; };
 		B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */; };
 		B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */; };
+		B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */; };
 		B5D20188241B85E800BBD06A /* kernel_resolver.h in Headers */ = {isa = PBXBuildFile; fileRef = B5D20186241B85E800BBD06A /* kernel_resolver.h */; };
 		B5D20189241B85E800BBD06A /* kernel_resolver.c in Sources */ = {isa = PBXBuildFile; fileRef = B5D20187241B85E800BBD06A /* kernel_resolver.c */; };
 		B5DB81D12417CB5E00741A38 /* PStateEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB81D02417CB5E00741A38 /* PStateEditorViewController.swift */; };
@@ -58,6 +60,7 @@
 		B561649F2470308C001806DC /* SystemMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitorViewController.swift; sourceTree = "<group>"; };
 		B564A5C9240B8256000FF929 /* LegacyIOUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegacyIOUserClient.h; sourceTree = "<group>"; };
 		B568E7352414D174007CEEC1 /* CPUSpeedShiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUSpeedShiftView.swift; sourceTree = "<group>"; };
+		B5735D3A24724B23002BA4DE /* GraphViewLineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewLineLayer.swift; sourceTree = "<group>"; };
 		B5787762241105D3001AE704 /* CPUBarLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUBarLayer.swift; sourceTree = "<group>"; };
 		B57C7E942424EFFF00C86B68 /* pmCPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pmCPU.h; sourceTree = "<group>"; };
 		B57C7E952424EFFF00C86B68 /* cpu_topology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_topology.h; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		B584F5CA242E2CBE007DEA77 /* pmAMDRyzen.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pmAMDRyzen.c; sourceTree = "<group>"; };
 		B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
 		B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
+		B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewGridLineLayer.swift; sourceTree = "<group>"; };
 		B5D20186241B85E800BBD06A /* kernel_resolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kernel_resolver.h; sourceTree = "<group>"; };
 		B5D20187241B85E800BBD06A /* kernel_resolver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kernel_resolver.c; sourceTree = "<group>"; };
 		B5DB81D02417CB5E00741A38 /* PStateEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PStateEditorViewController.swift; sourceTree = "<group>"; };
@@ -135,10 +139,10 @@
 		B56162C52400EF770006A7D8 /* AMD Power Gadget */ = {
 			isa = PBXGroup;
 			children = (
+				B5735D3924724AC9002BA4DE /* GraphView */,
 				B595D3E124166F6000B704F7 /* Resources */,
 				B5F46D80240E6F19009F2961 /* ProcessorModel.swift */,
 				B56162C62400EF770006A7D8 /* AppDelegate.swift */,
-				B561633424010C050006A7D8 /* GraphView.swift */,
 				B56162C82400EF770006A7D8 /* ViewController.swift */,
 				B5787764241105DE001AE704 /* Power Tool */,
 				B561649E24703053001806DC /* System Monitor */,
@@ -156,6 +160,16 @@
 				B561649F2470308C001806DC /* SystemMonitorViewController.swift */,
 			);
 			path = "System Monitor";
+			sourceTree = "<group>";
+		};
+		B5735D3924724AC9002BA4DE /* GraphView */ = {
+			isa = PBXGroup;
+			children = (
+				B561633424010C050006A7D8 /* GraphView.swift */,
+				B5735D3A24724B23002BA4DE /* GraphViewLineLayer.swift */,
+				B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */,
+			);
+			path = GraphView;
 			sourceTree = "<group>";
 		};
 		B5787764241105DE001AE704 /* Power Tool */ = {
@@ -431,6 +445,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5735D3B24724B23002BA4DE /* GraphViewLineLayer.swift in Sources */,
 				B5F46D83240E76D9009F2961 /* PowerToolViewController.swift in Sources */,
 				B56162C92400EF770006A7D8 /* ViewController.swift in Sources */,
 				B5787763241105D3001AE704 /* CPUBarLayer.swift in Sources */,
@@ -441,6 +456,7 @@
 				B5F46D81240E6F19009F2961 /* ProcessorModel.swift in Sources */,
 				B5DB81D12417CB5E00741A38 /* PStateEditorViewController.swift in Sources */,
 				B561633524010C050006A7D8 /* GraphView.swift in Sources */,
+				B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +552,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -560,7 +576,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -684,7 +700,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.2;
+				CURRENT_PROJECT_VERSION = 0.6.3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -699,7 +715,7 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.2;
+				MARKETING_VERSION = 0.6.3;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
 				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				OTHER_CFLAGS = (
@@ -729,7 +745,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.2;
+				CURRENT_PROJECT_VERSION = 0.6.3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -742,7 +758,7 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.2;
+				MARKETING_VERSION = 0.6.3;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
 				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				OTHER_CFLAGS = (
