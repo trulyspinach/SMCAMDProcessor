@@ -20,7 +20,7 @@
 #define CHIP_NCT6683 0xc730
 
 
-#define CHIP_MAX_NUMFAN 16
+#define NCT668X_MAX_NUMFAN 16
 
 #define CHIP_SIO_OPEN 0x87
 #define CHIP_SIO_CLOSE 0xaa
@@ -55,9 +55,9 @@ public:
     
     ISSuperIONCT668X(int psel, uint16_t addr, uint16_t chipIntel);
     
-    int fanRPMs[CHIP_MAX_NUMFAN];
-    uint8_t fanThrottles[CHIP_MAX_NUMFAN];
-    uint8_t fanControlMode[CHIP_MAX_NUMFAN];
+    int fanRPMs[NCT668X_MAX_NUMFAN];
+    uint8_t fanThrottles[NCT668X_MAX_NUMFAN];
+    uint8_t fanControlMode[NCT668X_MAX_NUMFAN];
     
     int activeFansOnSystem = 0;
     
@@ -80,7 +80,7 @@ private:
     int lpcPortSel = 0;
     
     uint16_t chipAddr = 0;
-    uint8_t fanDefaultControlMode[CHIP_MAX_NUMFAN];
+    uint8_t fanDefaultControlMode[NCT668X_MAX_NUMFAN];
     
     uint8_t readByte(uint16_t addr);
     uint16_t readWord(uint16_t addr);

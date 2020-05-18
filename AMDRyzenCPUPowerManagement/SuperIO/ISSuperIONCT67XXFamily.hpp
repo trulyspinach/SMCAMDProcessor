@@ -28,9 +28,9 @@
 #define CHIP_NCT6796D 0xD423
 #define CHIP_NCT6796DR 0xD42A
 #define CHIP_NCT6797D 0xD451
-#define CHIP_NCT6798D 0xD42B0
+#define CHIP_NCT6798D 0xD42B
 
-#define CHIP_MAX_NUMFAN 7
+#define NCT67XX_MAX_NUMFAN 7
 
 #define CHIP_SIO_OPEN 0x87
 #define CHIP_SIO_CLOSE 0xaa
@@ -61,9 +61,9 @@ public:
     
     ISSuperIONCT67XXFamily(int psel, uint16_t addr, uint16_t chipIntel);
     
-    int fanRPMs[CHIP_MAX_NUMFAN];
-    uint8_t fanThrottles[CHIP_MAX_NUMFAN];
-    uint8_t fanControlMode[CHIP_MAX_NUMFAN];
+    int fanRPMs[NCT67XX_MAX_NUMFAN];
+    uint8_t fanThrottles[NCT67XX_MAX_NUMFAN];
+    uint8_t fanControlMode[NCT67XX_MAX_NUMFAN];
     
     int activeFansOnSystem = 0;
     
@@ -91,7 +91,7 @@ private:
     int lpcPortSel = 0;
     
     uint16_t chipAddr = 0;
-    uint8_t fanDefaultControlMode[CHIP_MAX_NUMFAN];
+    uint8_t fanDefaultControlMode[NCT67XX_MAX_NUMFAN];
     
     uint8_t readByte(uint16_t addr);
     uint16_t readWord(uint16_t addr);

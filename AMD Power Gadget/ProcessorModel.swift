@@ -90,7 +90,12 @@ class ProcessorModel {
         
         let status = IOServiceOpen(serviceObject, mach_task_self_, 0, &connect)
         print(status)
+        
         return status == KERN_SUCCESS
+    }
+    
+    func closeDriver() {
+        IOServiceClose(connect)
     }
     
     func alertAndQuit(message : String){

@@ -12,7 +12,7 @@ ISSuperIONCT668X::ISSuperIONCT668X(int psel, uint16_t addr, uint16_t chipIntel){
     lpcPortSel = psel;
     chipAddr = addr;
     
-    activeFansOnSystem = CHIP_MAX_NUMFAN;
+    activeFansOnSystem = NCT668X_MAX_NUMFAN;
     
     //backup default ctrl mode
 //    for (int i = 0; i < activeFansOnSystem; i++) {
