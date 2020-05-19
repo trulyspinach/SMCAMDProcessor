@@ -217,14 +217,53 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
               totalNumberOfPhysicalCores, totalNumberOfLogicalCores);
     
     workLoop = IOWorkLoop::workLoop();
+    startWorkLoop();
+
+    //SuperIO Init
+//    initSuperIO(&savedSMCChipIntel);
+    
+    // disable CPB by default
+    setCPBState(false);
+
+    // prototyping...
+    PMinit();
+    provider->joinPMtree(this);
+    registerPowerDriver(this, powerStates, kNrOfPowerStates);
+    // end
+
+    return success;
+}
+
+void AMDRyzenCPUPowerManagement::stop(IOService *provider){
+    pmRyzen_stop();
+    
+    IOLog("AMDCPUSupport stopped\n");
+    
+    stopWorkLoop();
+    
+    if(superIO){
+        for (int i = 0; i < superIO->getNumberOfFans(); i++) {
+            superIO->setDefaultFanControl(i);
+        }
+
+        delete superIO;
+    }
+
+    PMstop();
+
+    IOService::stop(provider);
+
+}
+
+void AMDRyzenCPUPowerManagement::startWorkLoop() {
+    IOLog("AMDCPUSupport::startWorkLoop setting up timer");
+    
     timerEventSource = IOTimerEventSource::timerEventSource(this, [](OSObject *object, IOTimerEventSource *sender) {
         AMDRyzenCPUPowerManagement *provider = OSDynamicCast(AMDRyzenCPUPowerManagement, object);
 
-        
-        
         //Run initialization
         if(!provider->serviceInitialized){
-            
+            IOLog("AMDCPUSupport::startWorkLoop initialize service");
             
             //Disable interrupts and sync all processor cores.
             mp_rendezvous_no_intrs([](void *obj) {
@@ -239,11 +278,9 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
 //                provider->read_msr(0xC0010296, &val);
 //                provider->write_msr(0xC0010296, val | (1 << 22) | (1 << 14) | (1 << 6));
 
-                
-                
                 uint64_t hwConfig;
                 if(!provider->read_msr(kMSR_HWCR, &hwConfig))
-                    panic("AMDCPUSupport::start: wtf?");
+                    panic("AMDCPUSupport::startWorkLoop: wtf?");
 
                 hwConfig |= (1 << 30);
                 provider->write_msr(kMSR_HWCR, hwConfig);
@@ -263,7 +300,7 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
                 //Init performance frequency counter.
                 uint64_t APERF, MPERF;
                 if(!provider->read_msr(kMSR_APERF, &APERF) || !provider->read_msr(kMSR_MPERF, &MPERF))
-                    panic("AMDCPUSupport::start: wtf?");
+                    panic("AMDCPUSupport::startWorkLoop: wtf?");
 
                 provider->lastAPERF_PerCore[physical] = APERF;
                 provider->lastMPERF_PerCore[physical] = MPERF;
@@ -325,43 +362,37 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         
     });
     
-
     registerService();
-    
-
     
     lastUpdateTime = getCurrentTimeNs();
     pwrLastTSC = rdtsc64();
     workLoop->addEventSource(timerEventSource);
     timerEventSource->setTimeoutMS(1);
-    
-    
-    //SuperIO Init
-//    initSuperIO(&savedSMCChipIntel);
-    
-    
-    return success;
 }
 
-void AMDRyzenCPUPowerManagement::stop(IOService *provider){
-    pmRyzen_stop();
-    
-    IOLog("AMDCPUSupport stopped\n");
-    
+void AMDRyzenCPUPowerManagement::stopWorkLoop() {
+    IOLog("AMDCPUSupport::startWorkLoop stopping timer");
     timerEventSource->cancelTimeout();
     workLoop->removeEventSource(timerEventSource);
     timerEventSource->release();
-    
-    if(superIO){
-        for (int i = 0; i < superIO->getNumberOfFans(); i++) {
-            superIO->setDefaultFanControl(i);
-        }
-        
-        delete superIO;
+    serviceInitialized = false;
+}
+
+
+IOReturn AMDRyzenCPUPowerManagement::setPowerState(unsigned long powerStateOrdinal, IOService* provider) {
+    if (0 == powerStateOrdinal) {
+        // Going to sleep
+        IOLog("AMDCPUSupport::setPowerState preparing for sleep\n");
+        wentToSleep = true;
+        stopWorkLoop();
+    } else if (1 == powerStateOrdinal && wentToSleep) {
+        // Waking up
+        IOLog("AMDCPUSupport::setPowerState preparing for wakeup\n");
+        wentToSleep = false;
+        startWorkLoop();
     }
-    
-    IOService::stop(provider);
-    
+
+    return kIOPMAckImplied;
 }
 
 void AMDRyzenCPUPowerManagement::fetchOEMBaseBoardInfo(){
@@ -470,7 +501,10 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     //If an overflow of either the MPERF or APERF register occurs between the read of last MPERF and the
     //read of last APERF, the effective frequency calculated in is invalid.
     //Yeah, so we will do nothing.
-    if(APERF <= lastAPERF || MPERF <= lastMPERF) return;
+    if(APERF <= lastAPERF || MPERF <= lastMPERF) {
+        IOLog("AMDCPUSupport::calculateEffectiveFrequency: frequency is invalid!!!");
+        return;
+    }
     
     float freqP0 = PStateDefClock_perCore[0];
     
