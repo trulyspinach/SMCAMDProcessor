@@ -146,8 +146,8 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController storyboardIdentifier="AMDPowerGadget" id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="AMD Power Gadget" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="darkAqua" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                    <window key="window" title="AMD Power Gadget" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="darkAqua" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="410" height="770"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -173,333 +173,438 @@
                         <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView appearanceType="darkAqua" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQS-Yx-qAY">
+                            <visualEffectView blendingMode="behindWindow" material="HUDWindow" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-sZ-1YA">
                                 <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
-                                <clipView key="contentView" id="baN-DY-cIK">
-                                    <rect key="frame" x="1" y="1" width="408" height="938"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <view id="TIX-Q5-kis">
-                                            <rect key="frame" x="0.0" y="0.0" width="388" height="925"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                <subviews>
+                                    <scrollView appearanceType="darkAqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQS-Yx-qAY">
+                                        <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="baN-DY-cIK">
+                                            <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-KS-nxl">
-                                                    <rect key="frame" x="18" y="873" width="298" height="32"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Power Gadget" id="kgx-Yz-PbY">
-                                                        <font key="font" size="27" name="HelveticaNeue-Bold"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="TFs-yj-lzu" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="336" width="368" height="241"/>
-                                                    <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qhw-g2-Ry1">
-                                                            <rect key="frame" x="18" y="202" width="298" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Temperature" id="9dF-A1-1Jg">
-                                                                <font key="font" size="22" name="HelveticaNeue-Bold"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iNA-Ja-LRu">
-                                                            <rect key="frame" x="18" y="177" width="44" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="30 C" id="tmg-PQ-zZy">
-                                                                <font key="font" size="13" name="HelveticaNeue-Medium"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                    </subviews>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
-                                                            <color key="value" red="0.097025269620285418" green="0.12493427342980919" blue="0.1291491256" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
-                                                            <color key="value" red="0.15746571779473817" green="0.21726086654867266" blue="0.42159164507875635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
-                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
-                                                            <real key="value" value="0.29999999999999999"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
-                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotFillColor">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotStrokeColor">
-                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
-                                                            <color key="value" red="0.98838856180000001" green="1" blue="0.99038895149999995" alpha="0.25343860039999999" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
-                                                            <real key="value" value="0.59999999999999998"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
-                                                            <real key="value" value="0.10000000000000001"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </customView>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dVq-Zt-29Y" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="76" width="368" height="241"/>
-                                                    <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p3e-V6-tG5">
-                                                            <rect key="frame" x="18" y="202" width="298" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Power" id="1wS-zW-gQa">
-                                                                <font key="font" size="22" name="HelveticaNeue-Bold"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nPz-fp-E0B">
-                                                            <rect key="frame" x="18" y="177" width="298" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Avg: 3.56Ghz Max: 4.3Ghz Min: 2.0Ghz" id="Plb-DS-sdn">
-                                                                <font key="font" size="13" name="HelveticaNeue-Medium"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                    </subviews>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
-                                                            <color key="value" red="0.1291491256" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
-                                                            <color key="value" red="0.3294342314" green="0.3246774563" blue="0.34255586139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
-                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
-                                                            <real key="value" value="0.40000000000000002"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
-                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotFillColor">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotStrokeColor">
-                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
-                                                            <color key="value" red="0.98838856180000001" green="1" blue="0.99038895149999995" alpha="0.25343860039999999" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
-                                                            <real key="value" value="0.65000000000000002"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
-                                                            <real key="value" value="0.10000000000000001"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </customView>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lW7-TH-Jh4">
-                                                    <rect key="frame" x="18" y="846" width="333" height="29"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="29" id="Vr7-Di-lrs"/>
-                                                        <constraint firstAttribute="width" constant="329" id="bUD-fi-qGW"/>
-                                                    </constraints>
-                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" alignment="left" title="AMD Ryzen 9 3900X n-Core Processor" id="dkz-Wd-dhY">
-                                                        <font key="font" size="15" name="HelveticaNeue-Bold"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-cv-FEh">
-                                                    <rect key="frame" x="123" y="20" width="142" height="21"/>
+                                                <view id="TIX-Q5-kis">
+                                                    <rect key="frame" x="0.0" y="0.0" width="410" height="925"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="trulyspinach" id="5Us-8x-J9i">
-                                                        <font key="font" metaFont="systemSemibold" size="13"/>
-                                                        <color key="textColor" red="0.032221600140000001" green="0.51876349519999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
-                                                    <rect key="frame" x="105" y="19" width="179" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
-                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                    <color key="contentTintColor" red="0.032221600135011963" green="0.51876349517399301" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="buttonPressed:" target="XfG-lQ-9wD" id="64Z-nc-FX5"/>
-                                                    </connections>
-                                                </button>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-xZ-Nqc">
-                                                    <rect key="frame" x="103" y="43" width="183" height="16"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Designed and Engineered By:" id="j0C-AZ-HUC">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="hBo-Uf-jJB">
-                                                    <rect key="frame" x="357" y="859" width="31" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="NOj-SU-7VI"/>
-                                                        <constraint firstAttribute="width" constant="31" id="sEn-H1-6DW"/>
-                                                    </constraints>
-                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSListViewTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="AXP-tr-TUe">
-                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="launchPowerTool:" target="XfG-lQ-9wD" id="Zzs-w1-G40"/>
-                                                    </connections>
-                                                </button>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dUS-mw-nYz" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="596" width="368" height="241"/>
                                                     <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jld-SV-yGS">
-                                                            <rect key="frame" x="18" y="202" width="298" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Frequency" id="qRd-tk-FyD">
-                                                                <font key="font" size="22" name="HelveticaNeue-Bold"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nku-di-rIr">
-                                                            <rect key="frame" x="18" y="177" width="298" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Avg: 3.56Ghz Max: 4.3Ghz Min: 2.0Ghz" id="SDV-46-714">
-                                                                <font key="font" size="13" name="HelveticaNeue-Medium"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
+                                                        <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z93-js-dOg">
+                                                            <rect key="frame" x="20" y="20" width="370" height="885"/>
+                                                            <subviews>
+                                                                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Pm-km-AqH">
+                                                                    <rect key="frame" x="0.0" y="796" width="370" height="89"/>
+                                                                    <subviews>
+                                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ctl-UK-C2x">
+                                                                            <rect key="frame" x="0.0" y="14" width="274" height="61"/>
+                                                                            <subviews>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-KS-nxl">
+                                                                                    <rect key="frame" x="-2" y="29" width="259" height="32"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Power Gadget" id="kgx-Yz-PbY">
+                                                                                        <font key="font" size="27" name="HelveticaNeue-Bold"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lW7-TH-Jh4">
+                                                                                    <rect key="frame" x="-2" y="0.0" width="278" height="29"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="29" id="Vr7-Di-lrs"/>
+                                                                                    </constraints>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="left" title="AMD Ryzen 9 3900X n-Core Processor" id="dkz-Wd-dhY">
+                                                                                        <font key="font" size="15" name="HelveticaNeue-Bold"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
+                                                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="hBo-Uf-jJB">
+                                                                            <rect key="frame" x="284" y="30" width="86" height="30"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="30" id="NOj-SU-7VI"/>
+                                                                            </constraints>
+                                                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSListViewTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="AXP-tr-TUe">
+                                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                            <connections>
+                                                                                <action selector="launchPowerTool:" target="XfG-lQ-9wD" id="Zzs-w1-G40"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <visibilityPriorities>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                    </visibilityPriorities>
+                                                                    <customSpacing>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                    </customSpacing>
+                                                                </stackView>
+                                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dUS-mw-nYz" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="551" width="370" height="230"/>
+                                                                    <subviews>
+                                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmE-cn-Eao">
+                                                                            <rect key="frame" x="15" y="178" width="340" height="42"/>
+                                                                            <subviews>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jld-SV-yGS">
+                                                                                    <rect key="frame" x="-2" y="16" width="115" height="26"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Frequency" id="qRd-tk-FyD">
+                                                                                        <font key="font" size="22" name="HelveticaNeue-Bold"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nku-di-rIr">
+                                                                                    <rect key="frame" x="-2" y="0.0" width="237" height="16"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Avg: 3.56Ghz Max: 4.3Ghz Min: 2.0Ghz" id="SDV-46-714">
+                                                                                        <font key="font" size="13" name="HelveticaNeue-Medium"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="pmE-cn-Eao" secondAttribute="trailing" constant="15" id="E1t-YO-GSV"/>
+                                                                        <constraint firstItem="pmE-cn-Eao" firstAttribute="leading" secondItem="dUS-mw-nYz" secondAttribute="leading" constant="15" id="QLO-EU-Bfb"/>
+                                                                        <constraint firstAttribute="height" constant="230" id="hxn-IM-tne"/>
+                                                                        <constraint firstItem="pmE-cn-Eao" firstAttribute="top" secondItem="dUS-mw-nYz" secondAttribute="top" constant="10" id="qAv-EB-nvL"/>
+                                                                    </constraints>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
+                                                                            <color key="value" red="0.20392156862745098" green="0.18823529411764706" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
+                                                                            <color key="value" red="0.3411764705882353" green="0.12156862745098039" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
+                                                                            <color key="value" red="0.30944381476683935" green="0.099611292638569604" blue="0.090447132345899739" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2_1">
+                                                                            <color key="value" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
+                                                                            <real key="value" value="0.29999999999999999"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
+                                                                            <color key="value" red="0.60658193008497407" green="0.19099316342017622" blue="0.17632566652203388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor2">
+                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                            <real key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
+                                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2_2">
+                                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
+                                                                            <real key="value" value="2"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotFillColor">
+                                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotStrokeColor">
+                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
+                                                                            <real key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
+                                                                            <color key="value" red="0.98838856183020274" green="1" blue="0.99038895154254147" alpha="0.25343860035211269" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
+                                                                            <real key="value" value="0.59999999999999998"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
+                                                                            <real key="value" value="0.10000000000000001"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </customView>
+                                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="TFs-yj-lzu" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="306" width="370" height="230"/>
+                                                                    <subviews>
+                                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FPJ-Wd-oOI">
+                                                                            <rect key="frame" x="20" y="178" width="335" height="42"/>
+                                                                            <subviews>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qhw-g2-Ry1">
+                                                                                    <rect key="frame" x="-2" y="16" width="137" height="26"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Temperature" id="9dF-A1-1Jg">
+                                                                                        <font key="font" size="22" name="HelveticaNeue-Bold"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iNA-Ja-LRu">
+                                                                                    <rect key="frame" x="-2" y="0.0" width="32" height="16"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="30 C" id="tmg-PQ-zZy">
+                                                                                        <font key="font" size="13" name="HelveticaNeue-Medium"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="FPJ-Wd-oOI" firstAttribute="top" secondItem="TFs-yj-lzu" secondAttribute="top" constant="10" id="fb5-j2-FS8"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="FPJ-Wd-oOI" secondAttribute="trailing" constant="15" id="ljl-tK-K6E"/>
+                                                                        <constraint firstAttribute="height" constant="230" id="n1e-Hu-tF2"/>
+                                                                        <constraint firstItem="FPJ-Wd-oOI" firstAttribute="leading" secondItem="TFs-yj-lzu" secondAttribute="leading" constant="20" symbolic="YES" id="tXv-q9-SPG"/>
+                                                                    </constraints>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
+                                                                            <color key="value" red="0.097025269620285418" green="0.12493427342980919" blue="0.1291491256" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
+                                                                            <color key="value" red="0.15746571779473817" green="0.21726086654867266" blue="0.42159164507875635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
+                                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
+                                                                            <real key="value" value="0.29999999999999999"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
+                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                            <real key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
+                                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
+                                                                            <real key="value" value="2"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotFillColor">
+                                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotStrokeColor">
+                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
+                                                                            <real key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
+                                                                            <color key="value" red="0.98838856180000001" green="1" blue="0.99038895149999995" alpha="0.25343860039999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
+                                                                            <real key="value" value="0.59999999999999998"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
+                                                                            <real key="value" value="0.10000000000000001"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </customView>
+                                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dVq-Zt-29Y" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="61" width="370" height="230"/>
+                                                                    <subviews>
+                                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edL-P0-tdg">
+                                                                            <rect key="frame" x="20" y="178" width="330" height="42"/>
+                                                                            <subviews>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3e-V6-tG5">
+                                                                                    <rect key="frame" x="-2" y="16" width="72" height="26"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Power" id="1wS-zW-gQa">
+                                                                                        <font key="font" size="22" name="HelveticaNeue-Bold"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nPz-fp-E0B">
+                                                                                    <rect key="frame" x="-2" y="0.0" width="237" height="16"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Avg: 3.56Ghz Max: 4.3Ghz Min: 2.0Ghz" id="Plb-DS-sdn">
+                                                                                        <font key="font" size="13" name="HelveticaNeue-Medium"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="edL-P0-tdg" secondAttribute="trailing" constant="20" symbolic="YES" id="27h-U8-Gt1"/>
+                                                                        <constraint firstAttribute="height" constant="230" id="6Zf-rt-yar"/>
+                                                                        <constraint firstItem="edL-P0-tdg" firstAttribute="leading" secondItem="dVq-Zt-29Y" secondAttribute="leading" constant="20" symbolic="YES" id="gap-lS-Afh"/>
+                                                                        <constraint firstItem="edL-P0-tdg" firstAttribute="top" secondItem="dVq-Zt-29Y" secondAttribute="top" constant="10" id="kJn-n7-lPJ"/>
+                                                                    </constraints>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
+                                                                            <color key="value" red="0.1291491256" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
+                                                                            <color key="value" red="0.3294342314" green="0.3246774563" blue="0.34255586139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
+                                                                            <color key="value" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
+                                                                            <real key="value" value="0.40000000000000002"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
+                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                            <real key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
+                                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
+                                                                            <real key="value" value="2"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotFillColor">
+                                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotStrokeColor">
+                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
+                                                                            <real key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
+                                                                            <color key="value" red="0.98838856180000001" green="1" blue="0.99038895149999995" alpha="0.25343860039999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
+                                                                            <real key="value" value="0.65000000000000002"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
+                                                                            <real key="value" value="0.10000000000000001"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </customView>
+                                                                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7O3-J8-Emw">
+                                                                    <rect key="frame" x="96" y="0.0" width="179" height="46"/>
+                                                                    <subviews>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-xZ-Nqc">
+                                                                            <rect key="frame" x="-2" y="30" width="183" height="16"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Designed and Engineered By:" id="j0C-AZ-HUC">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-cv-FEh">
+                                                                            <rect key="frame" x="46" y="14" width="87" height="16"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="trulyspinach" id="5Us-8x-J9i">
+                                                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                                                                <color key="textColor" red="0.032221600140000001" green="0.51876349519999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
+                                                                            <rect key="frame" x="87" y="0.0" width="4" height="14"/>
+                                                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
+                                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                            <color key="contentTintColor" red="0.032221600135011963" green="0.51876349517399301" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <connections>
+                                                                                <action selector="buttonPressed:" target="XfG-lQ-9wD" id="64Z-nc-FX5"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <visibilityPriorities>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                    </visibilityPriorities>
+                                                                    <customSpacing>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                    </customSpacing>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="dUS-mw-nYz" firstAttribute="width" secondItem="z93-js-dOg" secondAttribute="width" id="2Wq-zu-T7H"/>
+                                                                <constraint firstItem="dVq-Zt-29Y" firstAttribute="width" secondItem="z93-js-dOg" secondAttribute="width" id="9to-Dv-Pym"/>
+                                                                <constraint firstItem="TFs-yj-lzu" firstAttribute="width" secondItem="z93-js-dOg" secondAttribute="width" id="NoA-HO-Ll4"/>
+                                                            </constraints>
+                                                            <visibilityPriorities>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                            </visibilityPriorities>
+                                                            <customSpacing>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                            </customSpacing>
+                                                        </stackView>
                                                     </subviews>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
-                                                            <color key="value" red="0.20392156862745098" green="0.18823529411764706" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor2">
-                                                            <color key="value" red="0.3411764705882353" green="0.12156862745098039" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_1">
-                                                            <color key="value" red="0.30944381476683935" green="0.099611292638569604" blue="0.090447132345899739" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2_1">
-                                                            <color key="value" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
-                                                            <real key="value" value="0.29999999999999999"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor1">
-                                                            <color key="value" red="0.60658193008497407" green="0.19099316342017622" blue="0.17632566652203388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor2">
-                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor1_2">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor2_2">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="dotRadius">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotFillColor">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="dotStrokeColor">
-                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
-                                                            <color key="value" red="0.98838856183020274" green="1" blue="0.99038895154254147" alpha="0.25343860035211269" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
-                                                            <real key="value" value="0.59999999999999998"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
-                                                            <real key="value" value="0.10000000000000001"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </customView>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="z93-js-dOg" secondAttribute="bottom" constant="20" symbolic="YES" id="ZWW-DT-pK2"/>
+                                                        <constraint firstAttribute="trailing" secondItem="z93-js-dOg" secondAttribute="trailing" constant="20" symbolic="YES" id="o65-Ke-m2f"/>
+                                                        <constraint firstItem="z93-js-dOg" firstAttribute="leading" secondItem="TIX-Q5-kis" secondAttribute="leading" constant="20" symbolic="YES" id="x9b-Ma-Hdq"/>
+                                                        <constraint firstItem="z93-js-dOg" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="20" symbolic="YES" id="yGG-Um-dz3"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="dUS-mw-nYz" secondAttribute="trailing" constant="-39" id="2VD-4R-hRQ"/>
-                                                <constraint firstItem="hBo-Uf-jJB" firstAttribute="leading" secondItem="lW7-TH-Jh4" secondAttribute="trailing" constant="8" symbolic="YES" id="2Vc-NA-VWE"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="dVq-Zt-29Y" secondAttribute="leading" id="AWt-bz-fnf"/>
-                                                <constraint firstItem="dUS-mw-nYz" firstAttribute="top" secondItem="YXN-KS-nxl" secondAttribute="bottom" constant="36" id="Gjz-Jd-Mwt"/>
-                                                <constraint firstItem="YXN-KS-nxl" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="20" symbolic="YES" id="H5I-vD-bdX"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="YXN-KS-nxl" secondAttribute="leading" id="H5h-02-vM6"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="dUS-mw-nYz" secondAttribute="leading" id="KjU-TQ-odV"/>
-                                                <constraint firstItem="dUS-mw-nYz" firstAttribute="top" secondItem="lW7-TH-Jh4" secondAttribute="bottom" constant="9" id="L2w-RH-bB3"/>
-                                                <constraint firstItem="TFs-yj-lzu" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="348" id="QD2-7C-QSt"/>
-                                                <constraint firstItem="dVq-Zt-29Y" firstAttribute="top" secondItem="TFs-yj-lzu" secondAttribute="bottom" constant="19" id="THl-Lw-orm"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="TFs-yj-lzu" secondAttribute="trailing" constant="-39" id="Wyh-vg-Hhw"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="TIX-Q5-kis" secondAttribute="leading" constant="20" symbolic="YES" id="Wzp-gX-th1"/>
-                                                <constraint firstItem="tU5-xZ-Nqc" firstAttribute="top" secondItem="dVq-Zt-29Y" secondAttribute="bottom" constant="17" id="Zu6-eZ-KuA"/>
-                                                <constraint firstAttribute="bottom" secondItem="dVq-Zt-29Y" secondAttribute="bottom" constant="76" id="ZyT-Zt-PRq"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="leading" secondItem="TFs-yj-lzu" secondAttribute="leading" id="efh-Qa-okv"/>
-                                                <constraint firstAttribute="trailing" secondItem="YXN-KS-nxl" secondAttribute="trailing" constant="74" id="hqb-jw-Oyu"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="firstBaseline" secondItem="hBo-Uf-jJB" secondAttribute="baseline" id="j8k-nh-7b5"/>
-                                                <constraint firstItem="lW7-TH-Jh4" firstAttribute="trailing" secondItem="dVq-Zt-29Y" secondAttribute="trailing" constant="-39" id="tRv-jb-fPd"/>
-                                                <constraint firstItem="tU5-xZ-Nqc" firstAttribute="centerX" secondItem="TIX-Q5-kis" secondAttribute="centerX" id="xEB-Bl-cM3"/>
-                                                <constraint firstItem="TFs-yj-lzu" firstAttribute="top" secondItem="dUS-mw-nYz" secondAttribute="bottom" constant="19" id="xWY-Ya-zkB"/>
-                                                <constraint firstItem="dVq-Zt-29Y" firstAttribute="top" secondItem="TIX-Q5-kis" secondAttribute="top" constant="608" id="yg4-w2-cFI"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </clipView>
-                                <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bxT-br-mDa">
-                                    <rect key="frame" x="-100" y="-100" width="408" height="16"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="FRn-xo-Ixx">
-                                    <rect key="frame" x="-100" y="-100" width="16" height="938"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
+                                        </clipView>
+                                        <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bxT-br-mDa">
+                                            <rect key="frame" x="-100" y="-100" width="408" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="FRn-xo-Ixx">
+                                            <rect key="frame" x="-100" y="-100" width="16" height="938"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="yQS-Yx-qAY" firstAttribute="leading" secondItem="4jT-sZ-1YA" secondAttribute="leading" id="63C-b9-2sV"/>
+                                    <constraint firstAttribute="bottom" secondItem="yQS-Yx-qAY" secondAttribute="bottom" id="IrM-aG-S4K"/>
+                                    <constraint firstAttribute="trailing" secondItem="yQS-Yx-qAY" secondAttribute="trailing" id="Zd1-Ma-rtn"/>
+                                    <constraint firstItem="yQS-Yx-qAY" firstAttribute="top" secondItem="4jT-sZ-1YA" secondAttribute="top" id="aRe-Xp-nzB"/>
+                                </constraints>
+                            </visualEffectView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="yQS-Yx-qAY" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="FB4-Nx-Ass"/>
-                            <constraint firstAttribute="bottom" secondItem="yQS-Yx-qAY" secondAttribute="bottom" id="GVc-Oc-48P"/>
-                            <constraint firstAttribute="trailing" secondItem="yQS-Yx-qAY" secondAttribute="trailing" id="Hx2-H4-9bg"/>
-                            <constraint firstItem="yQS-Yx-qAY" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="fLz-fj-gwq"/>
+                            <constraint firstAttribute="bottom" secondItem="4jT-sZ-1YA" secondAttribute="bottom" id="LBo-7G-uHe"/>
+                            <constraint firstAttribute="trailing" secondItem="4jT-sZ-1YA" secondAttribute="trailing" id="dOI-Sg-oBU"/>
+                            <constraint firstItem="4jT-sZ-1YA" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="fza-Lq-ze4"/>
+                            <constraint firstItem="4jT-sZ-1YA" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="jHt-ue-x6m"/>
                         </constraints>
                     </view>
                     <connections>
@@ -522,7 +627,7 @@
         <scene sceneID="fwz-oU-itY">
             <objects>
                 <windowController storyboardIdentifier="AMDPowerTool" id="Luk-nU-LVZ" sceneMemberID="viewController">
-                    <window key="window" title="AMD Power Tool" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="darkAqua" frameAutosaveName="" animationBehavior="default" id="E7w-tc-hlq">
+                    <window key="window" title="AMD Power Tool" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="darkAqua" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="E7w-tc-hlq">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="516" y="564" width="612" height="650"/>
@@ -545,7 +650,7 @@
         <scene sceneID="wqj-Ig-uLo">
             <objects>
                 <windowController storyboardIdentifier="SystemMonitor" id="cZD-YC-FDl" sceneMemberID="viewController">
-                    <window key="window" title="SMC Fans" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="0qo-qi-5WU">
+                    <window key="window" title="SMC Fans" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="0qo-qi-5WU">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="516" y="564" width="480" height="316"/>
