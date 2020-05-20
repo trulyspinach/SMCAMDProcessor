@@ -4,12 +4,10 @@
 //Support for macOS 10.13
 #include <Library/LegacyIOService.h>
 
-//#include <IOKit/IOService.h>
-//#include <IOKit/IOLib.h>
-
 #include <math.h>
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/IOTimerEventSource.h>
+
 
 #include <i386/proc_reg.h>
 #include <libkern/libkern.h>
@@ -35,6 +33,9 @@
 #define OC_OEM_BOARD_VARIABLE_NAME         u"oem-board"
 
 #define BASEBOARD_STRING_MAX 64
+
+#define kNrOfPowerStates 2
+#define kIOPMPowerOff 0
 
 extern "C" {
 #include "pmAMDRyzen.h"
@@ -71,6 +72,10 @@ typedef struct tctl_offset {
 } TempOffset;
 
 
+static IOPMPowerState powerStates[kNrOfPowerStates] = {
+   {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
+   {1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
+};
 
 
 class AMDRyzenCPUPowerManagement : public IOService {
@@ -125,6 +130,8 @@ public:
     
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
+    
+    virtual IOReturn setPowerState(unsigned long powerStateOrdinal, IOService* whatDevice) override;
     
     void fetchOEMBaseBoardInfo();
 
@@ -242,8 +249,9 @@ private:
     
     IOPCIDevice *fIOPCIDevice;
     bool getPCIService();
+    bool wentToSleep;
     
-    
-    
+    void startWorkLoop();
+    void stopWorkLoop();
 };
 #endif
