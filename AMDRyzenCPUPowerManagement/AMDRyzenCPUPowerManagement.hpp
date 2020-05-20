@@ -4,14 +4,10 @@
 //Support for macOS 10.13
 #include <Library/LegacyIOService.h>
 
-//#include <IOKit/IOService.h>
-//#include <IOKit/IOLib.h>
-
 #include <math.h>
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/IOTimerEventSource.h>
-#include <IOKit/IOService.h>
-#include <IOKit/IOLib.h>
+
 
 #include <i386/proc_reg.h>
 #include <libkern/libkern.h>
@@ -74,6 +70,7 @@ typedef struct tctl_offset {
     char const *id;
     int offset;
 } TempOffset;
+
 
 static IOPMPowerState powerStates[kNrOfPowerStates] = {
    {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
