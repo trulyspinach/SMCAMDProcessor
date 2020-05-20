@@ -68,7 +68,7 @@ bool AMDRyzenCPUPMUserClient::hasPrivilege(){
     
     char buf[128];
     snprintf(buf, 128,
-             "A process is trying to make changes to your system.\n\nAffected process name: %s\nAuthorize?",
+             "A process is trying to make changes to your system.\nAffected process name: %s\n\nAuthorize?",
              taskProcessBinaryName);
     
     unsigned int rf;
