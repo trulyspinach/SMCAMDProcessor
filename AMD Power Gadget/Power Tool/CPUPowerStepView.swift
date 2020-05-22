@@ -65,11 +65,13 @@ class CPUPowerStepView: NSView {
     func setup(totalCores : Int) {
         self.layer = layer
         wantsLayer = true
+
+
        
         layer?.cornerRadius = 20
         layer?.masksToBounds = true
-        layer?.shadowOpacity = 1
-        layer?.shadowColor = NSColor.white.cgColor
+        // layer?.shadowOpacity = 1
+        // layer?.shadowColor = NSColor.white.cgColor
         viewTop = frame.height * viewTopPercentage
         viewBottom = frame.height * viewBottomPercentage
         viewHeight = viewTop - viewBottom
@@ -112,13 +114,13 @@ class CPUPowerStepView: NSView {
         guard let context = NSGraphicsContext.current?.cgContext else {
             return
         }
-        
-        backgroundColor1.setFill()
-        dirtyRect.fill()
-        
-        context.addRect(CGRect(x: 0, y: 0, width: barMarginLeft, height: frame.height))
-        context.setFillColor(backgroundColorSide.cgColor)
-        context.fillPath()
+
+        // backgroundColor1.setFill()
+        // dirtyRect.fill()
+        //
+        // // context.addRect(CGRect(x: 0, y: 0, width: barMarginLeft, height: frame.height))
+        // // context.setFillColor(backgroundColorSide.cgColor)
+        // // context.fillPath()
 
 
         drawGrid(in: dirtyRect, context: context)
