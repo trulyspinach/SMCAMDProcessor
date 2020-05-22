@@ -78,6 +78,7 @@ class ViewController: NSViewController, NSWindowDelegate {
     
     override func viewWillAppear() {
         view.window?.delegate = self
+        view.window?.isMovableByWindowBackground = true
     }
     
     override var representedObject: Any? {
