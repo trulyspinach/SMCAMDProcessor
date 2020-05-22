@@ -111,7 +111,14 @@ class CPUPowerStepView: NSView {
         guard let context = NSGraphicsContext.current?.cgContext else {
             return
         }
+        
+        backgroundColor1.setFill()
+         dirtyRect.fill()
 
+         context.addRect(CGRect(x: 0, y: 0, width: barMarginLeft, height: frame.height))
+         context.setFillColor(backgroundColorSide.cgColor)
+         context.fillPath()
+        
         drawGrid(in: dirtyRect, context: context)
         
     }
