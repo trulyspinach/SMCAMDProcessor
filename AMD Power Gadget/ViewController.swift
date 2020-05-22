@@ -79,6 +79,10 @@ class ViewController: NSViewController, NSWindowDelegate {
     override func viewWillAppear() {
         view.window?.delegate = self
         view.window?.isMovableByWindowBackground = true
+        if var frame = view.window?.frame {
+            frame.size = NSSize(width: 410, height: 860)
+            view.window?.setFrame(frame, display: true, animate: false)
+        }
     }
     
     override var representedObject: Any? {
