@@ -173,7 +173,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView blendingMode="behindWindow" material="HUDWindow" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-sZ-1YA">
+                            <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-sZ-1YA">
                                 <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                                 <subviews>
                                     <scrollView appearanceType="darkAqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQS-Yx-qAY">
@@ -1029,7 +1029,7 @@
         <scene sceneID="w5e-Rh-alZ">
             <objects>
                 <viewController id="rDh-aT-nig" customClass="PowerToolViewController" customModule="AMD_Power_Gadget" customModuleProvider="target" sceneMemberID="viewController">
-                    <visualEffectView key="view" blendingMode="behindWindow" material="HUDWindow" state="active" id="Hbi-PG-htk">
+                    <visualEffectView key="view" blendingMode="behindWindow" material="appearanceBased" state="active" id="Hbi-PG-htk">
                         <rect key="frame" x="0.0" y="0.0" width="612" height="650"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
