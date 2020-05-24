@@ -442,6 +442,8 @@ class ProcessorModel {
                         systemConfig["gpu"] = String(data: model, encoding: .ascii)!
                             .trimmingCharacters(in: .controlCharacters)
                             .trimmingCharacters(in: .whitespacesAndNewlines)
+                    } else {
+                        systemConfig["gpu"] = "Unknown"
                     }
                 }
             }
