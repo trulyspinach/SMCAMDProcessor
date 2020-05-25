@@ -702,6 +702,7 @@ bool AMDRyzenCPUPowerManagement::initSuperIO(uint16_t *chipIntel){
     superIO = nullptr;
     if(!superIO) superIO = ISSuperIONCT668X::getDevice(&savedSMCChipIntel);
     if(!superIO) superIO = ISSuperIONCT67XXFamily::getDevice(&savedSMCChipIntel);
+    if(!superIO) superIO = ISSuperIOIT8688E::getDevice(&savedSMCChipIntel);
     
     *chipIntel = savedSMCChipIntel;
     
