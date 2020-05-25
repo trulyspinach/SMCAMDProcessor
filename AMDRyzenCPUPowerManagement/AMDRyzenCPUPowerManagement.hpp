@@ -26,7 +26,6 @@
 
 #include "SuperIO/ISSuperIONCT668X.hpp"
 #include "SuperIO/ISSuperIONCT67XXFamily.hpp"
-#include "SuperIO/ISSuperIOIT8688E.hpp"
 
 #include <i386/cpuid.h>
 
