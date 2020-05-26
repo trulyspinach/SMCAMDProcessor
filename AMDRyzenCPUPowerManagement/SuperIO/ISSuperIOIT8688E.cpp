@@ -17,6 +17,8 @@ ISSuperIOIT8688E::ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel){
         default:
             activeFansOnSystem = 5;
             break;
+        case CHIP_IT8686E:
+            activeFansOnSystem = 5;
     }
     
     //backup default ctrl mode
@@ -62,7 +64,10 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t *chipIntel){
                 found = true;
                 IOLog("IT8688E chip identified\n");
                 break;
-                
+            case CHIP_IT8686E:
+                found = true;
+                IOLog("IT8686E Chip identified\n");
+                break;
             default:
                 
                 break;

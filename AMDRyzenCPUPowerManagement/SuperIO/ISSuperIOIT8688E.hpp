@@ -17,6 +17,7 @@
 #include "ISSuperIOSMCFamily.hpp"
 
 #define CHIP_IT8688E 0x8688
+#define CHIP_IT8686E 0x8686
 
 #define IT8688E_MAX_NUMFAN 5
 
