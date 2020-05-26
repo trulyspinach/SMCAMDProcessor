@@ -16,10 +16,8 @@ ISSuperIOIT8688E::ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel)
     switch (chipIntel)
     {
         case CHIP_IT8688E:
-        default:
-            activeFansOnSystem = 5;
-            break;
         case CHIP_IT8686E:
+        default:
             activeFansOnSystem = 5;
             break;
     }
@@ -39,7 +37,7 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
     uint8_t deviceID = 0, revision = 0;
     bool found = false;
     int portSel = 0;
-    IOLog("probe IT8XXXE\n");
+    IOLog("probe IT868XE\n");
 
     for (; portSel < 2; portSel++)
     {
@@ -70,12 +68,10 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
         switch ((deviceID << 8) | revision)
         {
             case CHIP_IT8688E:
-                found = true;
-                IOLog("IT8688E chip identified\n");
-                break;
             case CHIP_IT8686E:
                 found = true;
-                IOLog("IT8686E Chip identfiied\n");
+                IOLog("IT868XE chip identified\n");
+                break;
             default:
                 break;
         }
@@ -107,7 +103,7 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
     IOSleep(100);
     if (ISLPCPort::readWord(portSel, ISLPCPort::kBASE_ADDRESS_REGISTER) != devAddr)
     {
-        IOLog("IT8688E address verify failed");
+        IOLog("IT868XE address verify failed");
     }
 
     ISLPCPort::select(portSel, CHIP_GPIO_LDN);
@@ -117,7 +113,7 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
     IOSleep(100);
     if (ISLPCPort::readWord(portSel, ISLPCPort::kBASE_ADDRESS_REGISTER + 2) != gpioAddress)
     {
-        IOLog("IT8688E gpio address verify failed");
+        IOLog("IT868XE gpio address verify failed");
     }
 
     // close port
