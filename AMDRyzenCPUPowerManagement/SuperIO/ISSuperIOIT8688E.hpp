@@ -20,13 +20,9 @@
 
 #define IT8688E_MAX_NUMFAN 5
 
-#define CHIP_SIO_OPEN 0x87
-#define CHIP_SIO_CLOSE 0x02
 #define CHIP_ENVIRONMENT_CONTROLLER_LDN 0x04
-#define CHIP_VERSION_REGISTER 0x22
 #define CHIP_GPIO_LDN 0x07
 
-#define CHIP_TACHOMETER_DIVISOR_REGISTER 0x0B
 #define CHIP_ADDR_REG_OFFSET 0x05
 #define CHIP_DAT_REG_OFFSET 0x06
 
@@ -49,7 +45,6 @@ public:
     ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel);
     
     int fanRPMs[IT8688E_MAX_NUMFAN];
-    uint8_t fanThrottles[IT8688E_MAX_NUMFAN];
     uint8_t fanControlMode[IT8688E_MAX_NUMFAN];
     
     int activeFansOnSystem = 0;
@@ -74,12 +69,12 @@ private:
     static constexpr uint16_t kFAN_RPM_EXT_REGS[] = { 0x18, 0x19, 0x1a, 0x81, 0x83 };
     static constexpr uint16_t kFAN_PWM_CTRL_REGS[] = { 0x15, 0x16, 0x17, 0x7f, 0xa7 };
     static constexpr uint16_t kFAN_PWM_CTRL_EXT_REGS[] = { 0x63, 0x6b, 0x73, 0x7b, 0xa3 };
-    static constexpr uint16_t kFAN_CTRL_MODE_REGS[] = { 0x15, 0x16, 0x17, 0x7f, 0xa7 };
     
     int lpcPortSel = 0;
     
     uint16_t chipAddr = 0;
     uint8_t fanDefaultControlMode[IT8688E_MAX_NUMFAN];
+    uint8_t fanDefaultExtControlMode[IT8688E_MAX_NUMFAN];
     
     uint8_t readByte(uint16_t addr);
     uint16_t readWord(uint16_t addr);
