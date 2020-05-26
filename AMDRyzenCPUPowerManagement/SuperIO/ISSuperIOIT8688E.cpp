@@ -75,7 +75,7 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
                 break;
             case CHIP_IT8686E:
                 found = true;
-                IOLog("IT8686E Chip identfiied\n")
+                IOLog("IT8686E Chip identfiied\n");
             default:
                 break;
         }
