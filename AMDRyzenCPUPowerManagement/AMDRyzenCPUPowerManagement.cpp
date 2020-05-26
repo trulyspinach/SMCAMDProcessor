@@ -39,20 +39,20 @@ bool AMDRyzenCPUPowerManagement::init(OSDictionary *dictionary){
     IOLog("AMDCPUSupport v%s, init\n", xStringify(MODULE_VERSION));
     
     IOLog("AMDCPUSupport::enter dlinking..\n");
-    
+
     pmRyzen_symtable_ready = 0;
-    
+
 retry:
     find_mach_header_addr(getKernelVersion() >= KernelVersion::BigSur);
     pmRyzen_symtable._wrmsr_carefully = lookup_symbol("_wrmsr_carefully");
-    
+
     if(!pmRyzen_symtable._wrmsr_carefully){
         kextloadAlerts++;
         IOSleep(2);
         goto retry;
     }
-    
-    
+
+
     pmRyzen_symtable._KUNCUserNotificationDisplayAlert = lookup_symbol("_KUNCUserNotificationDisplayAlert");
     pmRyzen_symtable._cpu_to_processor = lookup_symbol("_cpu_to_processor");
     pmRyzen_symtable._tscFreq = lookup_symbol("_tscFreq");
@@ -320,11 +320,11 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         IOLog("AMDCPUSupport::start no PCI support found, failing...\n");
         return false;
     }
-    
+
 //    while (!pmRyzen_symtable_ready) {
 //        IOSleep(200);
 //    }
-    
+
     void *safe_wrmsr = pmRyzen_symtable._wrmsr_carefully;
     if(!safe_wrmsr){
         IOLog("AMDCPUSupport::start WARN: Can't find _wrmsr_carefully, proceeding with unsafe wrmsr\n");
@@ -392,7 +392,7 @@ IOReturn AMDRyzenCPUPowerManagement::setPowerState(unsigned long powerStateOrdin
         IOLog("AMDCPUSupport::setPowerState preparing for sleep\n");
         sleepState.sleep = true;
         sleepState.cpb = getCPBState();
-        dumpPstate(sleepState.pstate);
+        //dumpPstate(sleepState.pstate);
         
         stopWorkLoop();
     } else if (1 == powerStateOrdinal && sleepState.sleep) {
@@ -400,7 +400,7 @@ IOReturn AMDRyzenCPUPowerManagement::setPowerState(unsigned long powerStateOrdin
         IOLog("AMDCPUSupport::setPowerState preparing for wakeup\n");
         sleepState.sleep = false;
         setCPBState(sleepState.cpb);
-        writePstate(sleepState.pstate);
+        //writePstate(sleepState.pstate);
         startWorkLoop();
     }
 
@@ -515,18 +515,20 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     //If an overflow of either the MPERF or APERF register occurs between read of last MPERF and
     //read of last APERF, the effective frequency calculated in is invalid.
     if(APERF <= lastAPERF || MPERF <= lastMPERF) {
-//        IOLog("AMDCPUSupport::calculateEffectiveFrequency: frequency is invalid!!!");
+        IOLog("AMDCPUSupport::calculateEffectiveFrequency: frequency is invalid for %u", physical);
+        lastAPERF_PerCore[physical] = APERF;
+        lastMPERF_PerCore[physical] = MPERF;
         return;
     }
     
     float freqP0 = PStateDefClock_perCore[0];
     
     uint64_t deltaAPERF = APERF - lastAPERF;
-    float effFreq = ((float)deltaAPERF / (float)(MPERF - lastMPERF)) * freqP0;
-    
-    effFreq_perCore[physical] = effFreq;
-    
-
+    uint64_t deltaMPERF = MPERF - lastMPERF;
+    if (deltaMPERF != 0) {
+        float effFreq = ((float)deltaAPERF / (float)(deltaMPERF)) * freqP0;
+        effFreq_perCore[physical] = effFreq;
+    }
 }
 
 void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t cpu_num){
@@ -724,7 +726,7 @@ EXPORT extern "C" kern_return_t amdryzencpupm_kern_start(kmod_info_t *, void *) 
     // This works better and increases boot speed in some cases.
     PE_parse_boot_argn("liludelay", &ADDPR(debugPrintDelay), sizeof(ADDPR(debugPrintDelay)));
     ADDPR(debugEnabled) = checkKernelArgument("-amdpdbg");
-    
+
 //    IOLog("AMDCPUSupport::enter dlinking..\n");
 //
 //    pmRyzen_symtable_ready = 0;
@@ -740,7 +742,7 @@ EXPORT extern "C" kern_return_t amdryzencpupm_kern_start(kmod_info_t *, void *) 
 //    pmRyzen_symtable._i386_cpu_IPI = lookup_symbol("_i386_cpu_IPI");
 //    pmRyzen_symtable_ready = 1;
 //    IOLog("AMDCPUSupport::enter link finished.\n");
-    
+
     return KERN_SUCCESS;
 }
 
