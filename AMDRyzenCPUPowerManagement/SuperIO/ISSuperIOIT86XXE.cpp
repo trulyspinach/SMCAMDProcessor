@@ -1,14 +1,14 @@
 //
-//  ISSuperIOIT8688E.cpp
+//  ISSuperIOIT86XXE.cpp
 //  AMDRyzenCPUPowerManagement
 //
 //  Created by Maurice on 25.05.20.
 //  Copyright © 2020 trulyspinach. All rights reserved.
 //
 
-#include "ISSuperIOIT8688E.hpp"
+#include "ISSuperIOIT86XXE.hpp"
 
-ISSuperIOIT8688E::ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel)
+ISSuperIOIT86XXE::ISSuperIOIT86XXE(int psel, uint16_t addr, uint16_t chipIntel)
 {
     lpcPortSel = psel;
     chipAddr = addr;
@@ -17,6 +17,7 @@ ISSuperIOIT8688E::ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel)
     {
         case CHIP_IT8688E:
         case CHIP_IT8686E:
+        case CHIP_IT8665E:
         default:
             activeFansOnSystem = 5;
             break;
@@ -30,14 +31,14 @@ ISSuperIOIT8688E::ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel)
     }
 }
 
-ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
+ISSuperIOIT86XXE* ISSuperIOIT86XXE::getDevice(uint16_t* chipIntel)
 {
 
     i386_ioport_t regport = 0;
     uint8_t deviceID = 0, revision = 0;
     bool found = false;
     int portSel = 0;
-    IOLog("probe IT868XE\n");
+    IOLog("probe IT86XXE\n");
 
     for (; portSel < 2; portSel++)
     {
@@ -69,8 +70,9 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
         {
             case CHIP_IT8688E:
             case CHIP_IT8686E:
+            case CHIP_IT8665E:
                 found = true;
-                IOLog("IT868XE chip identified\n");
+                IOLog("IT%X%XE chip identified\n", deviceID, revision);
                 break;
             default:
                 break;
@@ -103,7 +105,7 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
     IOSleep(100);
     if (ISLPCPort::readWord(portSel, ISLPCPort::kBASE_ADDRESS_REGISTER) != devAddr)
     {
-        IOLog("IT868XE address verify failed");
+        IOLog("IT%X%XE address verify failed", deviceID, revision);
     }
 
     ISLPCPort::select(portSel, CHIP_GPIO_LDN);
@@ -113,7 +115,7 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
     IOSleep(100);
     if (ISLPCPort::readWord(portSel, ISLPCPort::kBASE_ADDRESS_REGISTER + 2) != gpioAddress)
     {
-        IOLog("IT868XE gpio address verify failed");
+        IOLog("IT%X%XE gpio address verify failed", deviceID, revision);
     }
 
     // close port
@@ -122,60 +124,60 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
         outb(regport, 0x02);
     }
 
-    return new ISSuperIOIT8688E(portSel, devAddr, *chipIntel);  //TODO: Add GPIO Addr
+    return new ISSuperIOIT86XXE(portSel, devAddr, *chipIntel);  //TODO: Add GPIO Addr
 }
 
-uint8_t ISSuperIOIT8688E::readByte(uint16_t addr)
+uint8_t ISSuperIOIT86XXE::readByte(uint16_t addr)
 {
     outb(chipAddr + CHIP_ADDR_REG_OFFSET, addr & 0xFF);
     return inb(chipAddr + CHIP_DAT_REG_OFFSET);
 }
 
-uint16_t ISSuperIOIT8688E::readWord(uint16_t addr)
+uint16_t ISSuperIOIT86XXE::readWord(uint16_t addr)
 {
     return (readByte(addr) << 8) | readByte(addr + 1);
 }
 
-void ISSuperIOIT8688E::writeByte(uint16_t addr, uint8_t val)
+void ISSuperIOIT86XXE::writeByte(uint16_t addr, uint8_t val)
 {
     outb(chipAddr + CHIP_ADDR_REG_OFFSET, addr & 0xFF);
     outb(chipAddr + CHIP_DAT_REG_OFFSET, val);
 }
 
-int ISSuperIOIT8688E::getNumberOfFans()
+int ISSuperIOIT86XXE::getNumberOfFans()
 {
     return activeFansOnSystem;
 }
 
-const char* ISSuperIOIT8688E::getReadableStringForFan(int fan)
+const char* ISSuperIOIT86XXE::getReadableStringForFan(int fan)
 {
     if (fan > activeFansOnSystem)
         return nullptr;
     return kFAN_READABLE_STRS[fan];
 }
 
-uint32_t ISSuperIOIT8688E::getRPMForFan(int fan)
+uint32_t ISSuperIOIT86XXE::getRPMForFan(int fan)
 {
     if (fan > activeFansOnSystem)
         return 0;
     return fanRPMs[fan];
 }
 
-bool ISSuperIOIT8688E::getFanAutoControlMode(int fan)
+bool ISSuperIOIT86XXE::getFanAutoControlMode(int fan)
 {
     if (fan > activeFansOnSystem)
         return 0;
     return fanControlMode[fan] != 0;
 }
 
-uint8_t ISSuperIOIT8688E::getFanThrottle(int fan)
+uint8_t ISSuperIOIT86XXE::getFanThrottle(int fan)
 {
     if (fan > activeFansOnSystem)
         return 0;
     return fanControlMode[fan];
 }
 
-void ISSuperIOIT8688E::updateFanRPMS()
+void ISSuperIOIT86XXE::updateFanRPMS()
 {
     for (int i = 0; i < activeFansOnSystem; i++)
     {
@@ -193,7 +195,7 @@ void ISSuperIOIT8688E::updateFanRPMS()
     }
 }
 
-void ISSuperIOIT8688E::updateFanControl()
+void ISSuperIOIT86XXE::updateFanControl()
 {
     for (int i = 0; i < activeFansOnSystem; i++)
     {
@@ -201,7 +203,7 @@ void ISSuperIOIT8688E::updateFanControl()
     }
 }
 
-void ISSuperIOIT8688E::overrideFanControl(int fan, uint8_t thr)
+void ISSuperIOIT86XXE::overrideFanControl(int fan, uint8_t thr)
 {
     if (fan >= activeFansOnSystem)
         return;
@@ -210,7 +212,7 @@ void ISSuperIOIT8688E::overrideFanControl(int fan, uint8_t thr)
     writeByte(kFAN_PWM_CTRL_EXT_REGS[fan], thr);
 }
 
-void ISSuperIOIT8688E::setDefaultFanControl(int fan)
+void ISSuperIOIT86XXE::setDefaultFanControl(int fan)
 {
     if (fan >= activeFansOnSystem)
         return;
