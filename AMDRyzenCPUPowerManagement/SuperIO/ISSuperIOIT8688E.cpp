@@ -19,6 +19,9 @@ ISSuperIOIT8688E::ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel)
         default:
             activeFansOnSystem = 5;
             break;
+        case CHIP_IT8686E:
+            activeFansOnSystem = 5;
+            break;
     }
 
     // backup default ctrl mode
@@ -36,7 +39,7 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
     uint8_t deviceID = 0, revision = 0;
     bool found = false;
     int portSel = 0;
-    IOLog("probe IT8688E\n");
+    IOLog("probe IT8XXXE\n");
 
     for (; portSel < 2; portSel++)
     {
@@ -70,6 +73,9 @@ ISSuperIOIT8688E* ISSuperIOIT8688E::getDevice(uint16_t* chipIntel)
                 found = true;
                 IOLog("IT8688E chip identified\n");
                 break;
+            case CHIP_IT8686E:
+                found = true;
+                IOLog("IT8686E Chip identfiied\n")
             default:
                 break;
         }
