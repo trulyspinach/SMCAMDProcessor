@@ -1,13 +1,13 @@
 //
-//  ISSuperIOIT86XXE.hpp
+//  ISSuperIOIT86XXEFamily.hpp
 //  AMDRyzenCPUPowerManagement
 //
 //  Created by Maurice on 25.05.20.
 //  Copyright © 2020 trulyspinach. All rights reserved.
 //
 
-#ifndef ISSuperIOIT86XXE_hpp
-#define ISSuperIOIT86XXE_hpp
+#ifndef ISSuperIOIT86XXEFamily_hpp
+#define ISSuperIOIT86XXEFamily_hpp
 
 #include <IOKit/IOLib.h>
 
@@ -28,7 +28,7 @@
 #define CHIP_ADDR_REG_OFFSET 0x05
 #define CHIP_DAT_REG_OFFSET 0x06
 
-class ISSuperIOIT86XXE : public ISSuperIOSMCFamily
+class ISSuperIOIT86XXEFamily : public ISSuperIOSMCFamily
 {
 
   public:
@@ -40,9 +40,9 @@ class ISSuperIOIT86XXE : public ISSuperIOSMCFamily
         "CPU OPT Fan",
     };
 
-    static ISSuperIOIT86XXE* getDevice(uint16_t* chipIntel);
+    static ISSuperIOIT86XXEFamily* getDevice(uint16_t* chipIntel);
 
-    ISSuperIOIT86XXE(int psel, uint16_t addr, uint16_t chipIntel);
+    ISSuperIOIT86XXEFamily(int psel, uint16_t addr, uint16_t chipIntel);
 
     int fanRPMs[IT86XXE_MAX_NUMFAN];
     uint8_t fanControlMode[IT86XXE_MAX_NUMFAN];

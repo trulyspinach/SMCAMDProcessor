@@ -1,14 +1,14 @@
 //
-//  ISSuperIOIT86XXE.cpp
+//  ISSuperIOIT86XXEFamily.cpp
 //  AMDRyzenCPUPowerManagement
 //
 //  Created by Maurice on 25.05.20.
 //  Copyright © 2020 trulyspinach. All rights reserved.
 //
 
-#include "ISSuperIOIT86XXE.hpp"
+#include "ISSuperIOIT86XXEFamily.hpp"
 
-ISSuperIOIT86XXE::ISSuperIOIT86XXE(int psel, uint16_t addr, uint16_t chipIntel)
+ISSuperIOIT86XXEFamily::ISSuperIOIT86XXEFamily(int psel, uint16_t addr, uint16_t chipIntel)
 {
     lpcPortSel = psel;
     chipAddr = addr;
@@ -31,7 +31,7 @@ ISSuperIOIT86XXE::ISSuperIOIT86XXE(int psel, uint16_t addr, uint16_t chipIntel)
     }
 }
 
-ISSuperIOIT86XXE* ISSuperIOIT86XXE::getDevice(uint16_t* chipIntel)
+ISSuperIOIT86XXEFamily* ISSuperIOIT86XXEFamily::getDevice(uint16_t* chipIntel)
 {
 
     i386_ioport_t regport = 0;
@@ -124,60 +124,60 @@ ISSuperIOIT86XXE* ISSuperIOIT86XXE::getDevice(uint16_t* chipIntel)
         outb(regport, 0x02);
     }
 
-    return new ISSuperIOIT86XXE(portSel, devAddr, *chipIntel);  //TODO: Add GPIO Addr
+    return new ISSuperIOIT86XXEFamily(portSel, devAddr, *chipIntel);  //TODO: Add GPIO Addr
 }
 
-uint8_t ISSuperIOIT86XXE::readByte(uint16_t addr)
+uint8_t ISSuperIOIT86XXEFamily::readByte(uint16_t addr)
 {
     outb(chipAddr + CHIP_ADDR_REG_OFFSET, addr & 0xFF);
     return inb(chipAddr + CHIP_DAT_REG_OFFSET);
 }
 
-uint16_t ISSuperIOIT86XXE::readWord(uint16_t addr)
+uint16_t ISSuperIOIT86XXEFamily::readWord(uint16_t addr)
 {
     return (readByte(addr) << 8) | readByte(addr + 1);
 }
 
-void ISSuperIOIT86XXE::writeByte(uint16_t addr, uint8_t val)
+void ISSuperIOIT86XXEFamily::writeByte(uint16_t addr, uint8_t val)
 {
     outb(chipAddr + CHIP_ADDR_REG_OFFSET, addr & 0xFF);
     outb(chipAddr + CHIP_DAT_REG_OFFSET, val);
 }
 
-int ISSuperIOIT86XXE::getNumberOfFans()
+int ISSuperIOIT86XXEFamily::getNumberOfFans()
 {
     return activeFansOnSystem;
 }
 
-const char* ISSuperIOIT86XXE::getReadableStringForFan(int fan)
+const char* ISSuperIOIT86XXEFamily::getReadableStringForFan(int fan)
 {
     if (fan > activeFansOnSystem)
         return nullptr;
     return kFAN_READABLE_STRS[fan];
 }
 
-uint32_t ISSuperIOIT86XXE::getRPMForFan(int fan)
+uint32_t ISSuperIOIT86XXEFamily::getRPMForFan(int fan)
 {
     if (fan > activeFansOnSystem)
         return 0;
     return fanRPMs[fan];
 }
 
-bool ISSuperIOIT86XXE::getFanAutoControlMode(int fan)
+bool ISSuperIOIT86XXEFamily::getFanAutoControlMode(int fan)
 {
     if (fan > activeFansOnSystem)
         return 0;
     return fanControlMode[fan] != 0;
 }
 
-uint8_t ISSuperIOIT86XXE::getFanThrottle(int fan)
+uint8_t ISSuperIOIT86XXEFamily::getFanThrottle(int fan)
 {
     if (fan > activeFansOnSystem)
         return 0;
     return fanControlMode[fan];
 }
 
-void ISSuperIOIT86XXE::updateFanRPMS()
+void ISSuperIOIT86XXEFamily::updateFanRPMS()
 {
     for (int i = 0; i < activeFansOnSystem; i++)
     {
@@ -195,7 +195,7 @@ void ISSuperIOIT86XXE::updateFanRPMS()
     }
 }
 
-void ISSuperIOIT86XXE::updateFanControl()
+void ISSuperIOIT86XXEFamily::updateFanControl()
 {
     for (int i = 0; i < activeFansOnSystem; i++)
     {
@@ -203,7 +203,7 @@ void ISSuperIOIT86XXE::updateFanControl()
     }
 }
 
-void ISSuperIOIT86XXE::overrideFanControl(int fan, uint8_t thr)
+void ISSuperIOIT86XXEFamily::overrideFanControl(int fan, uint8_t thr)
 {
     if (fan >= activeFansOnSystem)
         return;
@@ -212,7 +212,7 @@ void ISSuperIOIT86XXE::overrideFanControl(int fan, uint8_t thr)
     writeByte(kFAN_PWM_CTRL_EXT_REGS[fan], thr);
 }
 
-void ISSuperIOIT86XXE::setDefaultFanControl(int fan)
+void ISSuperIOIT86XXEFamily::setDefaultFanControl(int fan)
 {
     if (fan >= activeFansOnSystem)
         return;
