@@ -1,13 +1,13 @@
 //
-//  ISSuperIOIT8688E.hpp
+//  ISSuperIOIT86XXE.hpp
 //  AMDRyzenCPUPowerManagement
 //
 //  Created by Maurice on 25.05.20.
 //  Copyright © 2020 trulyspinach. All rights reserved.
 //
 
-#ifndef ISSuperIOIT8688E_hpp
-#define ISSuperIOIT8688E_hpp
+#ifndef ISSuperIOIT86XXE_hpp
+#define ISSuperIOIT86XXE_hpp
 
 #include <IOKit/IOLib.h>
 
@@ -18,8 +18,9 @@
 
 #define CHIP_IT8688E 0x8688
 #define CHIP_IT8686E 0x8686
+#define CHIP_IT8665E 0x8665
 
-#define IT8688E_MAX_NUMFAN 5
+#define IT86XXE_MAX_NUMFAN 5
 
 #define CHIP_ENVIRONMENT_CONTROLLER_LDN 0x04
 #define CHIP_GPIO_LDN 0x07
@@ -27,7 +28,7 @@
 #define CHIP_ADDR_REG_OFFSET 0x05
 #define CHIP_DAT_REG_OFFSET 0x06
 
-class ISSuperIOIT8688E : public ISSuperIOSMCFamily
+class ISSuperIOIT86XXE : public ISSuperIOSMCFamily
 {
 
   public:
@@ -39,12 +40,12 @@ class ISSuperIOIT8688E : public ISSuperIOSMCFamily
         "CPU OPT Fan",
     };
 
-    static ISSuperIOIT8688E* getDevice(uint16_t* chipIntel);
+    static ISSuperIOIT86XXE* getDevice(uint16_t* chipIntel);
 
-    ISSuperIOIT8688E(int psel, uint16_t addr, uint16_t chipIntel);
+    ISSuperIOIT86XXE(int psel, uint16_t addr, uint16_t chipIntel);
 
-    int fanRPMs[IT8688E_MAX_NUMFAN];
-    uint8_t fanControlMode[IT8688E_MAX_NUMFAN];
+    int fanRPMs[IT86XXE_MAX_NUMFAN];
+    uint8_t fanControlMode[IT86XXE_MAX_NUMFAN];
 
     int activeFansOnSystem = 0;
 
@@ -71,8 +72,8 @@ class ISSuperIOIT8688E : public ISSuperIOSMCFamily
     int lpcPortSel = 0;
 
     uint16_t chipAddr = 0;
-    uint8_t fanDefaultControlMode[IT8688E_MAX_NUMFAN];
-    uint8_t fanDefaultExtControlMode[IT8688E_MAX_NUMFAN];
+    uint8_t fanDefaultControlMode[IT86XXE_MAX_NUMFAN];
+    uint8_t fanDefaultExtControlMode[IT86XXE_MAX_NUMFAN];
 
     uint8_t readByte(uint16_t addr);
     uint16_t readWord(uint16_t addr);
@@ -80,4 +81,4 @@ class ISSuperIOIT8688E : public ISSuperIOSMCFamily
     void writeByte(uint16_t addr, uint8_t val);
 };
 
-#endif /* ISSuperIOIT8688E_hpp */
+#endif /* ISSuperIOIT86XXE_hpp */
