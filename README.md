@@ -76,8 +76,10 @@ To access PState editor:
 
 ## Credits
 * [aluveitie](https://github.com/aluveitie) for various enhancements and fixes.
+* [mauricelos](https://github.com/mauricelos) for IT86XXE SMC chip driver.
 * [necross2](https://github.com/necross2) for adding support to temperature sensor offset.
 * [Shaneee](https://github.com/Shaneee) for the beautiful icon.
+
 
 ## Notes
 * I am still fairly new to macOS kernel development, this software project was initally a hobby project, **and it still is**, to get some reading on my newly built AMD hackintosh computer.
