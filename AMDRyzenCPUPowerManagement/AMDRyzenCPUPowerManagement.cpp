@@ -341,17 +341,10 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     workLoop = IOWorkLoop::workLoop();
     startWorkLoop();
 
-    //SuperIO Init
-//    initSuperIO(&savedSMCChipIntel);
-    
-    // disable CPB by default
-    setCPBState(false);
 
-    // prototyping...
     PMinit();
     provider->joinPMtree(this);
     registerPowerDriver(this, powerStates, kNrOfPowerStates);
-    // end
 
     return success;
 }
