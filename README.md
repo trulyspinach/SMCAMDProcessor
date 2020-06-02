@@ -56,6 +56,7 @@ To access PState editor:
 
 
 ## Tested Processors
+* Ryzen 9 3950X
 * Ryzen 9 3900X
 * Ryzen 7 3700X
 * Ryzen 7 2700X
