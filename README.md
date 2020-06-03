@@ -36,7 +36,7 @@ You can access this menu from menu bar "Open -> SMC Fans" or the button in Power
 
 <img src="imgs/ani.gif" width="100%">
 
-### AMD Power Gadget
+## AMD Power Gadget
 <img src="imgs/all.png" width="80%">
 
 ## Editing PState
@@ -53,14 +53,6 @@ To access PState editor:
 * Incorrect PState setting can potentially cause permanent damage to your computer hardware.
 * For safety concern, this function was limited to root user only. You can either launch AMD Power Gadget with root user or use `-amdpnopchk` to disable this check.
 
-
-
-## Tested Processors
-* Ryzen 9 3900X
-* Ryzen 7 3700X
-* Ryzen 7 2700X
-* Ryzen 5 3600
-* Threadripper 2990WX
 
 <img src="imgs/iStats.png" width="40%">
 
