@@ -21,30 +21,39 @@ seg_command_64_t *find_segment_64(mach_header_64_t *mh, const char *segname);
 load_command_t *find_load_command(mach_header_64_t *mh, uint32_t cmd);
 void *find_symbol(mach_header_64_t *mh, const char *name);
 
-void *lookup_symbol(const char *symbol)
-{
+static uint64_t mh_base_addr = 0;
+
+void find_mach_header_addr(uint8_t kc){
     uint64_t slide = 0;
     vm_offset_t slide_address = 0;
     vm_kernel_unslide_or_perm_external((unsigned long long)(void *)printf, &slide_address);
     slide = (uint64_t)(void *)printf - slide_address;
     uint64_t base_address = (uint64_t)slide + KERNEL_BASE;
     
+    if(!kc){
+        mh_base_addr = base_address;
+        return;
+    }
+    
     mach_header_64_t* mach_header = (mach_header_64_t*)base_address;
-    mach_header_64_t* actual_header = NULL;
     
     load_command_t* lcp = (load_command_t*)(base_address + sizeof(mach_header_64_t));
     for (uint32_t i = 0; i < mach_header->ncmds; i++) {
         if (lcp->cmd == LC_SEGMENT_64) {
             seg_command_64_t *sc = (seg_command_64_t*)lcp;
             if (!strncmp(sc->segname, "__PRELINK_TEXT", sizeof(sc->segname))) {
-                actual_header = (mach_header_64_t*)sc->vmaddr;
+                mh_base_addr = sc->vmaddr;
                 break;
             }
         }
         lcp = (load_command_t*)((uint64_t)lcp + (uint64_t)lcp->cmdsize);
     }
+}
 
+void *lookup_symbol(const char *symbol)
+{
     
+    if(!mh_base_addr) return NULL;
 //    IOLog("%s: aslr slide: 0x%0llx\n", __func__, slide);
 //    print_pointer((void*)slide);
 //    IOLog("%s: base address: 0x%0llx\n", __func__, base_address);
@@ -53,7 +62,7 @@ void *lookup_symbol(const char *symbol)
 //    IOLog("%s: actual address: 0x%0llx\n", __func__, (uint64_t)actual_header);
 //    print_pointer((void*)actual_header);
     
-    return find_symbol(actual_header, symbol);
+    return find_symbol((mach_header_64_t*)mh_base_addr, symbol);
 }
 
 seg_command_64_t *

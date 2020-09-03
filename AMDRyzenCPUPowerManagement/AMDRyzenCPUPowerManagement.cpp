@@ -42,6 +42,7 @@ bool AMDRyzenCPUPowerManagement::init(OSDictionary *dictionary){
     
     pmRyzen_symtable_ready = 0;
     
+    find_mach_header_addr(getKernelVersion() >= KernelVersion::BigSur);
     pmRyzen_symtable._wrmsr_carefully = lookup_symbol("_wrmsr_carefully");
     pmRyzen_symtable._KUNCUserNotificationDisplayAlert = lookup_symbol("_KUNCUserNotificationDisplayAlert");
     pmRyzen_symtable._cpu_to_processor = lookup_symbol("_cpu_to_processor");

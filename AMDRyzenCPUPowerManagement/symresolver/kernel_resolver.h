@@ -10,6 +10,8 @@
 #include <vm/vm_kern.h>
 #include <sys/sysctl.h>
 
+
+
 typedef struct mach_header_64 mach_header_64_t;
 typedef struct load_command load_command_t;
 typedef struct segment_command_64 seg_command_64_t;
@@ -19,8 +21,8 @@ typedef struct symtab_command symtab_command_t;
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
-    void *lookup_symbol(const char *symbol);
+void find_mach_header_addr(uint8_t kc);
+void *lookup_symbol(const char *symbol);
 void print_pointer(void *ptr);
     
 #ifdef __cplusplus
