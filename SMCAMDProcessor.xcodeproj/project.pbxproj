@@ -32,6 +32,7 @@
 		B583FEA3242E0A65001AE99A /* Keyimplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280223F66C8E002BC699 /* Keyimplementations.cpp */; };
 		B584F5CB242E2CBE007DEA77 /* pmAMDRyzen.h in Headers */ = {isa = PBXBuildFile; fileRef = B584F5C9242E2CBE007DEA77 /* pmAMDRyzen.h */; };
 		B584F5CC242E2CBE007DEA77 /* pmAMDRyzen.c in Sources */ = {isa = PBXBuildFile; fileRef = B584F5CA242E2CBE007DEA77 /* pmAMDRyzen.c */; };
+		B5920B9424FFBB9B006C6DFF /* pmRyzenSymbolTable.h in Sources */ = {isa = PBXBuildFile; fileRef = B5920B9324FFBB9B006C6DFF /* pmRyzenSymbolTable.h */; };
 		B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */; };
 		B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */; };
 		B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */; };
@@ -81,6 +82,7 @@
 		B5810046246D6B3200A38AB7 /* ISLPCPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISLPCPort.h; sourceTree = "<group>"; };
 		B584F5C9242E2CBE007DEA77 /* pmAMDRyzen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pmAMDRyzen.h; sourceTree = "<group>"; };
 		B584F5CA242E2CBE007DEA77 /* pmAMDRyzen.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pmAMDRyzen.c; sourceTree = "<group>"; };
+		B5920B9324FFBB9B006C6DFF /* pmRyzenSymbolTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pmRyzenSymbolTable.h; sourceTree = "<group>"; };
 		B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
 		B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewGridLineLayer.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		B57C7E912424EFC700C86B68 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				B5920B9324FFBB9B006C6DFF /* pmRyzenSymbolTable.h */,
 				B57C7E922424EFFF00C86B68 /* osfmk */,
 				B55E654B240B842400376E9E /* LegacyHeaders */,
 			);
@@ -471,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5920B9424FFBB9B006C6DFF /* pmRyzenSymbolTable.h in Sources */,
 				B5DF4AB5247156F200663498 /* ISSuperIONCT668X.cpp in Sources */,
 				B584F5CC242E2CBE007DEA77 /* pmAMDRyzen.c in Sources */,
 				5B72086D247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp in Sources */,
@@ -708,7 +712,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.4;
+				CURRENT_PROJECT_VERSION = 0.6.5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -723,8 +727,10 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
+				MODULE_START = amdryzencpupm_kern_start;
+				MODULE_STOP = amdryzencpupm_kern_stop;
 				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				OTHER_CFLAGS = (
 					"-mmmx",
@@ -753,7 +759,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.4;
+				CURRENT_PROJECT_VERSION = 0.6.5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -766,8 +772,10 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
+				MODULE_START = amdryzencpupm_kern_start;
+				MODULE_STOP = amdryzencpupm_kern_stop;
 				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				OTHER_CFLAGS = (
 					"-mmmx",

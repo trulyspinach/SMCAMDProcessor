@@ -19,7 +19,7 @@
 #include "symresolver/kernel_resolver.h"
 
 #include <i386/proc_reg.h>
-
+#include "Headers/pmRyzenSymbolTable.h"
 
 #define MOD_NAME pmARyzen
 #define XNU_MAX_CPU 64
@@ -51,8 +51,10 @@ extern uint32_t pmRyzen_hpcpus;
 
 extern uint32_t pmRyzen_pstatelimit;
 
+
 extern void pmRyzen_wrmsr_safe(void *, uint32_t, uint64_t);
 extern uint64_t pmRyzen_rdmsr_safe(void *, uint32_t);
+extern pmRyzen_symtable_t pmRyzen_symtable;
 
 
 typedef struct pmProcessor{

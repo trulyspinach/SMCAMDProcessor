@@ -11,94 +11,114 @@
  *     http://ho.ax/posts/2012/02/resolving-kernel-symbols/
  */
 
+
 #include "kernel_resolver.h"
-#include <IOKit/IOLib.h>
+
 
 #define KERNEL_BASE 0xffffff8000200000
 
-struct nlist_64 {
-    union {
-        uint32_t  n_strx;   /* index into the string table */
-    } n_un;
-    uint8_t n_type;         /* type flag, see below */
-    uint8_t n_sect;         /* section number or NO_SECT */
-    uint16_t n_desc;        /* see <mach-o/stab.h> */
-    uint64_t n_value;       /* value of this symbol (or stab offset) */
-};
-
-struct segment_command_64 *find_segment_64(struct mach_header_64 *mh, const char *segname);
-struct load_command *find_load_command(struct mach_header_64 *mh, uint32_t cmd);
-void *find_symbol(struct mach_header_64 *mh, const char *name);
+seg_command_64_t *find_segment_64(mach_header_64_t *mh, const char *segname);
+load_command_t *find_load_command(mach_header_64_t *mh, uint32_t cmd);
+void *find_symbol(mach_header_64_t *mh, const char *name);
 
 void *lookup_symbol(const char *symbol)
 {
-    int64_t slide = 0;
+    uint64_t slide = 0;
     vm_offset_t slide_address = 0;
     vm_kernel_unslide_or_perm_external((unsigned long long)(void *)printf, &slide_address);
-    slide = (unsigned long long)(void *)printf - slide_address;
-    int64_t base_address = slide + KERNEL_BASE;
+    slide = (uint64_t)(void *)printf - slide_address;
+    uint64_t base_address = (uint64_t)slide + KERNEL_BASE;
+    
+    mach_header_64_t* mach_header = (mach_header_64_t*)base_address;
+    mach_header_64_t* actual_header = NULL;
+    
+    load_command_t* lcp = (load_command_t*)(base_address + sizeof(mach_header_64_t));
+    for (uint32_t i = 0; i < mach_header->ncmds; i++) {
+        if (lcp->cmd == LC_SEGMENT_64) {
+            seg_command_64_t *sc = (seg_command_64_t*)lcp;
+            if (!strncmp(sc->segname, "__PRELINK_TEXT", sizeof(sc->segname))) {
+                actual_header = (mach_header_64_t*)sc->vmaddr;
+                break;
+            }
+        }
+        lcp = (load_command_t*)((uint64_t)lcp + (uint64_t)lcp->cmdsize);
+    }
+
     
 //    IOLog("%s: aslr slide: 0x%0llx\n", __func__, slide);
+//    print_pointer((void*)slide);
 //    IOLog("%s: base address: 0x%0llx\n", __func__, base_address);
+//    print_pointer((void*)base_address);
+//
+//    IOLog("%s: actual address: 0x%0llx\n", __func__, (uint64_t)actual_header);
+//    print_pointer((void*)actual_header);
     
-    return find_symbol((struct mach_header_64 *)base_address, symbol);
+    return find_symbol(actual_header, symbol);
 }
 
-struct segment_command_64 *
-find_segment_64(struct mach_header_64 *mh, const char *segname)
+seg_command_64_t *
+find_segment_64(mach_header_64_t *mh, const char *segname)
 {
-    struct load_command *lc;
-    struct segment_command_64 *seg, *foundseg = NULL;
-    
+    load_command_t *lc;
+    seg_command_64_t *seg, *foundseg = NULL;
+    size_t segname_len = strlen(segname) + 1;
     /* first load command begins straight after the mach header */
-    lc = (struct load_command *)((uint64_t)mh + sizeof(struct mach_header_64));
+    lc = (load_command_t *)((uint64_t)mh + sizeof(mach_header_64_t));
     while ((uint64_t)lc < (uint64_t)mh + (uint64_t)mh->sizeofcmds) {
         if (lc->cmd == LC_SEGMENT_64) {
             /* evaluate segment */
-            seg = (struct segment_command_64 *)lc;
-            if (strcmp(seg->segname, segname) == 0) {
+            seg = (seg_command_64_t*)lc;
+            if (strncmp(seg->segname, segname, segname_len) == 0) {
                 foundseg = seg;
                 break;
             }
         }
         
         /* next load command */
-        lc = (struct load_command *)((uint64_t)lc + (uint64_t)lc->cmdsize);
+        lc = (load_command_t *)((uint64_t)lc + (uint64_t)lc->cmdsize);
     }
     
     return foundseg;
 }
 
-struct load_command *
-find_load_command(struct mach_header_64 *mh, uint32_t cmd)
+load_command_t *
+find_load_command(mach_header_64_t *mh, uint32_t cmd)
 {
-    struct load_command *lc, *foundlc = NULL;
+    load_command_t *lc, *foundlc = NULL;
     
     /* first load command begins straight after the mach header */
-    lc = (struct load_command *)((uint64_t)mh + sizeof(struct mach_header_64));
+    lc = (load_command_t *)((uint64_t)mh + sizeof(mach_header_64_t));
     while ((uint64_t)lc < (uint64_t)mh + (uint64_t)mh->sizeofcmds) {
         if (lc->cmd == cmd) {
-            foundlc = (struct load_command *)lc;
+            foundlc = (load_command_t *)lc;
             break;
         }
         
         /* next load command*/
-        lc = (struct load_command *)((uint64_t)lc + (uint64_t)lc->cmdsize);
+        lc = (load_command_t *)((uint64_t)lc + (uint64_t)lc->cmdsize);
     }
     
     return foundlc;
 }
 
+void print_pointer(void *ptr){
+    uint64_t v = (uint64_t)ptr;
+    uint32_t l = v & 0xffffffff;
+    uint32_t h = v >> 32;
+    IOLog("vh: %u, vl: %u\n", h, l);
+}
+
 void *
-find_symbol(struct mach_header_64 *mh, const char *name)
+find_symbol(mach_header_64_t *mh, const char *name)
 {
-    struct symtab_command *symtab = NULL;
-    struct segment_command_64 *linkedit = NULL;
-    struct nlist_64 *nl = NULL;
-    void *strtab = NULL;
+    symtab_command_t *symtab = NULL;
+    seg_command_64_t *linkedit = NULL;
+    nlist_64_t *nl = NULL;
+    char *strtab = NULL;
     void *addr = NULL;
+    size_t symlen = strlen(name)+1;
     uint64_t i;
-    
+
     /* check header (0xfeedfccf) */
     if (mh->magic != MH_MAGIC_64) {
         IOLog("%s: magic number doesn't match - 0x%x\n", __func__, mh->magic);
@@ -107,30 +127,30 @@ find_symbol(struct mach_header_64 *mh, const char *name)
     
     /* find the __LINKEDIT segment and LC_SYMTAB command */
     linkedit = find_segment_64(mh, SEG_LINKEDIT);
+
     if (!linkedit) {
         IOLog("%s: couldn't find __LINKEDIT\n", __func__);
         return NULL;
     }
     
-    symtab = (struct symtab_command *)find_load_command(mh, LC_SYMTAB);
+    symtab = (symtab_command_t*)find_load_command(mh, LC_SYMTAB);
     if (!symtab) {
         IOLog("%s: couldn't find LC_SYMTAB\n", __func__);
         return NULL;
     }
-    
+
     /* walk the symbol table until we find a match */
-    int64_t strtab_addr = (int64_t)(linkedit->vmaddr - linkedit->fileoff) + symtab->stroff;
-    int64_t symtab_addr = (int64_t)(linkedit->vmaddr - linkedit->fileoff) + symtab->symoff;
+
+    print_pointer((void*)linkedit->vmaddr);
+    uint64_t strtab_addr = linkedit->vmaddr - linkedit->fileoff + (uint64_t)symtab->stroff;
+    uint64_t symtab_addr = linkedit->vmaddr - linkedit->fileoff + (uint64_t)symtab->symoff;
     
-    strtab = (void *)strtab_addr;
-    for (i = 0, nl = (struct nlist_64 *)symtab_addr;
-         i < symtab->nsyms;
-         i++, nl = (struct nlist_64 *)((int64_t)nl + sizeof(struct nlist_64)))
+    strtab = (char *)strtab_addr;
+
+    for (i = 0, nl = (nlist_64_t*)symtab_addr; i < symtab->nsyms; i++, nl++)
     {
-        char *str = (char *)strtab + nl->n_un.n_strx;
-        
-        if (strcmp(str, name) == 0) {
-//            IOLog("%s: symbol %s at address %llx\n", __func__, str, (uint64_t)nl->n_value);
+        char *str = strtab + nl->n_un.n_strx;
+        if (strncmp(str, name, symlen) == 0) {
             addr = (void *)nl->n_value;
         }
     }

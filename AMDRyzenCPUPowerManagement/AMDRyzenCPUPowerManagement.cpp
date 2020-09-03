@@ -28,6 +28,9 @@ uint64_t pmRyzen_rdmsr_safe(void *handle, uint32_t addr){
     return v;
 }
 
+pmRyzen_symtable_t pmRyzen_symtable={0};
+uint8_t pmRyzen_symtable_ready = 0;
+
 }
 
 
@@ -35,7 +38,21 @@ bool AMDRyzenCPUPowerManagement::init(OSDictionary *dictionary){
 //    strcpy((char*)kMODULE_VERSION, xStringify(MODULE_VERSION), (uint32_t)strlen(xStringify(MODULE_VERSION)));
     IOLog("AMDCPUSupport v%s, init\n", xStringify(MODULE_VERSION));
     
+    IOLog("AMDCPUSupport::enter dlinking..\n");
     
+    pmRyzen_symtable_ready = 0;
+    
+    pmRyzen_symtable._wrmsr_carefully = lookup_symbol("_wrmsr_carefully");
+    pmRyzen_symtable._KUNCUserNotificationDisplayAlert = lookup_symbol("_KUNCUserNotificationDisplayAlert");
+    pmRyzen_symtable._cpu_to_processor = lookup_symbol("_cpu_to_processor");
+    pmRyzen_symtable._tscFreq = lookup_symbol("_tscFreq");
+    pmRyzen_symtable._pmDispatch = lookup_symbol("_pmDispatch");
+    pmRyzen_symtable._pmUnRegister = lookup_symbol("_pmUnRegister");
+    pmRyzen_symtable._cpu_NMI_interrupt = lookup_symbol("_cpu_NMI_interrupt");
+    pmRyzen_symtable._NMIPI_enable = lookup_symbol("_NMIPI_enable");
+    pmRyzen_symtable._i386_cpu_IPI = lookup_symbol("_i386_cpu_IPI");
+    pmRyzen_symtable_ready = 1;
+    IOLog("AMDCPUSupport::enter link finished.\n");
     return IOService::init(dictionary);
 }
 
@@ -147,9 +164,9 @@ void AMDRyzenCPUPowerManagement::startWorkLoop() {
         mp_rendezvous_no_intrs([](void *obj) {
             auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
             uint32_t cpu_num = cpu_number();
-            
+
             provider->updateInstructionDelta(cpu_num);
-            
+
             // Ignore hyper-threaded cores
             if(!pmRyzen_cpu_primary_in_core(cpu_num)) return;
             uint8_t physical = pmRyzen_cpu_phys_num(cpu_num);
@@ -162,30 +179,19 @@ void AMDRyzenCPUPowerManagement::startWorkLoop() {
         //Read stats from package.
         provider->updatePackageTemp();
         provider->updatePackageEnergy();
-//        if(provider->superIO) provider->superIO->updateFanControl();
-//        IOLog("exit idle: %llu, ipi: %llu, diff %llu, false %llu\n", pmRyzen_exit_idle_c, pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_c - pmRyzen_exit_idle_ipi_c, pmRyzen_exit_idle_false_c);
-//        pmRyzen_exit_idle_c = 0; pmRyzen_exit_idle_ipi_c = 0; pmRyzen_exit_idle_false_c = 0;
-//
-//
-//        IOLog("time: 0.%llu, running: %llu\n", uint64_t(pmRyzen_get_processor(0)->eff_load * 1000000000), pmRyzen_get_processor(4)->stat_exit_idle);
         
-//        IOLog("active p %u\n", pmRyzen_hpcpus);
+
         
         uint32_t now = uint32_t(getCurrentTimeNs() / 1000000); //ms
         uint32_t newInt = max(now - provider->timeOfLastMissedRequest,
                               provider->estimatedRequestTimeInterval);
-        
+
         provider->actualUpdateTimeInterval = now - provider->timeOfLastUpdate;
         provider->timeOfLastUpdate = now;
         provider->updateTimeInterval = min(1200, max(50, newInt));
         
         provider->timerEventSource->setTimeoutMS(provider->updateTimeInterval);
-//        IOLog("est time: %d\n", provider->estimatedRequestTimeInterval);
-//        IOLog("update time: %d\n", provider->updateTimeInterval);
-//        IOLog("Core %d: %llu\n", 0, (uint64_t)(provider->PStateCur_perCore[0]));
-//        for (int i = 0; i < provider->totalNumberOfPhysicalCores; i++) {
-//            IOLog("Core %d: %llu\n", i, (uint64_t)(provider->PStateCur_perCore[i]));
-//        }
+
         
         
     });
@@ -298,14 +304,24 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
 //    totalNumberOfLogicalCores = cpuTopology.totalLogical();
     
     
-    void *safe_wrmsr = lookup_symbol("_wrmsr_carefully");
+    IOLog("AMDCPUSupport::start trying to init PCI service...\n");
+    if(!getPCIService()){
+        IOLog("AMDCPUSupport::start no PCI support found, failing...\n");
+        return false;
+    }
+    
+//    while (!pmRyzen_symtable_ready) {
+//        IOSleep(200);
+//    }
+    
+    void *safe_wrmsr = pmRyzen_symtable._wrmsr_carefully;
     if(!safe_wrmsr){
         IOLog("AMDCPUSupport::start WARN: Can't find _wrmsr_carefully, proceeding with unsafe wrmsr\n");
     } else {
         wrmsr_carefully = (int(*)(uint32_t,uint32_t,uint32_t)) safe_wrmsr;
     }
-    
-    void *_kunc_alert = lookup_symbol("_KUNCUserNotificationDisplayAlert");
+
+    void *_kunc_alert = pmRyzen_symtable._KUNCUserNotificationDisplayAlert;
     IOLog("kunc_alert %p\n", kunc_alert);
     if(!_kunc_alert){
         IOLog("AMDCPUSupport::start WARN: Can't find _KUNCUserNotificationDisplayAlert.\n");
@@ -314,30 +330,19 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
         (kern_return_t(*)(int,unsigned,const char*,const char*,const char*,
         const char*,const char*,const char*,const char*,const char*,unsigned*))_kunc_alert;
     }
-    
-    cpu_to_processor = (processor_t(*)(int))lookup_symbol("_cpu_to_processor");
-    processor_shutdown = (kern_return_t(*)(processor_t))lookup_symbol("_processor_exit_from_user");
-    processor_startup = (kern_return_t(*)(processor_t))lookup_symbol("_processor_start_from_user");
-    xnuTSCFreq = *((uint64_t*)lookup_symbol("_tscFreq"));
-    
-//    for(int i = 4; i< 24; i++){
-//        (*processor_startup)((*cpu_to_processor)(i));
-//    }
-    
-    IOLog("AMDCPUSupport::start trying to init PCI service...\n");
-    if(!getPCIService()){
-        IOLog("AMDCPUSupport::start no PCI support found, failing...\n");
-        return false;
-    }
-    
+
+    cpu_to_processor = (processor_t(*)(int))pmRyzen_symtable._cpu_to_processor;
+
+    xnuTSCFreq = *((uint64_t*)pmRyzen_symtable._tscFreq);
+
     pmRyzen_init(this);
-    
+
     totalNumberOfLogicalCores = pmRyzen_num_logi;
     totalNumberOfPhysicalCores = pmRyzen_num_phys;
-    
+
     IOLog("AMDCPUSupport::start, Physical Count: %u, Logical Count %u.\n",
               totalNumberOfPhysicalCores, totalNumberOfLogicalCores);
-    
+
     workLoop = IOWorkLoop::workLoop();
     startWorkLoop();
 
@@ -489,11 +494,10 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     uint64_t lastAPERF = lastAPERF_PerCore[physical];
     uint64_t lastMPERF = lastMPERF_PerCore[physical];
     
-    //If an overflow of either the MPERF or APERF register occurs between the read of last MPERF and the
+    //If an overflow of either the MPERF or APERF register occurs between read of last MPERF and
     //read of last APERF, the effective frequency calculated in is invalid.
-    //Yeah, so we will do nothing.
     if(APERF <= lastAPERF || MPERF <= lastMPERF) {
-        IOLog("AMDCPUSupport::calculateEffectiveFrequency: frequency is invalid!!!");
+//        IOLog("AMDCPUSupport::calculateEffectiveFrequency: frequency is invalid!!!");
         return;
     }
     
@@ -595,17 +599,6 @@ void AMDRyzenCPUPowerManagement::updatePackageTemp(){
     
     
     PACKAGE_TEMPERATURE_perPackage[0] = t;
-    
-    
-//    IOPCIAddressSpace space2;
-//    space2.bits = 0;
-//    space2.es.deviceNum = 0x18;
-//    space2.es.functionNum = 3;
-//    uint32_t nn = fIOPCIDevice->configRead32(space2, 0x00);
-//    uint64_t ca = 0;
-//    read_msr(kMSR_CSTATE_ADDR, &ca);
-//
-//    IOLog("shit %u %llu\n", nn, ca);
 }
 
 void AMDRyzenCPUPowerManagement::updatePackageEnergy(){
@@ -717,15 +710,32 @@ uint32_t AMDRyzenCPUPowerManagement::getHPcpus(){
     return pmRyzen_hpcpus;
 }
 
-EXPORT extern "C" kern_return_t ADDPR(kern_start)(kmod_info_t *, void *) {
+EXPORT extern "C" kern_return_t amdryzencpupm_kern_start(kmod_info_t *, void *) {
     // Report success but actually do not start and let I/O Kit unload us.
     // This works better and increases boot speed in some cases.
     PE_parse_boot_argn("liludelay", &ADDPR(debugPrintDelay), sizeof(ADDPR(debugPrintDelay)));
     ADDPR(debugEnabled) = checkKernelArgument("-amdpdbg");
+    
+//    IOLog("AMDCPUSupport::enter dlinking..\n");
+//
+//    pmRyzen_symtable_ready = 0;
+//
+//    pmRyzen_symtable._wrmsr_carefully = lookup_symbol("_wrmsr_carefully");
+//    pmRyzen_symtable._KUNCUserNotificationDisplayAlert = lookup_symbol("_KUNCUserNotificationDisplayAlert");
+//    pmRyzen_symtable._cpu_to_processor = lookup_symbol("_cpu_to_processor");
+//    pmRyzen_symtable._tscFreq = lookup_symbol("_tscFreq");
+//    pmRyzen_symtable._pmDispatch = lookup_symbol("_pmDispatch");
+//    pmRyzen_symtable._pmUnRegister = lookup_symbol("_pmUnRegister");
+//    pmRyzen_symtable._cpu_NMI_interrupt = lookup_symbol("_cpu_NMI_interrupt");
+//    pmRyzen_symtable._NMIPI_enable = lookup_symbol("_NMIPI_enable");
+//    pmRyzen_symtable._i386_cpu_IPI = lookup_symbol("_i386_cpu_IPI");
+//    pmRyzen_symtable_ready = 1;
+//    IOLog("AMDCPUSupport::enter link finished.\n");
+    
     return KERN_SUCCESS;
 }
 
-EXPORT extern "C" kern_return_t ADDPR(kern_stop)(kmod_info_t *, void *) {
+EXPORT extern "C" kern_return_t amdryzencpupm_kern_stop(kmod_info_t *, void *) {
     // It is not safe to unload VirtualSMC plugins!
     return KERN_FAILURE;
 }

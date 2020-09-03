@@ -12,21 +12,23 @@
 #include <i386/proc_reg.h>
 #include <libkern/libkern.h>
 
-#include <Headers/kern_efi.hpp>
 
+#include <Headers/kern_efi.hpp>
 #include <Headers/kern_util.hpp>
 #include <Headers/kern_cpu.hpp>
 #include <Headers/kern_time.hpp>
 
-#include <VirtualSMCSDK/kern_vsmcapi.hpp>
-#include <VirtualSMCSDK/AppleSmc.h>
-
-
+#include <Headers/kern_api.hpp>
+#define LILU_CUSTOM_KMOD_INIT
+#define LILU_CUSTOM_IOKIT_INIT
+#include <Headers/plugin_start.hpp>
 #include "symresolver/kernel_resolver.h"
 
 #include "SuperIO/ISSuperIONCT668X.hpp"
 #include "SuperIO/ISSuperIONCT67XXFamily.hpp"
 #include "SuperIO/ISSuperIOIT86XXEFamily.hpp"
+
+#include "Headers/pmRyzenSymbolTable.h"
 
 #include <i386/cpuid.h>
 
@@ -60,6 +62,9 @@ void i386_deactivate_cpu(void);
 void pmRyzen_wrmsr_safe(void *, uint32_t, uint64_t);
 uint64_t pmRyzen_rdmsr_safe(void *, uint32_t);
 
+
+
+extern pmRyzen_symtable_t pmRyzen_symtable;
 };
 
 
@@ -249,6 +254,9 @@ private:
     CPUInfo::CpuTopology cpuTopology {};
     
     IOPCIDevice *fIOPCIDevice;
+    
+    KernelPatcher *liluKernelPatcher;
+    
     bool getPCIService();
     bool wentToSleep;
     
