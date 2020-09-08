@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B72086C247C884C00BF7492 /* ISSuperIOIT86XXEFamily.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B72086A247C884C00BF7492 /* ISSuperIOIT86XXEFamily.hpp */; };
+		5B72086D247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B72086B247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp */; };
 		B5011EA1242E01CC009FB2A2 /* SMCAMDProcessor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B5011EA0242E01CC009FB2A2 /* SMCAMDProcessor.hpp */; };
 		B5011EA3242E01CC009FB2A2 /* SMCAMDProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5011EA2242E01CC009FB2A2 /* SMCAMDProcessor.cpp */; };
 		B56162C72400EF770006A7D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56162C62400EF770006A7D8 /* AppDelegate.swift */; };
@@ -30,6 +32,7 @@
 		B583FEA3242E0A65001AE99A /* Keyimplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57D280223F66C8E002BC699 /* Keyimplementations.cpp */; };
 		B584F5CB242E2CBE007DEA77 /* pmAMDRyzen.h in Headers */ = {isa = PBXBuildFile; fileRef = B584F5C9242E2CBE007DEA77 /* pmAMDRyzen.h */; };
 		B584F5CC242E2CBE007DEA77 /* pmAMDRyzen.c in Sources */ = {isa = PBXBuildFile; fileRef = B584F5CA242E2CBE007DEA77 /* pmAMDRyzen.c */; };
+		B5920B9424FFBB9B006C6DFF /* pmRyzenSymbolTable.h in Sources */ = {isa = PBXBuildFile; fileRef = B5920B9324FFBB9B006C6DFF /* pmRyzenSymbolTable.h */; };
 		B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */; };
 		B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */; };
 		B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */; };
@@ -45,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B72086A247C884C00BF7492 /* ISSuperIOIT86XXEFamily.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ISSuperIOIT86XXEFamily.hpp; sourceTree = "<group>"; };
+		5B72086B247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ISSuperIOIT86XXEFamily.cpp; sourceTree = "<group>"; };
 		B5011E9E242E01CC009FB2A2 /* SMCAMDProcessor.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMCAMDProcessor.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5011EA0242E01CC009FB2A2 /* SMCAMDProcessor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SMCAMDProcessor.hpp; sourceTree = "<group>"; };
 		B5011EA2242E01CC009FB2A2 /* SMCAMDProcessor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SMCAMDProcessor.cpp; sourceTree = "<group>"; };
@@ -77,6 +82,7 @@
 		B5810046246D6B3200A38AB7 /* ISLPCPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISLPCPort.h; sourceTree = "<group>"; };
 		B584F5C9242E2CBE007DEA77 /* pmAMDRyzen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pmAMDRyzen.h; sourceTree = "<group>"; };
 		B584F5CA242E2CBE007DEA77 /* pmAMDRyzen.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pmAMDRyzen.c; sourceTree = "<group>"; };
+		B5920B9324FFBB9B006C6DFF /* pmRyzenSymbolTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pmRyzenSymbolTable.h; sourceTree = "<group>"; };
 		B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
 		B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewGridLineLayer.swift; sourceTree = "<group>"; };
@@ -187,6 +193,7 @@
 		B57C7E912424EFC700C86B68 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				B5920B9324FFBB9B006C6DFF /* pmRyzenSymbolTable.h */,
 				B57C7E922424EFFF00C86B68 /* osfmk */,
 				B55E654B240B842400376E9E /* LegacyHeaders */,
 			);
@@ -250,6 +257,8 @@
 		B5810041246D627700A38AB7 /* SuperIO */ = {
 			isa = PBXGroup;
 			children = (
+				5B72086B247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp */,
+				5B72086A247C884C00BF7492 /* ISSuperIOIT86XXEFamily.hpp */,
 				B5810042246D629C00A38AB7 /* ISSuperIONCT67XXFamily.cpp */,
 				B5810043246D629C00A38AB7 /* ISSuperIONCT67XXFamily.hpp */,
 				B5DF4AB3247156F200663498 /* ISSuperIONCT668X.cpp */,
@@ -301,6 +310,7 @@
 				B5810045246D629C00A38AB7 /* ISSuperIONCT67XXFamily.hpp in Headers */,
 				B57C7E972424EFFF00C86B68 /* cpu_topology.h in Headers */,
 				B564A5CA240B8256000FF929 /* LegacyIOUserClient.h in Headers */,
+				5B72086C247C884C00BF7492 /* ISSuperIOIT86XXEFamily.hpp in Headers */,
 				B5DDAAC224714A1500A7572D /* ISSuperIOSMCFamily.hpp in Headers */,
 				B57D280923F66C8E002BC699 /* AMDRyzenCPUPowerManagement.hpp in Headers */,
 			);
@@ -464,8 +474,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5920B9424FFBB9B006C6DFF /* pmRyzenSymbolTable.h in Sources */,
 				B5DF4AB5247156F200663498 /* ISSuperIONCT668X.cpp in Sources */,
 				B584F5CC242E2CBE007DEA77 /* pmAMDRyzen.c in Sources */,
+				5B72086D247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp in Sources */,
 				B5D20189241B85E800BBD06A /* kernel_resolver.c in Sources */,
 				B57D280B23F66C8E002BC699 /* AMDRyzenCPUPMUserClient.cpp in Sources */,
 				B57D280723F66C8E002BC699 /* AMDRyzenCPUPowerManagement.cpp in Sources */,
@@ -552,7 +564,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -576,7 +588,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -700,7 +712,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.3;
+				CURRENT_PROJECT_VERSION = 0.6.5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -715,8 +727,10 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.3;
+				MARKETING_VERSION = 0.6.5;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
+				MODULE_START = amdryzencpupm_kern_start;
+				MODULE_STOP = amdryzencpupm_kern_stop;
 				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				OTHER_CFLAGS = (
 					"-mmmx",
@@ -745,7 +759,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.3;
+				CURRENT_PROJECT_VERSION = 0.6.5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -758,8 +772,10 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.3;
+				MARKETING_VERSION = 0.6.5;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
+				MODULE_START = amdryzencpupm_kern_start;
+				MODULE_STOP = amdryzencpupm_kern_stop;
 				MODULE_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				OTHER_CFLAGS = (
 					"-mmmx",

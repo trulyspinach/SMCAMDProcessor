@@ -4,30 +4,32 @@
 //Support for macOS 10.13
 #include <Library/LegacyIOService.h>
 
-//#include <IOKit/IOService.h>
-//#include <IOKit/IOLib.h>
-
 #include <math.h>
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/IOTimerEventSource.h>
 
+
 #include <i386/proc_reg.h>
 #include <libkern/libkern.h>
 
-#include <Headers/kern_efi.hpp>
 
+#include <Headers/kern_efi.hpp>
 #include <Headers/kern_util.hpp>
 #include <Headers/kern_cpu.hpp>
 #include <Headers/kern_time.hpp>
 
-#include <VirtualSMCSDK/kern_vsmcapi.hpp>
-#include <VirtualSMCSDK/AppleSmc.h>
 
-
+#include <Headers/kern_api.hpp>
+#define LILU_CUSTOM_KMOD_INIT
+#define LILU_CUSTOM_IOKIT_INIT
+#include <Headers/plugin_start.hpp>
 #include "symresolver/kernel_resolver.h"
 
 #include "SuperIO/ISSuperIONCT668X.hpp"
 #include "SuperIO/ISSuperIONCT67XXFamily.hpp"
+#include "SuperIO/ISSuperIOIT86XXEFamily.hpp"
+
+#include "Headers/pmRyzenSymbolTable.h"
 
 #include <i386/cpuid.h>
 
@@ -35,6 +37,9 @@
 #define OC_OEM_BOARD_VARIABLE_NAME         u"oem-board"
 
 #define BASEBOARD_STRING_MAX 64
+
+#define kNrOfPowerStates 2
+#define kIOPMPowerOff 0
 
 extern "C" {
 #include "pmAMDRyzen.h"
@@ -58,6 +63,9 @@ void i386_deactivate_cpu(void);
 void pmRyzen_wrmsr_safe(void *, uint32_t, uint64_t);
 uint64_t pmRyzen_rdmsr_safe(void *, uint32_t);
 
+
+
+extern pmRyzen_symtable_t pmRyzen_symtable;
 };
 
 
@@ -71,6 +79,10 @@ typedef struct tctl_offset {
 } TempOffset;
 
 
+static IOPMPowerState powerStates[kNrOfPowerStates] = {
+   {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
+   {1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
+};
 
 
 class AMDRyzenCPUPowerManagement : public IOService {
@@ -125,6 +137,8 @@ public:
     
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
+    
+    virtual IOReturn setPowerState(unsigned long powerStateOrdinal, IOService* whatDevice) override;
     
     void fetchOEMBaseBoardInfo();
 
@@ -241,9 +255,13 @@ private:
     CPUInfo::CpuTopology cpuTopology {};
     
     IOPCIDevice *fIOPCIDevice;
+    
+    KernelPatcher *liluKernelPatcher;
+    
     bool getPCIService();
+    bool wentToSleep;
     
-    
-    
+    void startWorkLoop();
+    void stopWorkLoop();
 };
 #endif

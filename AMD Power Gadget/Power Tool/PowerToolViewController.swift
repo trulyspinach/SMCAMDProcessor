@@ -31,6 +31,12 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     }
     
     
+    @IBOutlet var vsView: NSVisualEffectView!
+    @IBOutlet weak var boxView: NSBox!
+    func toggleTranslucency(enabled : Bool) {
+        vsView.state = enabled ? .active : .inactive
+        boxView.isTransparent = enabled
+    }
     
     @IBOutlet weak var boardHelpButton: NSButton!
     @IBAction func boardHelp(_ sender: Any) {
@@ -78,7 +84,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     var sumCount = 0
     
     static var activeSelf : PowerToolViewController?
-    static func launch() {
+    static func launch(){
         if let vc = PowerToolViewController.activeSelf {
             vc.view.window?.orderFrontRegardless()
         } else {
@@ -114,6 +120,8 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         
         topLabel1.font = NSFont(name: "SF Pro Rounded", size: 32)
         topLabel2.font = NSFont(name: "SF Pro Rounded", size: 32)
+        
+        toggleTranslucency(enabled: UserDefaults.standard.bool(forKey: "usetranslucency"))
         
         PowerToolViewController.activeSelf = self
     }

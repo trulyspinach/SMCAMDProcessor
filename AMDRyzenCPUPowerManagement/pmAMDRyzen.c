@@ -75,7 +75,11 @@ pmDispatch_t pmRyzen_cpuFuncs = {
     .GetDeadline = 0,
     .SetDeadline = 0,
     .Deadline = 0,
+#ifdef PMRYZEN_IDLE_MWAIT
     .exitIdle = &pmRyzen_exit_idle,
+#else
+    .exitIdle = 0,
+#endif
     .markCPURunning = 0,
     .pmCPUControl = 0,
     .pmCPUHalt = 0,
@@ -145,18 +149,19 @@ void pmRyzen_init(void *handle){
     pmRyzen_io_service_handle = handle;
     
     
-    void **kernelDisp = lookup_symbol("_pmDispatch");
-    pmRyzen_pmUnRegister = (void(*)(pmDispatch_t*))lookup_symbol("_pmUnRegister");
-    pmRyzen_cpu_NMI = (void(*)(int))lookup_symbol("_cpu_NMI_interrupt");
-    pmRyzen_NMI_enabled = (void(*)(boolean_t))lookup_symbol("_NMIPI_enable");
-    pmRyzen_cpu_IPI = (void(*)(boolean_t))lookup_symbol("_i386_cpu_IPI");
-    pmRyzen_tsc_freq = *((uint64_t*)lookup_symbol("_tscFreq"));
+    void **kernelDisp = pmRyzen_symtable._pmDispatch;
+    pmRyzen_pmUnRegister = (void(*)(pmDispatch_t*))pmRyzen_symtable._pmUnRegister;
+    pmRyzen_cpu_NMI = (void(*)(int))pmRyzen_symtable._cpu_NMI_interrupt;
+    pmRyzen_NMI_enabled = (void(*)(boolean_t))pmRyzen_symtable._NMIPI_enable;
+    pmRyzen_cpu_IPI = (void(*)(boolean_t))pmRyzen_symtable._i386_cpu_IPI;
+    pmRyzen_tsc_freq = *((uint64_t*)pmRyzen_symtable._tscFreq);
     
     
     
     pmCallBacks_t cb;
     if(*kernelDisp)(*pmRyzen_pmUnRegister)(*kernelDisp);
     pmKextRegister(PM_DISPATCH_VERSION, &pmRyzen_cpuFuncs, &cb);
+//    pmKextRegister(PM_DISPATCH_VERSION, NULL, &cb);
     
     x86_pkg_t * pkg = cb.GetPkgRoot();
     int pkgCount = 0;
@@ -351,9 +356,9 @@ boolean_t pmRyzen_exit_idle(x86_lcpu_t *lcpu){
     pmProcessor_t *target = &pmRyzen_cpus[lcpu->cpu_num];
 
     // Exit if cpu is already awake.
-    if(target->cpu_awake) return false;
+//    if(target->cpu_awake) return false;
     
-    pmRyzen_exit_idle_c++;
+//    pmRyzen_exit_idle_c++;
     
 #ifdef PMRYZEN_IDLE_MWAIT
     uint64_t start_tsc = rdtsc64();
@@ -374,7 +379,8 @@ boolean_t pmRyzen_exit_idle(x86_lcpu_t *lcpu){
     
 #else
     target->arm_flag = 1;
-    pmRyzen_exit_idle_ipi_c++;
+//    pmRyzen_exit_idle_ipi_c++;
+    
     
     return true;
 #endif

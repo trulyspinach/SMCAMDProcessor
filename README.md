@@ -36,7 +36,7 @@ You can access this menu from menu bar "Open -> SMC Fans" or the button in Power
 
 <img src="imgs/ani.gif" width="100%">
 
-### AMD Power Gadget
+## AMD Power Gadget
 <img src="imgs/all.png" width="80%">
 
 ## Editing PState
@@ -54,14 +54,6 @@ To access PState editor:
 * For safety concern, this function was limited to root user only. You can either launch AMD Power Gadget with root user or use `-amdpnopchk` to disable this check.
 
 
-
-## Tested Processors
-* Ryzen 9 3900X
-* Ryzen 7 3700X
-* Ryzen 7 2700X
-* Ryzen 5 3600
-* Threadripper 2990WX
-
 <img src="imgs/iStats.png" width="40%">
 
 
@@ -76,8 +68,10 @@ To access PState editor:
 
 ## Credits
 * [aluveitie](https://github.com/aluveitie) for various enhancements and fixes.
+* [mauricelos](https://github.com/mauricelos) for IT86XXE SMC chip driver.
 * [necross2](https://github.com/necross2) for adding support to temperature sensor offset.
 * [Shaneee](https://github.com/Shaneee) for the beautiful icon.
+
 
 ## Notes
 * I am still fairly new to macOS kernel development, this software project was initally a hobby project, **and it still is**, to get some reading on my newly built AMD hackintosh computer.

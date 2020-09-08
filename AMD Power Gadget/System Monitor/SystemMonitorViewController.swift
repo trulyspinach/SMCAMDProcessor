@@ -96,7 +96,7 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return 20
+        return 30
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {

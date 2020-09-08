@@ -25,6 +25,8 @@ class ViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var temperatureLabel: NSTextField!
     @IBOutlet weak var powerLabel: NSTextField!
 
+    @IBOutlet weak var vsView: NSVisualEffectView!
+    
     var timer : Timer?
     
     var freqLine : Int = 0
@@ -71,6 +73,8 @@ class ViewController: NSViewController, NSWindowDelegate {
         
         timeStart = Date.timeIntervalSinceReferenceDate
         
+        toggleTranslucency(enabled: UserDefaults.standard.bool(forKey: "usetranslucency"))
+        
         sampleData(forced: true)
         sampleData(forced: true)
         sampleData(forced: true)
@@ -79,16 +83,18 @@ class ViewController: NSViewController, NSWindowDelegate {
     override func viewWillAppear() {
         view.window?.delegate = self
         view.window?.isMovableByWindowBackground = true
-        if var frame = view.window?.frame {
-            frame.size = NSSize(width: 410, height: 860)
-            view.window?.setFrame(frame, display: true, animate: false)
-        }
     }
     
     override var representedObject: Any? {
         didSet {
             // Update the view, if already loaded.
         }
+    }
+    
+    func toggleTranslucency(enabled : Bool) {
+        vsView.state = enabled ? .active : .inactive
+        
+        scrollView.drawsBackground = !enabled
     }
     
     func sampleData(forced : Bool){

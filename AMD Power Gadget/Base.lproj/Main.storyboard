@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -59,8 +59,8 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Open" id="HyV-fh-RgO">
                                     <items>
-                                        <menuItem title="AMD Power Gadget" keyEquivalent="t" id="snW-S8-Cw5">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                        <menuItem title="AMD Power Gadget" id="snW-S8-Cw5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="gadget:" target="Voe-Tx-rLC" id="p4g-Jh-v70"/>
                                             </connections>
@@ -88,6 +88,19 @@
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="toggleFullScreen:" target="Ady-hI-5gd" id="dU3-MA-1Rq"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Appearance" id="YPP-op-718">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Appearance" id="2QC-gb-0f6">
+                                    <items>
+                                        <menuItem title="Use Aqua Translucent" id="fV4-Ra-Fu1">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="changeAppearance:" target="Voe-Tx-rLC" id="qqf-u3-SWy"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -136,7 +149,11 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AMD_Power_Gadget" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                    <connections>
+                        <outlet property="appearanceToggle" destination="fV4-Ra-Fu1" id="QrG-wZ-zSC"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -151,7 +168,7 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="410" height="770"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="410" height="400"/>
+                        <value key="minSize" type="size" width="410" height="450"/>
                         <value key="maxSize" type="size" width="410" height="900"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -173,12 +190,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-sZ-1YA">
+                            <visualEffectView appearanceType="darkAqua" blendingMode="behindWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-sZ-1YA">
                                 <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                                 <subviews>
                                     <scrollView appearanceType="darkAqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQS-Yx-qAY">
                                         <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
-                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="baN-DY-cIK">
+                                        <clipView key="contentView" copiesOnScroll="NO" id="baN-DY-cIK">
                                             <rect key="frame" x="0.0" y="0.0" width="410" height="940"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -190,13 +207,13 @@
                                                             <rect key="frame" x="20" y="20" width="370" height="885"/>
                                                             <subviews>
                                                                 <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Pm-km-AqH">
-                                                                    <rect key="frame" x="0.0" y="796" width="370" height="89"/>
+                                                                    <rect key="frame" x="0.0" y="832" width="370" height="53"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ctl-UK-C2x">
-                                                                            <rect key="frame" x="0.0" y="14" width="274" height="61"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="274" height="53"/>
                                                                             <subviews>
                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-KS-nxl">
-                                                                                    <rect key="frame" x="-2" y="29" width="259" height="32"/>
+                                                                                    <rect key="frame" x="-2" y="29" width="259" height="24"/>
                                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Power Gadget" id="kgx-Yz-PbY">
                                                                                         <font key="font" size="27" name="HelveticaNeue-Bold"/>
                                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -225,7 +242,7 @@
                                                                             </customSpacing>
                                                                         </stackView>
                                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="hBo-Uf-jJB">
-                                                                            <rect key="frame" x="284" y="30" width="86" height="30"/>
+                                                                            <rect key="frame" x="284" y="12" width="86" height="30"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="NOj-SU-7VI"/>
                                                                             </constraints>
@@ -248,7 +265,7 @@
                                                                     </customSpacing>
                                                                 </stackView>
                                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="dUS-mw-nYz" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="551" width="370" height="230"/>
+                                                                    <rect key="frame" x="0.0" y="587" width="370" height="230"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmE-cn-Eao">
                                                                             <rect key="frame" x="15" y="178" width="340" height="42"/>
@@ -341,7 +358,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
                                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="TFs-yj-lzu" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="306" width="370" height="230"/>
+                                                                    <rect key="frame" x="0.0" y="342" width="370" height="230"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FPJ-Wd-oOI">
                                                                             <rect key="frame" x="20" y="178" width="335" height="42"/>
@@ -425,7 +442,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
                                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="dVq-Zt-29Y" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="61" width="370" height="230"/>
+                                                                    <rect key="frame" x="0.0" y="97" width="370" height="230"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edL-P0-tdg">
                                                                             <rect key="frame" x="20" y="178" width="330" height="42"/>
@@ -509,10 +526,10 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
                                                                 <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7O3-J8-Emw">
-                                                                    <rect key="frame" x="96" y="0.0" width="179" height="46"/>
+                                                                    <rect key="frame" x="96" y="0.0" width="179" height="82"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-xZ-Nqc">
-                                                                            <rect key="frame" x="-2" y="30" width="183" height="16"/>
+                                                                            <rect key="frame" x="-2" y="66" width="183" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Designed and Engineered By:" id="j0C-AZ-HUC">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
@@ -520,7 +537,7 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-cv-FEh">
-                                                                            <rect key="frame" x="46" y="14" width="87" height="16"/>
+                                                                            <rect key="frame" x="46" y="50" width="87" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="trulyspinach" id="5Us-8x-J9i">
                                                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                                                 <color key="textColor" red="0.032221600140000001" green="0.51876349519999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -528,7 +545,7 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
-                                                                            <rect key="frame" x="87" y="0.0" width="4" height="14"/>
+                                                                            <rect key="frame" x="64" y="0.0" width="50" height="50"/>
                                                                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -580,6 +597,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </clipView>
                                         <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bxT-br-mDa">
@@ -617,6 +635,7 @@
                         <outlet property="subtitleLabel" destination="lW7-TH-Jh4" id="7hy-Oa-Zma"/>
                         <outlet property="temperatureGraphView" destination="TFs-yj-lzu" id="TOn-7N-frS"/>
                         <outlet property="temperatureLabel" destination="iNA-Ja-LRu" id="wYy-bR-QLX"/>
+                        <outlet property="vsView" destination="4jT-sZ-1YA" id="D8C-my-6wB"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -673,7 +692,7 @@
         <scene sceneID="XXV-SL-iZC">
             <objects>
                 <viewController id="jl0-3p-cPP" customClass="SystemMonitorViewController" customModule="AMD_Power_Gadget" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="HZ9-Dt-1W1">
+                    <view key="view" appearanceType="darkAqua" id="HZ9-Dt-1W1">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="316"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -681,17 +700,17 @@
                                 <rect key="frame" x="20" y="61" width="440" height="181"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <clipView key="contentView" id="6Ot-eG-XsL">
-                                    <rect key="frame" x="1" y="0.0" width="438" height="180"/>
+                                    <rect key="frame" x="1" y="1" width="438" height="179"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="dsO-5e-kHu" id="fMM-Ea-Bjx">
-                                            <rect key="frame" x="0.0" y="0.0" width="438" height="155"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="438" height="154"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="fan" editable="NO" width="59" minWidth="50" maxWidth="80" id="oIC-kO-sGy">
+                                                <tableColumn identifier="fan" editable="NO" width="60.5" minWidth="50" maxWidth="80" id="oIC-kO-sGy">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Fan">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -715,12 +734,12 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                 </tableColumn>
-                                                <tableColumn identifier="control" width="47" minWidth="10" maxWidth="3.4028234663852886e+38" id="zoC-w0-w5s">
+                                                <tableColumn identifier="control" width="258.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="zoC-w0-w5s">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Throttle">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
-                                                    <sliderCell key="dataCell" state="on" alignment="left" maxValue="255" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="04O-Oe-4C0"/>
+                                                    <sliderCell key="dataCell" state="on" alignment="left" maxValue="255" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="Ek1-Uv-UJ4"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                 </tableColumn>
                                                 <tableColumn identifier="override" width="51" minWidth="51" maxWidth="51" id="UGH-lF-HM6">
@@ -745,7 +764,7 @@
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" id="dsO-5e-kHu">
+                                <tableHeaderView key="headerView" wantsLayer="YES" id="dsO-5e-kHu">
                                     <rect key="frame" x="0.0" y="0.0" width="438" height="25"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
@@ -844,11 +863,11 @@
                                 <rect key="frame" x="20" y="61" width="569" height="356"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="V3E-mk-Xj5">
-                                    <rect key="frame" x="1" y="0.0" width="567" height="355"/>
+                                    <rect key="frame" x="1" y="1" width="567" height="354"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="2sv-85-nb4" id="BG7-Ha-mMu">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="330"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="329"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -947,7 +966,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                 </tableColumn>
-                                                <tableColumn identifier="scale" width="37" minWidth="10" maxWidth="3.4028234663852886e+38" id="1pT-Cn-Ijo">
+                                                <tableColumn identifier="scale" width="168" minWidth="10" maxWidth="3.4028234663852886e+38" id="1pT-Cn-Ijo">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Scale">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -960,14 +979,14 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="z40-Cj-627">
-                                    <rect key="frame" x="1" y="378" width="567" height="16"/>
+                                    <rect key="frame" x="1" y="339" width="567" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="zBe-X2-UEf">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" id="2sv-85-nb4">
+                                <tableHeaderView key="headerView" wantsLayer="YES" id="2sv-85-nb4">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="25"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
@@ -1029,429 +1048,442 @@
         <scene sceneID="w5e-Rh-alZ">
             <objects>
                 <viewController id="rDh-aT-nig" customClass="PowerToolViewController" customModule="AMD_Power_Gadget" customModuleProvider="target" sceneMemberID="viewController">
-                    <visualEffectView key="view" blendingMode="behindWindow" material="appearanceBased" state="active" id="Hbi-PG-htk">
+                    <visualEffectView key="view" appearanceType="darkAqua" blendingMode="behindWindow" material="appearanceBased" state="inactive" id="Hbi-PG-htk">
                         <rect key="frame" x="0.0" y="0.0" width="612" height="650"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view id="txW-FO-Ih2">
-                                <rect key="frame" x="1" y="1" width="610" height="648"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qWA-cp-LHL">
-                                        <rect key="frame" x="18" y="590" width="298" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Power Tool" id="rfE-lF-RW1">
-                                            <font key="font" size="27" name="HelveticaNeue-Bold"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <box fixedFrame="YES" boxType="custom" borderWidth="0.0" cornerRadius="6" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Ar1-iz-6mE">
-                                        <rect key="frame" x="169" y="574" width="12" height="12"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" id="BJE-c2-Bg3">
-                                            <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                        <color key="fillColor" red="0.0" green="0.88068223990000005" blue="0.85222271130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </box>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rj8-sl-s8x">
-                                        <rect key="frame" x="20" y="560" width="146" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Effective Frequency" usesSingleLineMode="YES" id="Hb6-Sn-ZPE">
-                                            <font key="font" size="15" name="HelveticaNeue-Bold"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <box fixedFrame="YES" boxType="custom" borderWidth="0.0" cornerRadius="6" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="afy-qs-3eT">
-                                        <rect key="frame" x="271" y="574" width="12" height="12"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" id="tkd-0n-clu">
-                                            <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                        <color key="fillColor" red="1" green="0.27058823529411763" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </box>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biP-MU-keW">
-                                        <rect key="frame" x="203" y="560" width="64" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Demand" usesSingleLineMode="YES" id="pqc-63-Avp">
-                                            <font key="font" size="15" name="HelveticaNeue-Bold"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <box fixedFrame="YES" boxType="custom" cornerRadius="20" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="EY4-Jq-qBj">
-                                        <rect key="frame" x="20" y="364" width="570" height="200"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" appearanceType="darkAqua" id="xtT-5s-pnK">
-                                            <rect key="frame" x="1" y="1" width="568" height="198"/>
+                            <box fixedFrame="YES" boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Plg-Z7-w4I">
+                                <rect key="frame" x="0.0" y="0.0" width="612" height="650"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="agv-Lr-T84">
+                                    <rect key="frame" x="1" y="1" width="610" height="648"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view id="txW-FO-Ih2">
+                                            <rect key="frame" x="0.0" y="0.0" width="610" height="648"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5PL-lX-mWT" customClass="CPUPowerStepView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                    <rect key="frame" x="-1" y="-1" width="570" height="200"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXw-0Z-Hsz">
-                                                            <rect key="frame" x="9" y="140" width="127" height="23"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Frequency Max:" id="S67-kA-60W">
-                                                                <font key="font" metaFont="menu" size="14"/>
-                                                                <color key="textColor" red="0.39682106951734819" green="0.38716487256029775" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f05-q5-Exd">
-                                                            <rect key="frame" x="18" y="32" width="127" height="51"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="5.463K" id="pNU-5v-eWS">
-                                                                <font key="font" metaFont="system" size="32"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0Z-cm-Nz9">
-                                                            <rect key="frame" x="9" y="69" width="134" height="23"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Inst(s) Retired:" id="qdI-Ya-6dw">
-                                                                <font key="font" metaFont="menu" size="14"/>
-                                                                <color key="textColor" red="1" green="0.22007907837337137" blue="0.38047095040909751" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGI-us-87W">
-                                                            <rect key="frame" x="18" y="103" width="127" height="51"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="3.4Ghz" id="1u3-hj-qcH">
-                                                                <font key="font" metaFont="system" size="32"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                    </subviews>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qWA-cp-LHL">
+                                                    <rect key="frame" x="18" y="590" width="298" height="38"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Power Tool" id="rfE-lF-RW1">
+                                                        <font key="font" size="27" name="HelveticaNeue-Bold"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <box fixedFrame="YES" boxType="custom" borderWidth="0.0" cornerRadius="6" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Ar1-iz-6mE">
+                                                    <rect key="frame" x="169" y="574" width="12" height="12"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <view key="contentView" id="BJE-c2-Bg3">
+                                                        <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </view>
+                                                    <color key="fillColor" red="0.0" green="0.88068223990000005" blue="0.85222271130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </box>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rj8-sl-s8x">
+                                                    <rect key="frame" x="20" y="560" width="146" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Effective Frequency" usesSingleLineMode="YES" id="Hb6-Sn-ZPE">
+                                                        <font key="font" size="15" name="HelveticaNeue-Bold"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <box fixedFrame="YES" boxType="custom" borderWidth="0.0" cornerRadius="6" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="afy-qs-3eT">
+                                                    <rect key="frame" x="271" y="574" width="12" height="12"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <view key="contentView" id="tkd-0n-clu">
+                                                        <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </view>
+                                                    <color key="fillColor" red="1" green="0.27058823529411763" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </box>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biP-MU-keW">
+                                                    <rect key="frame" x="203" y="560" width="64" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Demand" usesSingleLineMode="YES" id="pqc-63-Avp">
+                                                        <font key="font" size="15" name="HelveticaNeue-Bold"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <box fixedFrame="YES" boxType="custom" cornerRadius="20" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="EY4-Jq-qBj">
+                                                    <rect key="frame" x="20" y="364" width="570" height="200"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <view key="contentView" appearanceType="darkAqua" id="xtT-5s-pnK">
+                                                        <rect key="frame" x="1" y="1" width="568" height="198"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5PL-lX-mWT" customClass="CPUPowerStepView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                                <rect key="frame" x="-1" y="-1" width="570" height="200"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <subviews>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXw-0Z-Hsz">
+                                                                        <rect key="frame" x="9" y="140" width="127" height="23"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Frequency Max:" id="S67-kA-60W">
+                                                                            <font key="font" metaFont="menuBar"/>
+                                                                            <color key="textColor" red="0.39682106951734819" green="0.38716487256029775" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f05-q5-Exd">
+                                                                        <rect key="frame" x="18" y="32" width="127" height="51"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="5.463K" id="pNU-5v-eWS">
+                                                                            <font key="font" metaFont="system" size="32"/>
+                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0Z-cm-Nz9">
+                                                                        <rect key="frame" x="9" y="69" width="134" height="23"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Inst(s) Retired:" id="qdI-Ya-6dw">
+                                                                            <font key="font" metaFont="menuBar"/>
+                                                                            <color key="textColor" red="1" green="0.22007907837337137" blue="0.38047095040909751" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGI-us-87W">
+                                                                        <rect key="frame" x="18" y="103" width="127" height="51"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="3.4Ghz" id="1u3-hj-qcH">
+                                                                            <font key="font" metaFont="system" size="32"/>
+                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                </subviews>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
+                                                                        <color key="value" red="0.18431372549019609" green="0.18823529411764706" blue="0.19215686274509802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="barColor1">
+                                                                        <color key="value" red="0.39215686274509803" green="0.82352941176470584" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="barSpacing">
+                                                                        <real key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="barMarginRight">
+                                                                        <real key="value" value="-2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
+                                                                        <color key="value" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="barColor2">
+                                                                        <color key="value" red="1" green="0.27058823529411763" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                        <color key="value" red="0.12279387953367871" green="0.12279387953367871" blue="0.12279387953367871" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxBarWidth">
+                                                                        <real key="value" value="1000"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="barCorner">
+                                                                        <real key="value" value="4"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="barTopWidth">
+                                                                        <real key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="barTopColor">
+                                                                        <color key="value" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="barMarginLeft">
+                                                                        <real key="value" value="171"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor2">
+                                                                        <color key="value" red="0.99803720419903308" green="1" blue="0.97404084073747099" alpha="0.67836707746478875" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColorSide">
+                                                                        <color key="value" red="0.15733034185245728" green="0.15776429332268657" blue="0.16438633419689119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                    </view>
+                                                    <color key="borderColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="fillColor" red="0.1450980392" green="0.1450980392" blue="0.1450980392" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewTopPercentage">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="viewBottomPercentage">
-                                                            <real key="value" value="0.0"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor1">
-                                                            <color key="value" red="0.18431372549019609" green="0.18823529411764706" blue="0.19215686274509802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="barColor1">
-                                                            <color key="value" red="0.39215686274509803" green="0.82352941176470584" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="barSpacing">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="barMarginRight">
-                                                            <real key="value" value="-2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
-                                                            <color key="value" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="barColor2">
-                                                            <color key="value" red="1" green="0.27058823529411763" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.12279387953367871" green="0.12279387953367871" blue="0.12279387953367871" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="maxBarWidth">
-                                                            <real key="value" value="1000"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="barCorner">
-                                                            <real key="value" value="4"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="barTopWidth">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineCurviness">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="barTopColor">
-                                                            <color key="value" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="barMarginLeft">
-                                                            <real key="value" value="171"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor2">
-                                                            <color key="value" red="0.99803720419903308" green="1" blue="0.97404084073747099" alpha="0.67836707746478875" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColorSide">
-                                                            <color key="value" red="0.15733034185245728" green="0.15776429332268657" blue="0.16438633419689119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
-                                                </view>
+                                                </box>
+                                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OqB-AI-Q3l">
+                                                    <rect key="frame" x="494" y="568" width="93" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <popUpButtonCell key="cell" type="push" title="Fastest" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" inset="2" pullsDown="YES" preferredEdge="maxX" selectedItem="JPo-Oe-VZY" id="Q1A-AK-67E">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="menu"/>
+                                                        <menu key="menu" id="M04-GL-LJW">
+                                                            <items>
+                                                                <menuItem title="Fastest" state="on" hidden="YES" id="JPo-Oe-VZY"/>
+                                                                <menuItem title="Item 2" id="Hn8-Ks-uXq"/>
+                                                                <menuItem title="Item 3" id="n9B-MP-DFG"/>
+                                                            </items>
+                                                        </menu>
+                                                    </popUpButtonCell>
+                                                </popUpButton>
+                                                <box fixedFrame="YES" boxType="custom" cornerRadius="20" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="4We-9B-XwG">
+                                                    <rect key="frame" x="20" y="25" width="570" height="276"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <view key="contentView" appearanceType="darkAqua" id="nrE-4F-Bxp">
+                                                        <rect key="frame" x="1" y="1" width="568" height="274"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <tabView appearanceType="darkAqua" fixedFrame="YES" drawsBackground="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-Iy-0Pe">
+                                                                <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                                <tabViewItems>
+                                                                    <tabViewItem label="Overview" identifier="" id="jw8-ka-4WD">
+                                                                        <view key="view" id="7ro-zI-xTc">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <subviews>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvS-BL-onx">
+                                                                                    <rect key="frame" x="18" y="20" width="372" height="242"/>
+                                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                                    <textFieldCell key="cell" selectable="YES" alignment="left" id="g3v-Pl-VUX">
+                                                                                        <font key="font" metaFont="systemMedium" size="13"/>
+                                                                                        <string key="title">Family: 12 ddd  deded dedededed dede de d ed ed e de dede d ded dccsvgbg  ijk  ij j jn jk iohiuohg yg uygb b jnmkl;m iohj uigbh uiojhn iujnhih </string>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LRK-w5-6Kx" customClass="CPUSpeedShiftView" customModule="AMD_Power_Gadget" customModuleProvider="target">
+                                                                                    <rect key="frame" x="409" y="15" width="122" height="220"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <userDefinedRuntimeAttributes>
+                                                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                                                            <color key="value" red="0.16927966339993578" green="0.16100697171648923" blue="0.17839216321243523" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                                            <real key="value" value="3"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                                            <color key="value" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                        <userDefinedRuntimeAttribute type="color" keyPath="stepColor1">
+                                                                                            <color key="value" red="0.060566519044490584" green="0.26306924972061363" blue="0.092129109768260775" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                        <userDefinedRuntimeAttribute type="color" keyPath="stepColor2">
+                                                                                            <color key="value" red="0.31482755829015541" green="0.26566781016499524" blue="0.016824513915994904" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                        <userDefinedRuntimeAttribute type="color" keyPath="stepColor3">
+                                                                                            <color key="value" red="0.34196891191709844" green="0.09280206957426633" blue="0.081135080272309687" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                    </userDefinedRuntimeAttributes>
+                                                                                    <connections>
+                                                                                        <action selector="onOverviewSpeedStep:" target="rDh-aT-nig" id="r64-Gf-dbc"/>
+                                                                                    </connections>
+                                                                                </customView>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q0W-oN-3ax">
+                                                                                    <rect key="frame" x="423" y="243" width="94" height="19"/>
+                                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Speed Steps" id="Zye-Ux-TbU">
+                                                                                        <font key="font" metaFont="systemMedium" size="15"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k7R-ib-Cnn">
+                                                                                    <rect key="frame" x="12" y="7" width="283" height="32"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="push" title="Fix motherboard displays as 'Unknown'?" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xeA-Lk-bKK">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="boardHelp:" target="rDh-aT-nig" id="s63-7f-Ob1"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                            </subviews>
+                                                                        </view>
+                                                                    </tabViewItem>
+                                                                    <tabViewItem label="Speed" identifier="" id="NXI-WX-40k">
+                                                                        <view key="view" id="X38-zG-n3c">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <subviews>
+                                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0lB-ss-dpq">
+                                                                                    <rect key="frame" x="24" y="238" width="199" height="18"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="check" title="Automatic Speed Adjustment" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Kze-iP-1gs">
+                                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="onASA:" target="rDh-aT-nig" id="MQR-MS-7b3"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aE-zT-Lhe">
+                                                                                    <rect key="frame" x="375" y="13" width="179" height="32"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="push" title="Any Updates?" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6I-ax-otA">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="openGitHub:" target="rDh-aT-nig" id="KV5-np-1kQ"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arp-oH-qjj">
+                                                                                    <rect key="frame" x="24" y="153" width="520" height="84"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="AIb-f9-EZB">
+                                                                                        <font key="font" size="12" name="HelveticaNeue"/>
+                                                                                        <string key="title">When enabled, your processor speed will increase automatically on demand, and decrease after a short period of low activity.  Lower amount of energy will be consumed when processor running at a lower speed; SMCAMDProcessor will always optimze how your processor idle to save energy. This option is enabled by default since release version 0.6.</string>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HtV-fF-ncd">
+                                                                                    <rect key="frame" x="20" y="13" width="179" height="32"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="push" title="Advanced Options" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5sK-13-pcv">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="openGitHub:" target="rDh-aT-nig" id="kTw-gG-4Yf"/>
+                                                                                        <segue destination="arI-oH-4xY" kind="sheet" id="PaB-YQ-pfi"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LSo-sk-viM">
+                                                                                    <rect key="frame" x="24" y="129" width="167" height="18"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="check" title="Enable Low Power State" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zPp-Te-Sg9">
+                                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="onLPM:" target="rDh-aT-nig" id="bR7-Os-YPD"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1h-CU-8OF">
+                                                                                    <rect key="frame" x="24" y="100" width="520" height="28"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <textFieldCell key="cell" allowsUndo="NO" alignment="left" title="Allow automatically shifting down to a low power state that may introduce performance issue." id="uqh-lv-7ht">
+                                                                                        <font key="font" size="12" name="HelveticaNeue"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                        </view>
+                                                                    </tabViewItem>
+                                                                    <tabViewItem label="Core Performance Boost" identifier="" id="dAV-Wj-Bx0">
+                                                                        <view key="view" id="YF3-oq-Hs9">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <subviews>
+                                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XVJ-1V-MPd">
+                                                                                    <rect key="frame" x="24" y="238" width="87" height="18"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="check" title="Supported" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="CpO-Od-2Cx">
+                                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                </button>
+                                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hck-n7-ZB8">
+                                                                                    <rect key="frame" x="24" y="218" width="71" height="18"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="PGN-R2-7eH">
+                                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="cpbEnabledBox:" target="rDh-aT-nig" id="hwW-bx-xqN"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ct-xj-erL">
+                                                                                    <rect key="frame" x="24" y="20" width="514" height="192"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                    <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="1o5-Lh-7Ab">
+                                                                                        <font key="font" size="12" name="HelveticaNeue"/>
+                                                                                        <string key="title">Core Performance Boost allows your processor use its hardware module to monitor the load of each core and dynamically increase the performance of a loaded core while keep the total power consumption under an internally defined value.   After a reboot your EFI BIOS will reset this setting.</string>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                        </view>
+                                                                    </tabViewItem>
+                                                                </tabViewItems>
+                                                            </tabView>
+                                                        </subviews>
+                                                    </view>
+                                                    <color key="borderColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="fillColor" red="0.14509803921568626" green="0.14509803921568626" blue="0.14509803921568626" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </box>
+                                                <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWw-zl-STF">
+                                                    <rect key="frame" x="273" y="315" width="313" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillProportionally" style="rounded" trackingMode="selectOne" id="Hl0-LG-mDU">
+                                                        <font key="font" metaFont="system"/>
+                                                        <segments>
+                                                            <segment label="Overview" selected="YES"/>
+                                                            <segment label="Speed"/>
+                                                            <segment label="Core Performance Boost"/>
+                                                        </segments>
+                                                    </segmentedCell>
+                                                    <connections>
+                                                        <action selector="onConfigControl:" target="rDh-aT-nig" id="bRE-Ua-5wM"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6K1-Hj-5Fg">
+                                                    <rect key="frame" x="18" y="305" width="271" height="39"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" allowsUndo="NO" alignment="left" title="Configurations" id="0ap-fT-RXi">
+                                                        <font key="font" size="22" name="HelveticaNeue-Bold"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TN7-v9-000">
+                                                    <rect key="frame" x="385" y="564" width="110" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="push" title="Fan Control" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rzA-U2-cjG">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="fanControlButton:" target="rDh-aT-nig" id="4jp-k2-cg2"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </view>
-                                        <color key="borderColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="fillColor" red="0.1450980392" green="0.1450980392" blue="0.1450980392" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </box>
-                                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OqB-AI-Q3l">
-                                        <rect key="frame" x="494" y="568" width="93" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="push" title="Fastest" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" inset="2" pullsDown="YES" preferredEdge="maxX" selectedItem="JPo-Oe-VZY" id="Q1A-AK-67E">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                            <menu key="menu" id="M04-GL-LJW">
-                                                <items>
-                                                    <menuItem title="Fastest" state="on" hidden="YES" id="JPo-Oe-VZY"/>
-                                                    <menuItem title="Item 2" id="Hn8-Ks-uXq"/>
-                                                    <menuItem title="Item 3" id="n9B-MP-DFG"/>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
-                                    </popUpButton>
-                                    <box fixedFrame="YES" boxType="custom" cornerRadius="20" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="4We-9B-XwG">
-                                        <rect key="frame" x="20" y="25" width="570" height="276"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" appearanceType="darkAqua" id="nrE-4F-Bxp">
-                                            <rect key="frame" x="1" y="1" width="568" height="274"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <tabView appearanceType="darkAqua" fixedFrame="YES" drawsBackground="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-Iy-0Pe">
-                                                    <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                    <tabViewItems>
-                                                        <tabViewItem label="Overview" identifier="" id="jw8-ka-4WD">
-                                                            <view key="view" id="7ro-zI-xTc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                <subviews>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvS-BL-onx">
-                                                                        <rect key="frame" x="18" y="20" width="372" height="242"/>
-                                                                        <autoresizingMask key="autoresizingMask"/>
-                                                                        <textFieldCell key="cell" selectable="YES" alignment="left" id="g3v-Pl-VUX">
-                                                                            <font key="font" metaFont="systemMedium" size="13"/>
-                                                                            <string key="title">Family: 12 ddd  deded dedededed dede de d ed ed e de dede d ded dccsvgbg  ijk  ij j jn jk iohiuohg yg uygb b jnmkl;m iohj uigbh uiojhn iujnhih </string>
-                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                    </textField>
-                                                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LRK-w5-6Kx" customClass="CPUSpeedShiftView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                                        <rect key="frame" x="409" y="15" width="122" height="220"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                                                                <color key="value" red="0.16927966339993578" green="0.16100697171648923" blue="0.17839216321243523" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                <real key="value" value="3"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                <color key="value" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="stepColor1">
-                                                                                <color key="value" red="0.060566519044490584" green="0.26306924972061363" blue="0.092129109768260775" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="stepColor2">
-                                                                                <color key="value" red="0.31482755829015541" green="0.26566781016499524" blue="0.016824513915994904" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="stepColor3">
-                                                                                <color key="value" red="0.34196891191709844" green="0.09280206957426633" blue="0.081135080272309687" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                        <connections>
-                                                                            <action selector="onOverviewSpeedStep:" target="rDh-aT-nig" id="r64-Gf-dbc"/>
-                                                                        </connections>
-                                                                    </customView>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q0W-oN-3ax">
-                                                                        <rect key="frame" x="423" y="243" width="94" height="19"/>
-                                                                        <autoresizingMask key="autoresizingMask"/>
-                                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Speed Steps" id="Zye-Ux-TbU">
-                                                                            <font key="font" metaFont="systemMedium" size="15"/>
-                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                    </textField>
-                                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k7R-ib-Cnn">
-                                                                        <rect key="frame" x="12" y="7" width="283" height="32"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <buttonCell key="cell" type="push" title="Fix motherboard displays as 'Unknown'?" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xeA-Lk-bKK">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <action selector="boardHelp:" target="rDh-aT-nig" id="s63-7f-Ob1"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </view>
-                                                        </tabViewItem>
-                                                        <tabViewItem label="Speed" identifier="" id="NXI-WX-40k">
-                                                            <view key="view" id="X38-zG-n3c">
-                                                                <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                <subviews>
-                                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0lB-ss-dpq">
-                                                                        <rect key="frame" x="24" y="238" width="199" height="18"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <buttonCell key="cell" type="check" title="Automatic Speed Adjustment" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Kze-iP-1gs">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <action selector="onASA:" target="rDh-aT-nig" id="MQR-MS-7b3"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aE-zT-Lhe">
-                                                                        <rect key="frame" x="375" y="13" width="179" height="32"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <buttonCell key="cell" type="push" title="Any Updates?" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6I-ax-otA">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <action selector="openGitHub:" target="rDh-aT-nig" id="KV5-np-1kQ"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arp-oH-qjj">
-                                                                        <rect key="frame" x="24" y="153" width="520" height="84"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="AIb-f9-EZB">
-                                                                            <font key="font" size="12" name="HelveticaNeue"/>
-                                                                            <string key="title">When enabled, your processor speed will increase automatically on demand, and decrease after a short period of low activity.  Lower amount of energy will be consumed when processor running at a lower speed; SMCAMDProcessor will always optimze how your processor idle to save energy. This option is enabled by default since release version 0.6.</string>
-                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                    </textField>
-                                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HtV-fF-ncd">
-                                                                        <rect key="frame" x="20" y="13" width="179" height="32"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <buttonCell key="cell" type="push" title="Advanced Options" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5sK-13-pcv">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <action selector="openGitHub:" target="rDh-aT-nig" id="kTw-gG-4Yf"/>
-                                                                            <segue destination="arI-oH-4xY" kind="sheet" id="PaB-YQ-pfi"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LSo-sk-viM">
-                                                                        <rect key="frame" x="24" y="129" width="167" height="18"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <buttonCell key="cell" type="check" title="Enable Low Power State" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zPp-Te-Sg9">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <action selector="onLPM:" target="rDh-aT-nig" id="bR7-Os-YPD"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1h-CU-8OF">
-                                                                        <rect key="frame" x="24" y="100" width="520" height="28"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <textFieldCell key="cell" allowsUndo="NO" alignment="left" title="Allow automatically shifting down to a low power state that may introduce performance issue." id="uqh-lv-7ht">
-                                                                            <font key="font" size="12" name="HelveticaNeue"/>
-                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                    </textField>
-                                                                </subviews>
-                                                            </view>
-                                                        </tabViewItem>
-                                                        <tabViewItem label="Core Performance Boost" identifier="" id="dAV-Wj-Bx0">
-                                                            <view key="view" id="YF3-oq-Hs9">
-                                                                <rect key="frame" x="0.0" y="0.0" width="568" height="274"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                <subviews>
-                                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XVJ-1V-MPd">
-                                                                        <rect key="frame" x="24" y="238" width="87" height="18"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <buttonCell key="cell" type="check" title="Supported" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="CpO-Od-2Cx">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                    </button>
-                                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hck-n7-ZB8">
-                                                                        <rect key="frame" x="24" y="218" width="71" height="18"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="PGN-R2-7eH">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <action selector="cpbEnabledBox:" target="rDh-aT-nig" id="hwW-bx-xqN"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ct-xj-erL">
-                                                                        <rect key="frame" x="24" y="20" width="514" height="192"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="1o5-Lh-7Ab">
-                                                                            <font key="font" size="12" name="HelveticaNeue"/>
-                                                                            <string key="title">Core Performance Boost allows your processor use its hardware module to monitor the load of each core and dynamically increase the performance of a loaded core while keep the total power consumption under an internally defined value.   After a reboot, this option will be reset by your EFI BIOS.</string>
-                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                    </textField>
-                                                                </subviews>
-                                                            </view>
-                                                        </tabViewItem>
-                                                    </tabViewItems>
-                                                </tabView>
-                                            </subviews>
-                                        </view>
-                                        <color key="borderColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="fillColor" red="0.14509803921568626" green="0.14509803921568626" blue="0.14509803921568626" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </box>
-                                    <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWw-zl-STF">
-                                        <rect key="frame" x="273" y="315" width="313" height="24"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillProportionally" style="rounded" trackingMode="selectOne" id="Hl0-LG-mDU">
-                                            <font key="font" metaFont="system"/>
-                                            <segments>
-                                                <segment label="Overview" selected="YES"/>
-                                                <segment label="Speed"/>
-                                                <segment label="Core Performance Boost"/>
-                                            </segments>
-                                        </segmentedCell>
-                                        <connections>
-                                            <action selector="onConfigControl:" target="rDh-aT-nig" id="bRE-Ua-5wM"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6K1-Hj-5Fg">
-                                        <rect key="frame" x="18" y="305" width="271" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" allowsUndo="NO" alignment="left" title="Configurations" id="0ap-fT-RXi">
-                                            <font key="font" size="22" name="HelveticaNeue-Bold"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TN7-v9-000">
-                                        <rect key="frame" x="385" y="564" width="110" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Fan Control" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rzA-U2-cjG">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="fanControlButton:" target="rDh-aT-nig" id="4jp-k2-cg2"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </view>
+                                    </subviews>
+                                </view>
+                                <color key="borderColor" red="0.48627450980392156" green="0.48627450980392156" blue="0.48627450980392156" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="fillColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </box>
                         </subviews>
                     </visualEffectView>
                     <connections>
                         <outlet property="asaBox" destination="0lB-ss-dpq" id="pLi-pS-Hgp"/>
                         <outlet property="basicLabel" destination="IvS-BL-onx" id="YHX-hZ-cyr"/>
                         <outlet property="boardHelpButton" destination="k7R-ib-Cnn" id="89p-zX-fWV"/>
+                        <outlet property="boxView" destination="Plg-Z7-w4I" id="FfW-lv-2Nj"/>
                         <outlet property="configControl" destination="mWw-zl-STF" id="lK7-f9-mmi"/>
                         <outlet property="configTabView" destination="pJK-Iy-0Pe" id="5w4-9P-5N2"/>
                         <outlet property="cpbEnabledBox" destination="hck-n7-ZB8" id="9Wm-qW-Otj"/>
@@ -1461,6 +1493,7 @@
                         <outlet property="overviewSpeedShift" destination="LRK-w5-6Kx" id="sBA-SR-DsA"/>
                         <outlet property="topLabel1" destination="VGI-us-87W" id="OQ9-dq-3xk"/>
                         <outlet property="topLabel2" destination="f05-q5-Exd" id="QDN-jE-Rag"/>
+                        <outlet property="vsView" destination="Hbi-PG-htk" id="yQh-Z5-ArI"/>
                     </connections>
                 </viewController>
                 <customObject id="AF5-mt-4gJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
