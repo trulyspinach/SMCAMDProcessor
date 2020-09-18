@@ -1,5 +1,7 @@
 SMCAMDProcessor
 ========
+[![Github release](https://img.shields.io/github/downloads/trulyspinach/SMCAMDProcessor/total.svg?color=pink)](https://github.com/trulyspinach/SMCAMDProcessor/releases)
+![Github release](https://img.shields.io/github/repo-size/trulyspinach/SMCAMDProcessor.svg?color=blue)
 
 XNU kernel extension for power management and monitoring of AMD processors.
 Also comes with a plugin for [VirtualSMC](https://github.com/acidanthera/VirtualSMC) to export readings to other applications.
