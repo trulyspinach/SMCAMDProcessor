@@ -20,16 +20,6 @@ SMCAMDProcessor now comes in two separate binaries(kernel extensions):
 4. If you're using [VirtualSMC](https://github.com/acidanthera/VirtualSMC) you can also load `SMCAMDProcessor.kext` to publish sensor data.
 5. Bootloaders like `OpenCore` will link each kext in the order they present in config file, so make sure `AMDRyzenCPUPowerManagement.kext` comes before `SMCAMDProcessor.kext` as it serves as a dependency.
 
-## Experimental Features
-### Fan Control
-
-Due to the amount of request an experimental feature for reading and overriding fan speed is out!
-<img src="imgs/fans.png" width="60%">
-
-You can access this menu from menu bar "Open -> SMC Fans" or the button in Power Tool.
-
-
-
 ## Features
 * CPU power management for AMD 17h processors. 
 * Supports for reading of temperature, energy and frequency data on AMD 17h Processors.
@@ -50,6 +40,15 @@ To access PState editor:
 1. Open AMD Power Tool
 2. Go to 'Speed' tab
 3. Click 'Advanced Options'
+
+## Fan Control
+
+Due to the amount of request an experimental feature for reading and overriding fan speed is out!
+<img src="imgs/fans.png" width="60%">
+
+You can access this menu from menu bar "Open -> SMC Fans" or the button in Power Tool.
+Currently only a limited amount of SMC controllers are supported.
+
 
 #### Safety Notes
 * Incorrect PState setting can potentially cause permanent damage to your computer hardware.
