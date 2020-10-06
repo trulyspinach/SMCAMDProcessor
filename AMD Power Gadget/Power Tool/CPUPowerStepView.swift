@@ -11,20 +11,20 @@ import Cocoa
 @IBDesignable
 class CPUPowerStepView: NSView {
     
-    var viewTop : CGFloat = 100;
-    var viewBottom : CGFloat = 0;
-    var viewHeight : CGFloat = 100;
+    var viewTop : CGFloat = 100
+    var viewBottom : CGFloat = 0
+    var viewHeight : CGFloat = 100
     
-    @IBInspectable var viewTopPercentage: CGFloat = 1;
-    @IBInspectable var viewBottomPercentage: CGFloat = 0;
+    @IBInspectable var viewTopPercentage: CGFloat = 1
+    @IBInspectable var viewBottomPercentage: CGFloat = 0
     
-    @IBInspectable var barMarginLeft: CGFloat = 20;
-    @IBInspectable var barMarginRight: CGFloat = 20;
-    @IBInspectable var barSpacing: CGFloat = 30;
-    @IBInspectable var maxBarWidth: CGFloat = 30;
-    @IBInspectable var barCorner: CGFloat = 30;
+    @IBInspectable var barMarginLeft: CGFloat = 20
+    @IBInspectable var barMarginRight: CGFloat = 20
+    @IBInspectable var barSpacing: CGFloat = 30
+    @IBInspectable var maxBarWidth: CGFloat = 30
+    @IBInspectable var barCorner: CGFloat = 30
     @IBInspectable var barTopColor: NSColor = NSColor.white
-    @IBInspectable var barTopWidth: CGFloat = 1;
+    @IBInspectable var barTopWidth: CGFloat = 1
     @IBInspectable var lineCurviness: CGFloat = 0.1
     
     @IBInspectable var backgroundColor1: NSColor = NSColor.highlightColor
@@ -34,10 +34,10 @@ class CPUPowerStepView: NSView {
     @IBInspectable var barColor1: NSColor = NSColor.white
     @IBInspectable var barColor2: NSColor = NSColor.red
     
-    @IBInspectable var gridWidth: CGFloat = 1;
+    @IBInspectable var gridWidth: CGFloat = 1
     @IBInspectable var gridColor: NSColor = NSColor.highlightColor
     
-    @IBInspectable var borderWidth: CGFloat = 1;
+    @IBInspectable var borderWidth: CGFloat = 1
     @IBInspectable var borderColor: NSColor = NSColor.highlightColor
     
     var cpuFreqData : [Float] = []

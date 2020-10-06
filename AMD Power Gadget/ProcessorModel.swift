@@ -157,7 +157,7 @@ class ProcessorModel {
     func kernelGetString(selector : UInt32, args : [UInt64]) -> String {
         
         var argcpy = args
-        var outbuffersize = 16;
+        var outbuffersize = 16
         var outputStr: [CChar] = [CChar](repeating: 0, count: outbuffersize)
         
         var res = IOConnectCallMethod(connect, selector, &argcpy, UInt32(args.count), nil, 0,
@@ -224,7 +224,7 @@ class ProcessorModel {
         var i = 0
         while i < 8 {
             if (PStateDef[i] & 0x8000000000000000) == 0 { //LOL Swift
-                break;
+                break
             }
             i += 1
         }
@@ -420,7 +420,7 @@ class ProcessorModel {
         }
         
         if boardValid {
-            systemConfig["mb"] = "\(boardName) \(boardVender)";
+            systemConfig["mb"] = "\(boardName) \(boardVender)"
         }
         
         var iter : io_iterator_t = 0
@@ -428,9 +428,9 @@ class ProcessorModel {
                                                IOServiceMatching("IOPCIDevice"), &iter)
         if err != kIOReturnSuccess {return}
         while true {
-            let reg = IOIteratorNext(iter);
+            let reg = IOIteratorNext(iter)
             if reg == 0 { break}
-            var serviceDictionary : Unmanaged<CFMutableDictionary>? = nil;
+            var serviceDictionary : Unmanaged<CFMutableDictionary>?
             let e = IORegistryEntryCreateCFProperties(reg, &serviceDictionary, kCFAllocatorDefault, .zero)
             
             if e != kIOReturnSuccess {continue}
@@ -464,8 +464,8 @@ class ProcessorModel {
             r += "&\(key)=\(value)"
         }
 
-        request.httpBody = postString.data(using: String.Encoding.utf8);
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
             if error != nil {
                 if self.fetchRetry > 0 {
                     self.fetchRetry -= 1
@@ -503,8 +503,8 @@ class ProcessorModel {
             r += "&\(key)=\(value)"
         }
 
-        request.httpBody = postString.data(using: String.Encoding.utf8);
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request) { (_, _, error) in
             if error != nil {
                 if self.fetchRetry2 > 0 {
                     self.fetchRetry2 -= 1

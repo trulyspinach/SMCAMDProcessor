@@ -14,7 +14,7 @@ class CPUSpeedShiftView: NSControl {
     var selectedItem : Int = 0
     var highlightedItem : Int = -1
     
-    @IBInspectable var borderWidth: CGFloat = 1;
+    @IBInspectable var borderWidth: CGFloat = 1
     @IBInspectable var borderColor: NSColor = NSColor.highlightColor
     
     @IBInspectable var backgroundColor: NSColor = NSColor.highlightColor
@@ -102,7 +102,7 @@ class CPUSpeedShiftView: NSControl {
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
         ]
         
-        let h = CGFloat(frame.height / CGFloat(options.count));
+        let h = CGFloat(frame.height / CGFloat(options.count))
         
         for (i, v) in options.reversed().enumerated(){
             let xC = CGFloat(i) * h
