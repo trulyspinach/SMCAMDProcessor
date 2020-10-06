@@ -108,7 +108,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
 
         sampleCPUGraph()
 
-        timer = Timer.scheduledTimer(withTimeInterval: updateTime, repeats: true, block: { (t) in
+        timer = Timer.scheduledTimer(withTimeInterval: updateTime, repeats: true, block: { (_) in
             self.sampleCPUGraph()
         })
 

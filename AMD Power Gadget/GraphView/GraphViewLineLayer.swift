@@ -63,7 +63,7 @@ class GraphViewLineLayer: CALayer {
         path.move(to: CGPoint(x: -1, y: -1), transform: .identity)
         
         
-        var lastPoint = CGPoint(x:-lineWidth * 2,y:-1);
+        var lastPoint = CGPoint(x:-lineWidth * 2,y:-1)
         for (i, v) in pointsY.enumerated(){
             let newPoint = CGPoint(x: pointsX[i] * dataXScale + xOffset,
                                    y: viewBottom + ((v - dataMin) / (dataDiff)) * viewHeight)
@@ -80,7 +80,7 @@ class GraphViewLineLayer: CALayer {
             
             path.addCurve(to: newPoint, control1: controlPointOne, control2: controlPointTwo)
             
-            lastPoint = newPoint;
+            lastPoint = newPoint
         }
         
         path.addLine(to: CGPoint(x: frame.size.width + lineWidth*2, y: lastPoint.y))
@@ -111,13 +111,13 @@ class GraphViewLineLayer: CALayer {
             
             let path = CGMutablePath()
             path.addArc(center: newPoint, radius: dotRadius, startAngle: 0, endAngle: CGFloat(2.0 * Double.pi), clockwise: true)
-            path.closeSubpath();
+            path.closeSubpath()
             
-            ctx.addPath(path);
+            ctx.addPath(path)
             ctx.setFillColor(dotFillColor)
-            ctx.fillPath();
+            ctx.fillPath()
             
-            ctx.addPath(path);
+            ctx.addPath(path)
             ctx.setStrokeColor(pointColor)
             ctx.setLineWidth(lineWidth)
             ctx.strokePath()

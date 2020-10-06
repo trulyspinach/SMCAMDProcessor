@@ -48,9 +48,9 @@ class ViewController: NSViewController, NSWindowDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.window?.delegate = self;
+        view.window?.delegate = self
         
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (t) in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (_) in
             self.sampleData(forced: true)
         })
         

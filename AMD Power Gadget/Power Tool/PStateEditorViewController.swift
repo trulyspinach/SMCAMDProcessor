@@ -195,7 +195,7 @@ class PStateEditorViewController: NSViewController, NSTableViewDelegate, NSTable
         op.runModal()
         
         if op.url == nil {
-            return;
+            return
         }
         
         let arr = NSArray.init(contentsOf: op.url!) as! [UInt64]
