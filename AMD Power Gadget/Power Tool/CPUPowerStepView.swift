@@ -156,7 +156,7 @@ class CPUPowerStepView: NSView {
     
     
     private func drawCPUBars() {
-        if barLayers.count <= 0 {
+        if barLayers.isEmpty {
             return
         }
         for (i, v) in cpuFreqData.enumerated() {
