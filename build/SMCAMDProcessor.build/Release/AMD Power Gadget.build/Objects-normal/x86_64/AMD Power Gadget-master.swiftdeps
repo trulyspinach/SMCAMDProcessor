@@ -1,0 +1,16 @@
+version: "Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)"
+options: "d654fd520b7650b0c44e7dccfe1f280f"
+build_time: [1605564464, 107814000]
+inputs:
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/GraphView/GraphViewLineLayer.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/Power Tool/PowerToolViewController.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/ViewController.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/Power Tool/CPUBarLayer.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/Power Tool/CPUPowerStepView.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/System Monitor/SystemMonitorViewController.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/Power Tool/CPUSpeedShiftView.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/AppDelegate.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/ProcessorModel.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/Power Tool/PStateEditorViewController.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/GraphView/GraphView.swift": [9223372036, 854775807]
+  "/Volumes/PCIe/Github/SMCAMDProcessor/AMD Power Gadget/GraphView/GraphViewGridLineLayer.swift": [9223372036, 854775807]
