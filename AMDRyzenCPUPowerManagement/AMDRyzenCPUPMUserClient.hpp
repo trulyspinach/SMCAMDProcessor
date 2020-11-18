@@ -10,13 +10,9 @@
 #define AMDRyzenCPUPowerManagementUserClient_hpp
 
 //Support for macOS 10.13
-#include "Headers/LegacyHeaders/LegacyIOUserClient.h"
+#include "IOKit/IOUserClient.h"
 
 #include <sys/proc.h>
-
-//#include <IOKit/IOService.h>
-//#include <IOKit/IOUserClient.h>
-//#include <IOKit/IOLib.h>
 
 #include "AMDRyzenCPUPowerManagement.hpp"
 
