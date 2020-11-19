@@ -220,6 +220,7 @@ public:
     
     bool disablePrivilegeCheck = false;
     uint16_t savedSMCChipIntel = 0;
+    uint16_t kextloadAlerts = 0;
 
     kern_return_t (*kunc_alert)(int,unsigned,const char*,const char*,const char*,
                                 const char*,const char*,const char*,const char*,const char*,unsigned*) {nullptr};
@@ -238,6 +239,7 @@ private:
     uint32_t timeOfLastUpdate = 0;
     uint32_t estimatedRequestTimeInterval = 0;
     uint32_t timeOfLastMissedRequest = 0;
+    
     
     float tempOffset = 0;
     double pwrTimeUnit = 0;

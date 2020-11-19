@@ -59,13 +59,13 @@ Currently only a limited amount of SMC controllers are supported.
 
 
 ## Contribution
-#### If you want to support this project, please:
+#### If you like this project, please consider supporting it via:
 
-* Give it a star! 😄
-* Feel free to open up an issue if it works for you and not listed on supported processors.
-* or if something breaks, please also open an issue.
+* Give it a star!
+* [Buy](https://ko-fi.com/trulyspinach) me a coffee(or a Zen 3 processsor 😝).
 
-* If you like to help with some coding, feel free to submit any pull request or just DM me on Discord.
+* Opening up an issue if you encountered any problem or want to make suggestions.
+* or if you're a coding person, feel free to submit any pull request or just DM me on Discord.
 
 ## Credits
 * [aluveitie](https://github.com/aluveitie) for various enhancements and fixes.

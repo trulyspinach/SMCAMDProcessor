@@ -28,6 +28,8 @@ bool AMDRyzenCPUPMUserClient::initWithTask(task_t owningTask,
     proc_name(proc_pid(proc), taskProcessBinaryName, 32);
     clientAuthorizedByUser = false;
     
+
+    
     return true;
 
 }
@@ -92,9 +94,22 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
                                                  IOExternalMethodDispatch *dispatch,
                                                    OSObject *target, void *reference){
     
+    if (fProvider->kextloadAlerts) {
+        unsigned int rf;
+        
+        char buf[128];
+        snprintf(buf, 128,
+                 "Kext alert detected: %d",
+                 fProvider->kextloadAlerts);
+        
+        (*(fProvider->kunc_alert))(0, 0, NULL, NULL, NULL,
+                      "AMDRyzenCPUPowerManagement", buf, "Ok", "Ok and Clear Alert", "WTF?", &rf);
+        if(rf == 1){
+            fProvider->kextloadAlerts = 0;
+        }
+    }
+    
     fProvider->registerRequest();
-    
-    
     
     switch (selector) {
             
