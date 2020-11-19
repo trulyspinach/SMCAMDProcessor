@@ -42,8 +42,17 @@ bool AMDRyzenCPUPowerManagement::init(OSDictionary *dictionary){
     
     pmRyzen_symtable_ready = 0;
     
+retry:
     find_mach_header_addr(getKernelVersion() >= KernelVersion::BigSur);
     pmRyzen_symtable._wrmsr_carefully = lookup_symbol("_wrmsr_carefully");
+    
+    if(!pmRyzen_symtable._wrmsr_carefully){
+        kextloadAlerts++;
+        IOSleep(2);
+        goto retry;
+    }
+    
+    
     pmRyzen_symtable._KUNCUserNotificationDisplayAlert = lookup_symbol("_KUNCUserNotificationDisplayAlert");
     pmRyzen_symtable._cpu_to_processor = lookup_symbol("_cpu_to_processor");
     pmRyzen_symtable._tscFreq = lookup_symbol("_tscFreq");
@@ -243,7 +252,8 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     cpuModel = ((cpuid_eax >> 16) & 0xf) + ((cpuid_eax >> 4) & 0xf);
     
     //Only 17h Family are supported offically by now.
-    cpuSupportedByCurrentVersion = (cpuFamily == 0x17)? 1 : 0;
+    // EDIT: add check bypass for 19h Zen 3 processors
+    cpuSupportedByCurrentVersion = (cpuFamily == 0x17 || cpuFamily == 0x19)? 1 : 0;
     IOLog("AMDCPUSupport::start Family %02Xh, Model %02Xh\n", cpuFamily, cpuModel);
     
     CPUInfo::getCpuid(0x80000005, 0, &cpuid_eax, &cpuid_ebx, &cpuid_ecx, &cpuid_edx);
