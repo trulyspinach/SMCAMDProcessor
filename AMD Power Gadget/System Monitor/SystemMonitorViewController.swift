@@ -72,7 +72,7 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
             fanThrottles = [UInt8](repeating: 0, count: numFans)
             fanOverrided = [Bool](repeating: false, count: numFans)
             
-            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (t) in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (_) in
                 self.updateFanRPMs()
             })
         }

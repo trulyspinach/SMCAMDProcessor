@@ -24,27 +24,27 @@ class GraphView: NSView {
     @IBInspectable var foregroundColorX_1: NSColor = NSColor.highlightColor
     @IBInspectable var foregroundColorX_2: NSColor = NSColor.highlightColor
     
-    @IBInspectable var gridWidth: CGFloat = 1;
+    @IBInspectable var gridWidth: CGFloat = 1
     @IBInspectable var gridColor: NSColor = NSColor.highlightColor
     
     @IBInspectable var lineColor1: NSColor = NSColor.highlightColor
     @IBInspectable var lineColor2: NSColor = NSColor.highlightColor
     @IBInspectable var lineColorX: NSColor = NSColor.highlightColor
-    @IBInspectable var lineWidth: CGFloat = 1;
+    @IBInspectable var lineWidth: CGFloat = 1
     @IBInspectable var lineCurviness: CGFloat = 0.1
     
-    @IBInspectable var dotRadius: CGFloat = 1;
+    @IBInspectable var dotRadius: CGFloat = 1
     @IBInspectable var dotStrokeColor: NSColor = NSColor.highlightColor
     @IBInspectable var dotFillColor: NSColor = NSColor.highlightColor
     
-    @IBInspectable var viewTopPercentage: CGFloat = 1;
-    @IBInspectable var viewBottomPercentage: CGFloat = 0;
+    @IBInspectable var viewTopPercentage: CGFloat = 1
+    @IBInspectable var viewBottomPercentage: CGFloat = 0
     
     let colorSpace = CGColorSpaceCreateDeviceRGB()
     
-    var viewTop : CGFloat = 100;
-    var viewBottom : CGFloat = 0;
-    var viewHeight : CGFloat = 100;
+    var viewTop : CGFloat = 100
+    var viewBottom : CGFloat = 0
+    var viewHeight : CGFloat = 100
     
     let gridDivLines: [CGFloat] = [0, 0.18, 0.38, 0.68, 1]
     let maxDataPoints = 30
@@ -67,7 +67,7 @@ class GraphView: NSView {
     func setup() {
         viewTop = frame.height * viewTopPercentage
         viewBottom = frame.height * viewBottomPercentage
-        viewHeight = viewTop - viewBottom;
+        viewHeight = viewTop - viewBottom
 
         self.layer = layer
         wantsLayer = true
@@ -230,7 +230,7 @@ class GraphView: NSView {
         line.scrollIndexBar = -1
         if xs.count > 2 {
             let ds = (line.frame.width) / (xs.last! - xs[1])
-            line.dataXScale = ds;
+            line.dataXScale = ds
             line.xOffset = -xs[1] * ds
         }
         
@@ -253,7 +253,7 @@ class GraphView: NSView {
             let curHeight = viewBottom + (CGFloat((gl.dataY - dataMin) / (dataDiff)) * viewHeight)
             
             let hide = abs(curHeight - lastHeight) > 20
-            gl.opacity = hide ? 1 : 0.2;
+            gl.opacity = hide ? 1 : 0.2
             
             if hide {lastHeight = curHeight}
         }
