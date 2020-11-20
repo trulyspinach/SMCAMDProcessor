@@ -128,11 +128,19 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     
     override func viewWillAppear() {
         view.window?.delegate = self
+        
+        if timer == nil || !timer!.isValid{
+            timer = Timer.scheduledTimer(withTimeInterval: updateTime, repeats: true, block: { (_) in
+                self.sampleCPUGraph()
+            })
+        }
     }
     
     override func viewWillDisappear() {
         timer?.invalidate()
     }
+    
+
     
     func windowWillClose(_ notification: Notification) {
         PowerToolViewController.activeSelf = nil

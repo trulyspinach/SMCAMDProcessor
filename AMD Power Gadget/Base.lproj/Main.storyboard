@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -207,13 +207,13 @@
                                                             <rect key="frame" x="20" y="20" width="370" height="885"/>
                                                             <subviews>
                                                                 <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Pm-km-AqH">
-                                                                    <rect key="frame" x="0.0" y="832" width="370" height="53"/>
+                                                                    <rect key="frame" x="0.0" y="800" width="370" height="85"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ctl-UK-C2x">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="274" height="53"/>
+                                                                            <rect key="frame" x="0.0" y="12" width="274" height="61"/>
                                                                             <subviews>
                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-KS-nxl">
-                                                                                    <rect key="frame" x="-2" y="29" width="259" height="24"/>
+                                                                                    <rect key="frame" x="-2" y="29" width="259" height="32"/>
                                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="AMD Power Gadget" id="kgx-Yz-PbY">
                                                                                         <font key="font" size="27" name="HelveticaNeue-Bold"/>
                                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -242,7 +242,7 @@
                                                                             </customSpacing>
                                                                         </stackView>
                                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="hBo-Uf-jJB">
-                                                                            <rect key="frame" x="284" y="12" width="86" height="30"/>
+                                                                            <rect key="frame" x="284" y="27" width="86" height="33"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="NOj-SU-7VI"/>
                                                                             </constraints>
@@ -265,7 +265,7 @@
                                                                     </customSpacing>
                                                                 </stackView>
                                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="dUS-mw-nYz" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="587" width="370" height="230"/>
+                                                                    <rect key="frame" x="0.0" y="555" width="370" height="230"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmE-cn-Eao">
                                                                             <rect key="frame" x="15" y="178" width="340" height="42"/>
@@ -358,7 +358,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
                                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="TFs-yj-lzu" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="342" width="370" height="230"/>
+                                                                    <rect key="frame" x="0.0" y="310" width="370" height="230"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FPJ-Wd-oOI">
                                                                             <rect key="frame" x="20" y="178" width="335" height="42"/>
@@ -442,7 +442,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
                                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="dVq-Zt-29Y" customClass="GraphView" customModule="AMD_Power_Gadget" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="97" width="370" height="230"/>
+                                                                    <rect key="frame" x="0.0" y="65" width="370" height="230"/>
                                                                     <subviews>
                                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edL-P0-tdg">
                                                                             <rect key="frame" x="20" y="178" width="330" height="42"/>
@@ -525,28 +525,31 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
-                                                                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7O3-J8-Emw">
-                                                                    <rect key="frame" x="96" y="0.0" width="179" height="82"/>
+                                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Q0U-O2-rd8">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="370" height="50"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-xZ-Nqc">
-                                                                            <rect key="frame" x="-2" y="66" width="183" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Designed and Engineered By:" id="j0C-AZ-HUC">
-                                                                                <font key="font" metaFont="system"/>
-                                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                        </textField>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-cv-FEh">
-                                                                            <rect key="frame" x="46" y="50" width="87" height="16"/>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-cv-FEh">
+                                                                            <rect key="frame" x="141" y="14" width="87" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="trulyspinach" id="5Us-8x-J9i">
                                                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                                                 <color key="textColor" red="0.032221600140000001" green="0.51876349519999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </textFieldCell>
                                                                         </textField>
-                                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
-                                                                            <rect key="frame" x="64" y="0.0" width="50" height="50"/>
-                                                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-xZ-Nqc">
+                                                                            <rect key="frame" x="93" y="29" width="183" height="19"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Designed and Engineered By:" id="j0C-AZ-HUC">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5490196078431373" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-cy-OHd">
+                                                                            <rect key="frame" x="143" y="11" width="83" height="19"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Mcz-UE-trr">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
@@ -556,17 +559,7 @@
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
-                                                                    <visibilityPriorities>
-                                                                        <integer value="1000"/>
-                                                                        <integer value="1000"/>
-                                                                        <integer value="1000"/>
-                                                                    </visibilityPriorities>
-                                                                    <customSpacing>
-                                                                        <real value="3.4028234663852886e+38"/>
-                                                                        <real value="3.4028234663852886e+38"/>
-                                                                        <real value="3.4028234663852886e+38"/>
-                                                                    </customSpacing>
-                                                                </stackView>
+                                                                </customView>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="dUS-mw-nYz" firstAttribute="width" secondItem="z93-js-dOg" secondAttribute="width" id="2Wq-zu-T7H"/>
@@ -734,7 +727,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                 </tableColumn>
-                                                <tableColumn identifier="control" width="258.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="zoC-w0-w5s">
+                                                <tableColumn identifier="control" width="229.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="zoC-w0-w5s">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Throttle">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -966,7 +959,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                 </tableColumn>
-                                                <tableColumn identifier="scale" width="168" minWidth="10" maxWidth="3.4028234663852886e+38" id="1pT-Cn-Ijo">
+                                                <tableColumn identifier="scale" width="139" minWidth="10" maxWidth="3.4028234663852886e+38" id="1pT-Cn-Ijo">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Scale">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1502,6 +1495,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSListViewTemplate" width="14" height="10"/>
+        <image name="NSListViewTemplate" width="16" height="12"/>
     </resources>
 </document>

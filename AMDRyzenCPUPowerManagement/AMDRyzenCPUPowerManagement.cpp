@@ -505,6 +505,8 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     uint64_t lastAPERF = lastAPERF_PerCore[physical];
     uint64_t lastMPERF = lastMPERF_PerCore[physical];
     
+    lastAPERF_PerCore[physical] = APERF;
+    lastMPERF_PerCore[physical] = MPERF;
     //If an overflow of either the MPERF or APERF register occurs between read of last MPERF and
     //read of last APERF, the effective frequency calculated in is invalid.
     if(APERF <= lastAPERF || MPERF <= lastMPERF) {
@@ -515,14 +517,11 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     float freqP0 = PStateDefClock_perCore[0];
     
     uint64_t deltaAPERF = APERF - lastAPERF;
-    deltaAPERF_PerCore[physical] = deltaAPERF;
-    deltaMPERF_PerCore[physical] = MPERF - lastMPERF;
     float effFreq = ((float)deltaAPERF / (float)(MPERF - lastMPERF)) * freqP0;
     
     effFreq_perCore[physical] = effFreq;
     
-    lastAPERF_PerCore[physical] = APERF;
-    lastMPERF_PerCore[physical] = MPERF;
+
 }
 
 void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t cpu_num){

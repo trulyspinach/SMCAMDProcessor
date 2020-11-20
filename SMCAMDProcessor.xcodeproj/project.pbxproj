@@ -564,7 +564,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -588,7 +588,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -712,7 +712,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.5;
+				CURRENT_PROJECT_VERSION = 0.6.6;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -727,7 +727,7 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.5;
+				MARKETING_VERSION = 0.6.6;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
 				MODULE_START = amdryzencpupm_kern_start;
 				MODULE_STOP = amdryzencpupm_kern_stop;
@@ -759,7 +759,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.5;
+				CURRENT_PROJECT_VERSION = 0.6.6;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -772,7 +772,7 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.5;
+				MARKETING_VERSION = 0.6.6;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
 				MODULE_START = amdryzencpupm_kern_start;
 				MODULE_STOP = amdryzencpupm_kern_stop;
