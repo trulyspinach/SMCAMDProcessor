@@ -192,7 +192,6 @@ public:
     
     uint64_t lastMPERF_PerCore[CPUInfo::MaxCpus];
     uint64_t lastAPERF_PerCore[CPUInfo::MaxCpus];
-    uint64_t deltaAPERF_PerCore[CPUInfo::MaxCpus];
     uint64_t deltaMPERF_PerCore[CPUInfo::MaxCpus];
     
 //    uint64_t lastAPERF_PerCore[CPUInfo::MaxCpus];
