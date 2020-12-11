@@ -79,3 +79,4 @@ Currently only a limited amount of SMC controllers are supported.
 
 * With that being said, please bear with some of the spaghetti and not-idiomatic codes. Any criticism is much welcomed :)
 
+[![stats](https://github-readme-stats.vercel.app/api?username=trulyspinach&theme=radical)](https://github.com/anuraghazra/github-readme-stats)
