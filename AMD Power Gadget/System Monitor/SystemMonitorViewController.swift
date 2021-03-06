@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate {
 
     var timer : Timer?
     
@@ -26,14 +26,17 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
     static var activeSelf : SystemMonitorViewController?
     static func launch() {
         if let vc = SystemMonitorViewController.activeSelf {
+
             vc.view.window?.orderFrontRegardless()
         } else {
             let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
             let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("SystemMonitor")) as! NSWindowController
             controller.showWindow(self)
+            
+            controller.window?.isMovableByWindowBackground = true
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,12 +79,21 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
                 self.updateFanRPMs()
             })
         }
-
-        
+  
         tableView.dataSource = self
         tableView.delegate = self
         
         tableView.sizeToFit()
+        
+        SystemMonitorViewController.activeSelf = self
+    }
+    
+    override func viewDidAppear() {
+        self.view.window?.delegate = self
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        SystemMonitorViewController.activeSelf = nil
     }
     
     func updateFanRPMs() {
