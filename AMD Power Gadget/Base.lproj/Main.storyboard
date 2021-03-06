@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -163,7 +163,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController storyboardIdentifier="AMDPowerGadget" id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="AMD Power Gadget" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" appearanceType="darkAqua" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="AMD Power Gadget" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="darkAqua" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="410" height="770"/>
@@ -590,6 +590,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </clipView>
                                         <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bxT-br-mDa">
@@ -661,8 +662,8 @@
         <scene sceneID="wqj-Ig-uLo">
             <objects>
                 <windowController storyboardIdentifier="SystemMonitor" id="cZD-YC-FDl" sceneMemberID="viewController">
-                    <window key="window" title="SMC Fans" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="darkAqua" frameAutosaveName="" animationBehavior="default" id="0qo-qi-5WU">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+                    <window key="window" title="SMC Fans" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="0qo-qi-5WU">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="516" y="564" width="480" height="316"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="3008" height="1669"/>
@@ -797,8 +798,8 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" title="WARNING: Some systems allow complete control over SMC. Setting a fan to zero or speed to low can cause damage to your hardware." id="n4b-i7-1Bs">
                                     <font key="font" size="11" name="HelveticaNeue-Medium"/>
-                                    <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" red="1" green="0.83921568629999999" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WQD-Dc-ffc">
@@ -825,7 +826,7 @@
         <scene sceneID="n8X-zX-yKW">
             <objects>
                 <viewController id="arI-oH-4xY" customClass="PStateEditorViewController" customModule="AMD_Power_Gadget" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" appearanceType="darkAqua" id="eyH-ab-osV">
+                    <view key="view" id="eyH-ab-osV">
                         <rect key="frame" x="0.0" y="0.0" width="609" height="476"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -851,7 +852,7 @@
                                     <action selector="apply:" target="arI-oH-4xY" id="bc4-tD-wrf"/>
                                 </connections>
                             </button>
-                            <scrollView appearanceType="darkAqua" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7NE-it-e76">
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7NE-it-e76">
                                 <rect key="frame" x="20" y="61" width="569" height="356"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="V3E-mk-Xj5">
@@ -989,7 +990,7 @@
                                 <textFieldCell key="cell" id="0WX-x7-Srn">
                                     <font key="font" size="11" name="HelveticaNeue-Bold"/>
                                     <string key="title">WARNING: Incorrect operation can lead to permanent damage to your hardware. Use the "Close" button to leave without making any changes. </string>
-                                    <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" red="1" green="0.83921568627450982" blue="0.039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -1494,6 +1495,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSListViewTemplate" width="17" height="12"/>
+        <image name="NSListViewTemplate" width="16" height="12"/>
     </resources>
 </document>
