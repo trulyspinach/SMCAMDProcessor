@@ -20,8 +20,6 @@ class GraphViewGridLineLayer: CALayer {
     @NSManaged var dataDiff : CGFloat
     @NSManaged var dataY : CGFloat
 
-    var textLayer : CATextLayer = CATextLayer()
-    
     override class func needsDisplay(forKey key: String) -> Bool {
         if key == #keyPath(gridColor) ||
             key == #keyPath(gridWidth) ||
@@ -59,9 +57,11 @@ class GraphViewGridLineLayer: CALayer {
         NSGraphicsContext.saveGraphicsState()
         let nsctx = NSGraphicsContext(cgContext: ctx, flipped: false)
         NSGraphicsContext.current = nsctx
-        
+
+        // Round the origin to the next screen pixel to ensure crisp text rendering.
+        let roundedHeight = round(height * self.contentsScale) / self.contentsScale
         let attributedString = NSAttributedString(string: "\(Int(dataY))", attributes: attributes)
-        attributedString.draw(at: NSPoint(x: 10, y: height + 2))
+        attributedString.draw(at: NSPoint(x: 10, y: roundedHeight + 2))
         NSGraphicsContext.restoreGraphicsState()
         
     }
