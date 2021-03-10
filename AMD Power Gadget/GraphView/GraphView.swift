@@ -100,6 +100,7 @@ class GraphView: NSView {
         newLayer.viewHeight = viewHeight
         newLayer.dotRadius = dotRadius
         newLayer.foregroundColors = getForegroundColors(index: lineID)
+        newLayer.contentsScale = self.layer!.contentsScale
         
         newLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         self.layer!.addSublayer(newLayer)
@@ -119,6 +120,7 @@ class GraphView: NSView {
         newLayer.dataMin = dataMin
         newLayer.dataDiff = dataDiff
         newLayer.dataY = CGFloat(v)
+        newLayer.contentsScale = self.layer!.contentsScale
         
         gridLines.sort { (a, b) -> Bool in
             return a.dataY > b.dataY
