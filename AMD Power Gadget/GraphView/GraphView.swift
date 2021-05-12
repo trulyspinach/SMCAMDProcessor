@@ -64,6 +64,8 @@ class GraphView: NSView {
     
     var gridLines : [GraphViewGridLineLayer] = []
   
+    var canBeDrawn:Bool = false
+    
     func setup() {
         viewTop = frame.height * viewTopPercentage
         viewBottom = frame.height * viewBottomPercentage
@@ -76,6 +78,9 @@ class GraphView: NSView {
     }
     
     override func draw(_ dirtyRect: NSRect) {
+        
+        if canBeDrawn == false { return }
+        
         super.draw(dirtyRect)
         
         guard let context = NSGraphicsContext.current?.cgContext else {

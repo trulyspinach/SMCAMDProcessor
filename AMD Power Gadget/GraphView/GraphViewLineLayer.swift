@@ -62,11 +62,12 @@ class GraphViewLineLayer: CALayer {
         let path = CGMutablePath()
         path.move(to: CGPoint(x: -1, y: -1), transform: .identity)
         
+        let dataPointPath = CGMutablePath()
         
         var lastPoint = CGPoint(x:-lineWidth * 2,y:-1)
-        for (i, v) in pointsY.enumerated(){
+        for (i, v) in pointsY.enumerated() {
             let newPoint = CGPoint(x: pointsX[i] * dataXScale + xOffset,
-                                   y: viewBottom + ((v - dataMin) / (dataDiff)) * viewHeight)
+                                   y: viewBottom + (CGFloat((v - dataMin) / (dataDiff)) * viewHeight))
             
             let difference = newPoint.x - lastPoint.x
             
@@ -78,14 +79,20 @@ class GraphViewLineLayer: CALayer {
             y = newPoint.y
             let controlPointTwo = CGPoint(x: x, y: y)
             
-            path.addCurve(to: newPoint, control1: controlPointOne, control2: controlPointTwo)
-            
             lastPoint = newPoint
+            
+            path.addCurve(to: newPoint, control1: controlPointOne, control2: controlPointTwo)
+                    
+            let dataPointPath=CGMutablePath()
+            dataPointPath.addArc(center: newPoint, radius: dotRadius, startAngle: 0, endAngle: CGFloat(2.0 * Double.pi), clockwise: true)
+            dataPointPath.closeSubpath()
+
+            ctx.addPath(dataPointPath)
         }
         
         path.addLine(to: CGPoint(x: frame.size.width + lineWidth*2, y: lastPoint.y))
         path.addLine(to: CGPoint(x: frame.size.width + lineWidth*2, y: -1))
-        
+
         ctx.addPath(path)
         ctx.setStrokeColor(lineColor)
         ctx.setLineWidth(lineWidth)
@@ -97,34 +104,20 @@ class GraphViewLineLayer: CALayer {
         
         ctx.drawLinearGradient(grad, start: CGPoint(x: 0, y: frame.height),
                                    end: CGPoint(x: 0, y: 0), options: [])
-        ctx.restoreGState()
-       
         
-        drawDataPoint(ctx: ctx)
-    }
-    
-    private func drawDataPoint(ctx: CGContext){
+        
+        ctx.setFillColor(dotFillColor)
+        ctx.fillPath()
+        
+        ctx.addPath(dataPointPath)
+        ctx.setStrokeColor(pointColor)
+        ctx.setLineWidth(lineWidth)
+        ctx.strokePath()
 
-        for (i, v) in pointsY.enumerated(){
-            let newPoint = CGPoint(x: pointsX[i] * dataXScale + xOffset,
-                                   y: viewBottom + (CGFloat((v - dataMin) / (dataDiff)) * viewHeight))
-            
-            let path = CGMutablePath()
-            path.addArc(center: newPoint, radius: dotRadius, startAngle: 0, endAngle: CGFloat(2.0 * Double.pi), clockwise: true)
-            path.closeSubpath()
-            
-            ctx.addPath(path)
-            ctx.setFillColor(dotFillColor)
-            ctx.fillPath()
-            
-            ctx.addPath(path)
-            ctx.setStrokeColor(pointColor)
-            ctx.setLineWidth(lineWidth)
-            ctx.strokePath()
-        }
+        ctx.restoreGState()
+    
     }
 
-    
     override func action(forKey key: String) -> CAAction? {
         
         if key == #keyPath(dataMin) ||
@@ -145,5 +138,5 @@ class GraphViewLineLayer: CALayer {
         }
         return super.action(forKey:key)
     }
-    
+
 }
