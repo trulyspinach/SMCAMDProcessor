@@ -78,6 +78,12 @@ typedef struct tctl_offset {
     int offset;
 } TempOffset;
 
+typedef struct sleep_state {
+    bool sleep;
+    bool cpb;
+    uint64_t pstate[8];
+} SleepState;
+
 
 static IOPMPowerState powerStates[kNrOfPowerStates] = {
    {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -159,7 +165,7 @@ public:
     
     void registerRequest();
     
-    void dumpPstate();
+    void dumpPstate(uint64_t buf[8]);
     void writePstate(const uint64_t *buf);
     
     bool initSuperIO(uint16_t* chipIntel);
@@ -209,7 +215,6 @@ public:
     uint8_t PStateCur_perCore[CPUInfo::MaxCpus];
     uint8_t PStateCtl = 0;
     uint64_t PStateDef_perCore[8];
-    uint8_t PStateEnabledLen = 0;
     float PStateDefClock_perCore[8];
     bool cpbSupported;
     
@@ -260,7 +265,8 @@ private:
     KernelPatcher *liluKernelPatcher;
     
     bool getPCIService();
-    bool wentToSleep;
+    
+    SleepState sleepState;
     
     void startWorkLoop();
     void stopWorkLoop();
