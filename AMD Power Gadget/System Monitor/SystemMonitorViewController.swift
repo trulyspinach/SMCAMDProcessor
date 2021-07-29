@@ -24,15 +24,19 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
     @IBOutlet weak var chipIntelLabel: NSTextField!
     
     static var activeSelf : SystemMonitorViewController?
-    static func launch() {
+    static func launch(forceFocus: Bool = false) {
         if let vc = SystemMonitorViewController.activeSelf {
             vc.view.window?.orderFrontRegardless()
         } else {
             let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
             let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("SystemMonitor")) as! NSWindowController
             controller.showWindow(self)
+            
+            if forceFocus {controller.window?.orderFrontRegardless()}
         }
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +86,13 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
         tableView.delegate = self
         
         tableView.sizeToFit()
+        
+        SystemMonitorViewController.activeSelf = self
+        AppDelegate.updateDockIcon()
+    }
+    
+    override func viewWillAppear() {
+        view.window?.delegate = self
     }
     
     func updateFanRPMs() {
@@ -153,5 +164,12 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
                 updateFanRPMs()
             }
         }
+    }
+}
+
+extension SystemMonitorViewController: NSWindowDelegate {
+    func windowWillClose(_ notification: Notification) {
+        SystemMonitorViewController.activeSelf = nil
+        AppDelegate.updateDockIcon()
     }
 }

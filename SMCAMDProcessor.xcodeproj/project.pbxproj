@@ -11,6 +11,7 @@
 		5B72086D247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B72086B247C884C00BF7492 /* ISSuperIOIT86XXEFamily.cpp */; };
 		B5011EA1242E01CC009FB2A2 /* SMCAMDProcessor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B5011EA0242E01CC009FB2A2 /* SMCAMDProcessor.hpp */; };
 		B5011EA3242E01CC009FB2A2 /* SMCAMDProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5011EA2242E01CC009FB2A2 /* SMCAMDProcessor.cpp */; };
+		B51BE99F26B2CBB4002BEE3C /* StatusbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51BE99E26B2CBB4002BEE3C /* StatusbarController.swift */; };
 		B56162C72400EF770006A7D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56162C62400EF770006A7D8 /* AppDelegate.swift */; };
 		B56162C92400EF770006A7D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56162C82400EF770006A7D8 /* ViewController.swift */; };
 		B56162CB2400EF780006A7D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B56162CA2400EF780006A7D8 /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 		B5011EA0242E01CC009FB2A2 /* SMCAMDProcessor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SMCAMDProcessor.hpp; sourceTree = "<group>"; };
 		B5011EA2242E01CC009FB2A2 /* SMCAMDProcessor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SMCAMDProcessor.cpp; sourceTree = "<group>"; };
 		B5011EA4242E01CC009FB2A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B51BE99E26B2CBB4002BEE3C /* StatusbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusbarController.swift; sourceTree = "<group>"; };
 		B56162C42400EF770006A7D8 /* AMD Power Gadget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AMD Power Gadget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B56162C62400EF770006A7D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B56162C82400EF770006A7D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				B5F46D80240E6F19009F2961 /* ProcessorModel.swift */,
 				B56162C62400EF770006A7D8 /* AppDelegate.swift */,
 				B56162C82400EF770006A7D8 /* ViewController.swift */,
+				B51BE99E26B2CBB4002BEE3C /* StatusbarController.swift */,
 				B5787764241105DE001AE704 /* Power Tool */,
 				B561649E24703053001806DC /* System Monitor */,
 				B56162CC2400EF780006A7D8 /* Main.storyboard */,
@@ -461,6 +464,7 @@
 				B5787763241105D3001AE704 /* CPUBarLayer.swift in Sources */,
 				B5F46D7F240E593D009F2961 /* CPUPowerStepView.swift in Sources */,
 				B56164A02470308C001806DC /* SystemMonitorViewController.swift in Sources */,
+				B51BE99F26B2CBB4002BEE3C /* StatusbarController.swift in Sources */,
 				B568E7362414D174007CEEC1 /* CPUSpeedShiftView.swift in Sources */,
 				B56162C72400EF770006A7D8 /* AppDelegate.swift in Sources */,
 				B5F46D81240E6F19009F2961 /* ProcessorModel.swift in Sources */,

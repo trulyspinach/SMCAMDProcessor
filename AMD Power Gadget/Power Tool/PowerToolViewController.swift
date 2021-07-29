@@ -84,7 +84,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     var sumCount = 0
     
     static var activeSelf : PowerToolViewController?
-    static func launch(){
+    static func launch(forceFocus: Bool = false){
         if let vc = PowerToolViewController.activeSelf {
             vc.view.window?.orderFrontRegardless()
         } else {
@@ -93,6 +93,8 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
             controller.showWindow(self)
 
             controller.window?.isMovableByWindowBackground = true
+            
+            if forceFocus {controller.window?.orderFrontRegardless()}
         }
     }
     
@@ -102,7 +104,6 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         vaildStatesClock = ProcessorModel.shared.getVaildPStateClocks()
         cpuFreqGraph.setup(totalCores: ProcessorModel.shared.getNumOfCore())
 
@@ -124,11 +125,11 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         toggleTranslucency(enabled: UserDefaults.standard.bool(forKey: "usetranslucency"))
         
         PowerToolViewController.activeSelf = self
+        AppDelegate.updateDockIcon()
     }
     
     override func viewWillAppear() {
-        view.window?.delegate = self
-        
+        view.window!.delegate = self
         if timer == nil || !timer!.isValid{
             timer = Timer.scheduledTimer(withTimeInterval: updateTime, repeats: true, block: { (_) in
                 self.sampleCPUGraph()
@@ -144,6 +145,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         PowerToolViewController.activeSelf = nil
+        AppDelegate.updateDockIcon()
     }
     
     func sampleCPUGraph() {

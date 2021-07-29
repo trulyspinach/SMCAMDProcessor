@@ -36,19 +36,20 @@ class ViewController: NSViewController, NSWindowDelegate {
     
     var timeStart : Double = 0
     static var activeSelf : ViewController?
-    static func launch() {
+    static func launch(forceFocus: Bool = false) {
         if let vc = ViewController.activeSelf {
             vc.view.window?.orderFrontRegardless()
         } else {
             let mainStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Main"), bundle: nil)
             let controller = mainStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("AMDPowerGadget")) as! NSWindowController
             controller.showWindow(self)
+            if forceFocus { controller.window?.orderFrontRegardless() }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.window?.delegate = self
+        
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (_) in
             self.sampleData(forced: true)
@@ -78,6 +79,8 @@ class ViewController: NSViewController, NSWindowDelegate {
         sampleData(forced: true)
         sampleData(forced: true)
         sampleData(forced: true)
+        
+        AppDelegate.updateDockIcon()
     }
     
     override func viewWillAppear() {
@@ -133,6 +136,7 @@ class ViewController: NSViewController, NSWindowDelegate {
 
     func windowWillClose(_ notification: Notification) {
         ViewController.activeSelf = nil
+        AppDelegate.updateDockIcon()
     }
     
     @IBAction func buttonPressed(_ sender: Any) {

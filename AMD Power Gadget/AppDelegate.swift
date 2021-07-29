@@ -11,6 +11,8 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    var mbController: StatusbarController?
+    
     @IBOutlet weak var appearanceToggle: NSMenuItem!
     
     
@@ -27,6 +29,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         PowerToolViewController.launch()
     }
     
+    static func launchGadget(){
+        ViewController.launch()
+    }
+    
+    static func haveActiveWindows() -> Bool {
+        return ViewController.activeSelf != nil
+            || PowerToolViewController.activeSelf != nil
+            || SystemMonitorViewController.activeSelf != nil
+    }
+    
+    static func updateDockIcon() {
+        NSApplication.shared.setActivationPolicy(haveActiveWindows() ? .regular : .accessory)
+    }
+    
     @IBAction func changeAppearance(_ sender: Any) {
         applyAppearanceSwitch(translucency: appearanceToggle.state == .off)
     }
@@ -35,6 +51,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        mbController = StatusbarController()
+        
         let useTran = UserDefaults.standard.bool(forKey: "usetranslucency")
         applyAppearanceSwitch(translucency: useTran)
     }
