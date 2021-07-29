@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
@@ -103,6 +103,13 @@
                                                 <action selector="changeAppearance:" target="Voe-Tx-rLC" id="qqf-u3-SWy"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="FK8-Lx-als"/>
+                                        <menuItem title="Show metrics in menu bar" id="goc-Nc-vnb">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleStatusBar:" target="Voe-Tx-rLC" id="F1t-uf-hDf"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -152,6 +159,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AMD_Power_Gadget" customModuleProvider="target">
                     <connections>
                         <outlet property="appearanceToggle" destination="fV4-Ra-Fu1" id="QrG-wZ-zSC"/>
+                        <outlet property="statusbarToggle" destination="goc-Nc-vnb" id="xNu-fJ-KhX"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>

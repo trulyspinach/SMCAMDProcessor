@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var mbController: StatusbarController?
     
     @IBOutlet weak var appearanceToggle: NSMenuItem!
+    @IBOutlet weak var statusbarToggle: NSMenuItem!
     
     
     @IBAction func openPage(_ sender: Any) {
@@ -34,6 +35,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     static func haveActiveWindows() -> Bool {
+        if !UserDefaults.standard.bool(forKey: "statusbarenabled") {return true}
+        
         return ViewController.activeSelf != nil
             || PowerToolViewController.activeSelf != nil
             || SystemMonitorViewController.activeSelf != nil
@@ -46,17 +49,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func changeAppearance(_ sender: Any) {
         applyAppearanceSwitch(translucency: appearanceToggle.state == .off)
     }
+    
+    @IBAction func toggleStatusBar(_ sender: Any) {
+        applyStatusBarSwitch(enabled: statusbarToggle.state == .off)
+    }
+    
     @IBAction func sysmonitor(_ sender: Any) {
         SystemMonitorViewController.launch()
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        mbController = StatusbarController()
+        UserDefaults.standard.register(defaults: ["usetranslucency" : false,
+                                                  "statusbarenabled": true])
         
         let useTran = UserDefaults.standard.bool(forKey: "usetranslucency")
+        let sb = UserDefaults.standard.bool(forKey: "statusbarenabled")
+        
+        applyStatusBarSwitch(enabled: sb)
         applyAppearanceSwitch(translucency: useTran)
+        
+        if !sb {
+            ViewController.launch()
+        }
     }
-
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         ProcessorModel.shared.closeDriver()
@@ -68,6 +84,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         PowerToolViewController.activeSelf?.toggleTranslucency(enabled: translucency)
         
         UserDefaults.standard.set(translucency, forKey: "usetranslucency")
+    }
+    
+    func applyStatusBarSwitch(enabled: Bool) {
+        statusbarToggle.state = enabled ? .on : .off
+        if enabled {
+            if mbController == nil {
+                mbController = StatusbarController()
+                AppDelegate.updateDockIcon()
+            }
+        } else {
+            mbController?.dismiss()
+            mbController = nil
+        }
+        
+        UserDefaults.standard.set(enabled, forKey: "statusbarenabled")
     }
 }
 

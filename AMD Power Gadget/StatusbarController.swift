@@ -116,6 +116,12 @@ class StatusbarController {
         })
     }
     
+    func dismiss() {
+        updateTimer?.invalidate()
+        NSStatusBar.system.removeStatusItem(statusItem!)
+        statusItem = nil
+    }
+    
     func update() {
         let numberOfCores = ProcessorModel.shared.getNumOfCore()
         let outputStr: [Float] = ProcessorModel.shared.getMetric(forced: false)
@@ -141,7 +147,9 @@ class StatusbarController {
     @objc func itemClicked(){
         switch NSApp.currentEvent?.type {
         case .leftMouseUp:
+            NSApp.activate(ignoringOtherApps: true)
             ViewController.launch(forceFocus: true)
+            
             
         case .rightMouseUp:
             guard let m = menu else {return}

@@ -55,12 +55,16 @@ class ProcessorModel {
                                       &outputStr, &outputStrCount)
         AMDRyzenCPUPowerManagementVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
         
-        let compatVers = ["0.6.3", "0.6.4", "0.6.5", "0.6.6"]
+        let compatVers = ["0.6.3", "0.6.4", "0.6.5", "0.6.6", "0.7"]
+        let latestMajorVers = ["0.7"]
         
         if !compatVers.contains(AMDRyzenCPUPowerManagementVersion){
-            alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated. Please use the lastest version and start this application again.")
+            alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated and no longer API compatible. Please use the lastest version and start this application again.")
         }
         
+        if !latestMajorVers.contains(AMDRyzenCPUPowerManagementVersion){
+            alertDontQuit(message: "There are updates available for AMDRyzenCPUPowerManagement. Please use the lastest version and start this application again.")
+        }
         
         loadCPUID()
         loadBaseBoardInfo()
@@ -114,6 +118,20 @@ class ProcessorModel {
         }
         
         NSApplication.shared.terminate(self)
+    }
+    
+    func alertDontQuit(message : String){
+        let alert = NSAlert()
+        alert.messageText = "Update Available"
+        alert.informativeText = message
+        alert.alertStyle = .critical
+        alert.addButton(withTitle: "Done")
+        alert.addButton(withTitle: "Download")
+        let res = alert.runModal()
+        
+        if res == .alertSecondButtonReturn {
+            NSWorkspace.shared.open(URL(string: "https://github.com/trulyspinach/SMCAMDProcessor")!)
+        }
     }
     
     func kernelGetFloats(count : Int, selector : UInt32) -> [Float] {
