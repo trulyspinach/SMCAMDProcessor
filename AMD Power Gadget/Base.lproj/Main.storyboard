@@ -1375,8 +1375,9 @@
                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1h-CU-8OF">
                                                                                     <rect key="frame" x="24" y="100" width="520" height="28"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                                    <textFieldCell key="cell" allowsUndo="NO" alignment="left" title="Allow automatically shifting down to a low power state, which may introduce performance issue." id="uqh-lv-7ht">
+                                                                                    <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="uqh-lv-7ht">
                                                                                         <font key="font" size="12" name="HelveticaNeue"/>
+                                                                                        <string key="title">Allow automatically shifting down to a low power state, which may introduce performance issue. This option is disabled by default and last until a reboot.</string>
                                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
