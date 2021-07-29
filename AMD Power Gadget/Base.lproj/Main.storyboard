@@ -1340,7 +1340,7 @@
                                                                                     </connections>
                                                                                 </button>
                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arp-oH-qjj">
-                                                                                    <rect key="frame" x="24" y="153" width="520" height="84"/>
+                                                                                    <rect key="frame" x="24" y="145" width="520" height="92"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                                     <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="AIb-f9-EZB">
                                                                                         <font key="font" size="12" name="HelveticaNeue"/>
@@ -1362,7 +1362,7 @@
                                                                                     </connections>
                                                                                 </button>
                                                                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LSo-sk-viM">
-                                                                                    <rect key="frame" x="24" y="129" width="167" height="18"/>
+                                                                                    <rect key="frame" x="25" y="107" width="167" height="18"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                                     <buttonCell key="cell" type="check" title="Enable Low Power State" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zPp-Te-Sg9">
                                                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1373,7 +1373,7 @@
                                                                                     </connections>
                                                                                 </button>
                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1h-CU-8OF">
-                                                                                    <rect key="frame" x="24" y="100" width="520" height="28"/>
+                                                                                    <rect key="frame" x="25" y="44" width="520" height="62"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                                     <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="uqh-lv-7ht">
                                                                                         <font key="font" size="12" name="HelveticaNeue"/>
