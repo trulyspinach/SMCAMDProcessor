@@ -21,8 +21,8 @@ SMCAMDProcessor now comes in two separate binaries(kernel extensions):
 5. Bootloaders like `OpenCore` will link each kext in the order they present in config file, so make sure `AMDRyzenCPUPowerManagement.kext` comes before `SMCAMDProcessor.kext` as it serves as a dependency.
 
 ## Features
-* CPU power management for AMD 17h processors. 
-* Supports for reading of temperature, energy and frequency data on AMD 17h Processors.
+* CPU power management for AMD Zen processors. 
+* Supports for reading of temperature, energy and frequency data on AMD Zen Processors.
 * Manual switching of processor speed.
 * PState editing.
 
