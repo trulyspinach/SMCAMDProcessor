@@ -1301,7 +1301,7 @@
                                                                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k7R-ib-Cnn">
                                                                                     <rect key="frame" x="12" y="7" width="283" height="32"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                                    <buttonCell key="cell" type="push" title="Fix motherboard displays as 'Unknown'?" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xeA-Lk-bKK">
+                                                                                    <buttonCell key="cell" type="push" title="Fix 'Unknown' motherboard display" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xeA-Lk-bKK">
                                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                         <font key="font" metaFont="system"/>
                                                                                     </buttonCell>
