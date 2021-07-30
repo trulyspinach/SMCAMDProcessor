@@ -205,7 +205,7 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
             dataOut[0] = 0;
             
             for(uint32_t i = 0; i < fProvider->totalNumberOfLogicalCores; i++){
-                dataOut[0] += fProvider->instructionDelta_PerCore[i];
+                dataOut[0] += fProvider->instructionDelta_perCore[i];
             }
             
             break;

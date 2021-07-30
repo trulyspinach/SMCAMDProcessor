@@ -110,10 +110,10 @@ bool AMDRyzenCPUPowerManagement::getPCIService(){
     return true;
 }
 
-void AMDRyzenCPUPowerManagement::startWorkLoop() {
+void AMDRyzenCPUPowerManagement::initWorkLoop() {
     IOLog("AMDCPUSupport::startWorkLoop setting up timer");
     
-    timerEventSource = IOTimerEventSource::timerEventSource(this, [](OSObject *object, IOTimerEventSource *sender) {
+    timerEvent_main = IOTimerEventSource::timerEventSource(this, [](OSObject *object, IOTimerEventSource *sender) {
         AMDRyzenCPUPowerManagement *provider = OSDynamicCast(AMDRyzenCPUPowerManagement, object);
 
         //Run initialization
@@ -157,8 +157,8 @@ void AMDRyzenCPUPowerManagement::startWorkLoop() {
                 if(!provider->read_msr(kMSR_APERF, &APERF) || !provider->read_msr(kMSR_MPERF, &MPERF))
                     panic("AMDCPUSupport::startWorkLoop: wtf?");
 
-                provider->lastAPERF_PerCore[physical] = APERF;
-                provider->lastMPERF_PerCore[physical] = MPERF;
+                provider->lastAPERF_perCore[physical] = APERF;
+                provider->lastMPERF_perCore[physical] = MPERF;
 
             }, provider);
             
@@ -166,7 +166,7 @@ void AMDRyzenCPUPowerManagement::startWorkLoop() {
             provider->PStateCtl = 0;
             
             provider->serviceInitialized = true;
-            provider->timerEventSource->setTimeoutMS(1);
+            provider->timerEvent_main->setTimeoutMS(1);
             return;
         }
         
@@ -200,26 +200,48 @@ void AMDRyzenCPUPowerManagement::startWorkLoop() {
         provider->timeOfLastUpdate = now;
         provider->updateTimeInterval = min(1200, max(50, newInt));
         
-        provider->timerEventSource->setTimeoutMS(provider->updateTimeInterval);
+        provider->timerEvent_main->setTimeoutMS(provider->updateTimeInterval);
 
+//        IOLog("fpp %d %d %.4f.\n", HF_TEMP_SAMPLE_FREQ, HF_TEMP_SAMPLE_PERIOD, (float)HF_TEMP_SAMPLE_REP);
         
+    });
+    
+//    tempSamplePeriod = (int)((1.0f / (float)HF_TEMP_SAMPLE_FREQ) * 1000);
+    float fillT = getPackageTemp();
+    tempNextSample = 0;
+    for (int i = 0; i < HF_TEMP_SAMPLE_LEN; i++) tempSamples[i] = fillT;
+    
+    timerEvent_tempe = IOTimerEventSource::timerEventSource(this, [](OSObject *object, IOTimerEventSource *sender) {
+        AMDRyzenCPUPowerManagement *provider = OSDynamicCast(AMDRyzenCPUPowerManagement, object);
         
+        int next_samp = provider->tempNextSample;
+        float t = provider->getPackageTemp();
+        provider->tempSamples[next_samp] = t;
+        provider->tempNextSample = (next_samp + 1) % HF_TEMP_SAMPLE_LEN;
+        
+        sender->setTimeoutMS(HF_TEMP_SAMPLE_PERIOD);
     });
     
     registerService();
     
     lastUpdateTime = getCurrentTimeNs();
     pwrLastTSC = rdtsc64();
-    workLoop->addEventSource(timerEventSource);
-    timerEventSource->setTimeoutMS(1);
+    workLoop->addEventSource(timerEvent_main);
+    workLoop->addEventSource(timerEvent_tempe);
+    timerEvent_main->setTimeoutMS(1);
+    timerEvent_tempe->setTimeoutMS(HF_TEMP_SAMPLE_PERIOD);
 }
 
 void AMDRyzenCPUPowerManagement::stopWorkLoop() {
-    IOLog("AMDCPUSupport::startWorkLoop stopping timer");
-    timerEventSource->cancelTimeout();
-    workLoop->removeEventSource(timerEventSource);
-    timerEventSource->release();
+//    IOLog("AMDCPUSupport::startWorkLoop stopping timer");
+
+    
+    workLoop->disableAllEventSources();
     serviceInitialized = false;
+}
+
+void AMDRyzenCPUPowerManagement::resumeWorkLoop() {
+    workLoop->enableAllEventSources();
 }
 
 bool AMDRyzenCPUPowerManagement::start(IOService *provider){
@@ -300,8 +322,8 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     
     pwrTimeUnit = pow((double)0.5, (double)((rapl >> 16) & 0xf));
     pwrEnergyUnit = pow((double)0.5, (double)((rapl >> 8) & 0x1f));
-    IOLog("a %lld\n", (long long)(pwrTimeUnit * 10000000000));
-    IOLog("b %lld\n", (long long)(pwrEnergyUnit * 10000000000));
+//    IOLog("a %lld\n", (long long)(pwrTimeUnit * 10000000000));
+//    IOLog("b %lld\n", (long long)(pwrEnergyUnit * 10000000000));
     
     fetchOEMBaseBoardInfo();
     
@@ -355,7 +377,7 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
               totalNumberOfPhysicalCores, totalNumberOfLogicalCores);
 
     workLoop = IOWorkLoop::workLoop();
-    startWorkLoop();
+    initWorkLoop();
 
 
     PMinit();
@@ -371,6 +393,9 @@ void AMDRyzenCPUPowerManagement::stop(IOService *provider){
     IOLog("AMDCPUSupport stopped\n");
     
     stopWorkLoop();
+    timerEvent_main->cancelTimeout();
+    workLoop->removeEventSource(timerEvent_main);
+    timerEvent_main->release();
     
     if(superIO){
         for (int i = 0; i < superIO->getNumberOfFans(); i++) {
@@ -396,7 +421,7 @@ IOReturn AMDRyzenCPUPowerManagement::setPowerState(unsigned long powerStateOrdin
         // Waking up
         IOLog("AMDCPUSupport::setPowerState preparing for wakeup\n");
         wentToSleep = false;
-        startWorkLoop();
+        resumeWorkLoop();
     }
 
     return kIOPMAckImplied;
@@ -502,11 +527,11 @@ void AMDRyzenCPUPowerManagement::calculateEffectiveFrequency(uint8_t physical){
     uint64_t APERF = APERF_lo | ((uint64_t)APERF_hi << 32);
     uint64_t MPERF = MPERF_lo | ((uint64_t)MPERF_hi << 32);;
         
-    uint64_t lastAPERF = lastAPERF_PerCore[physical];
-    uint64_t lastMPERF = lastMPERF_PerCore[physical];
+    uint64_t lastAPERF = lastAPERF_perCore[physical];
+    uint64_t lastMPERF = lastMPERF_perCore[physical];
     
-    lastAPERF_PerCore[physical] = APERF;
-    lastMPERF_PerCore[physical] = MPERF;
+    lastAPERF_perCore[physical] = APERF;
+    lastMPERF_perCore[physical] = MPERF;
     //If an overflow of either the MPERF or APERF register occurs between read of last MPERF and
     //read of last APERF, the effective frequency calculated in is invalid.
     if(APERF <= lastAPERF || MPERF <= lastMPERF) {
@@ -535,7 +560,7 @@ void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t cpu_num){
     if(lastInstructionDelta_perCore[cpu_num] > insCount) return;
     
 //    uint64_t delta = insCount - lastInstructionDelta_perCore[cpu_num];
-    instructionDelta_PerCore[cpu_num] = insCount - lastInstructionDelta_perCore[cpu_num];
+    instructionDelta_perCore[cpu_num] = insCount - lastInstructionDelta_perCore[cpu_num];
     
     lastInstructionDelta_perCore[cpu_num] = insCount;
     
@@ -589,7 +614,7 @@ bool AMDRyzenCPUPowerManagement::getCPBState(){
     return !((hwConfig >> 25) & 0x1);
 }
 
-void AMDRyzenCPUPowerManagement::updatePackageTemp(){
+inline float AMDRyzenCPUPowerManagement::getPackageTemp() {
     IOPCIAddressSpace space;
     space.bits = 0x00;
     
@@ -607,8 +632,13 @@ void AMDRyzenCPUPowerManagement::updatePackageTemp(){
     if (tempOffsetFlag)
         t -= 49.0f;
     
-    
-    PACKAGE_TEMPERATURE_perPackage[0] = t;
+    return t;
+}
+
+void AMDRyzenCPUPowerManagement::updatePackageTemp(){
+    float sum = 0;
+    for (int i = 0; i < HF_TEMP_SAMPLE_LEN; i++) sum += tempSamples[i];
+    PACKAGE_TEMPERATURE_perPackage[0] = sum * HF_TEMP_SAMPLE_LENREP;
 }
 
 void AMDRyzenCPUPowerManagement::updatePackageEnergy(){

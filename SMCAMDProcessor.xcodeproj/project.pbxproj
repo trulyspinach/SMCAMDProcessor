@@ -716,7 +716,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.6;
+				CURRENT_PROJECT_VERSION = 0.7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -731,7 +731,7 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.6;
+				MARKETING_VERSION = 0.7;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
 				MODULE_START = amdryzencpupm_kern_start;
 				MODULE_STOP = amdryzencpupm_kern_stop;
@@ -763,7 +763,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.6.6;
+				CURRENT_PROJECT_VERSION = 0.7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -776,7 +776,7 @@
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.6.6;
+				MARKETING_VERSION = 0.7;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
 				MODULE_START = amdryzencpupm_kern_start;
 				MODULE_STOP = amdryzencpupm_kern_stop;

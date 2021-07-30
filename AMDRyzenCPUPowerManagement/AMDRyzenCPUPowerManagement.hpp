@@ -154,7 +154,15 @@ public:
     void setCPBState(bool enabled);
     bool getCPBState();
     
+#define HF_TEMP_SAMPLE_SECS 3
+#define HF_TEMP_SAMPLE_FREQ 2
+#define HF_TEMP_SAMPLE_LEN (HF_TEMP_SAMPLE_SECS * HF_TEMP_SAMPLE_FREQ)
+#define HF_TEMP_SAMPLE_LENREP (1.0f / (float)HF_TEMP_SAMPLE_LEN)
+#define HF_TEMP_SAMPLE_REP (1.0f / (float)HF_TEMP_SAMPLE_FREQ)
+#define HF_TEMP_SAMPLE_PERIOD (int)(HF_TEMP_SAMPLE_REP * 1000.0)
+    inline float getPackageTemp();
     void updatePackageTemp();
+    
     void updatePackageEnergy();
     
     void registerRequest();
@@ -192,16 +200,16 @@ public:
     float effFreq_perCore[CPUInfo::MaxCpus] {};
     float PACKAGE_TEMPERATURE_perPackage[CPUInfo::MaxCpus];
     
-    uint64_t lastMPERF_PerCore[CPUInfo::MaxCpus];
-    uint64_t lastAPERF_PerCore[CPUInfo::MaxCpus];
-    uint64_t deltaMPERF_PerCore[CPUInfo::MaxCpus];
+    uint64_t lastMPERF_perCore[CPUInfo::MaxCpus];
+    uint64_t lastAPERF_perCore[CPUInfo::MaxCpus];
+    uint64_t deltaMPERF_perCore[CPUInfo::MaxCpus];
     
 //    uint64_t lastAPERF_PerCore[CPUInfo::MaxCpus];
     
-    uint64_t instructionDelta_PerCore[CPUInfo::MaxCpus];
+    uint64_t instructionDelta_perCore[CPUInfo::MaxCpus];
     uint64_t lastInstructionDelta_perCore[CPUInfo::MaxCpus];
     
-    float loadIndex_PerCore[CPUInfo::MaxCpus];
+    float loadIndex_perCore[CPUInfo::MaxCpus];
     
     float PStateStepUpRatio = 0.36;
     float PStateStepDownRatio = 0.05;
@@ -231,7 +239,8 @@ public:
     
 private:
     IOWorkLoop *workLoop;
-    IOTimerEventSource *timerEventSource;
+    IOTimerEventSource *timerEvent_main;
+    IOTimerEventSource *timerEvent_tempe;
     
     bool serviceInitialized = false;
     
@@ -241,7 +250,8 @@ private:
     uint32_t estimatedRequestTimeInterval = 0;
     uint32_t timeOfLastMissedRequest = 0;
     
-    
+    int tempNextSample = 0;
+    float tempSamples[HF_TEMP_SAMPLE_LEN];
     float tempOffset = 0;
     double pwrTimeUnit = 0;
     double pwrEnergyUnit = 0;
@@ -262,7 +272,8 @@ private:
     bool getPCIService();
     bool wentToSleep;
     
-    void startWorkLoop();
+    void initWorkLoop();
     void stopWorkLoop();
+    void resumeWorkLoop();
 };
 #endif
