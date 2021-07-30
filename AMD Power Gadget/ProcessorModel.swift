@@ -59,11 +59,11 @@ class ProcessorModel {
         let latestMajorVers = ["0.7"]
         
         if !compatVers.contains(AMDRyzenCPUPowerManagementVersion){
-            alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated and no longer API compatible. Please use the lastest version and start this application again.")
+            alertAndQuit(message: "Your AMDRyzenCPUPowerManagement version is outdated and no longer API compatible. Please use the latest version and start this application again.")
         }
         
         if !latestMajorVers.contains(AMDRyzenCPUPowerManagementVersion){
-            alertDontQuit(message: "There are updates available for AMDRyzenCPUPowerManagement. Please use the lastest version and start this application again.")
+            alertDontQuit(message: "There are updates available for AMDRyzenCPUPowerManagement. Update to the latest version for more feature and stability.")
         }
         
         loadCPUID()
@@ -122,10 +122,10 @@ class ProcessorModel {
     
     func alertDontQuit(message : String){
         let alert = NSAlert()
-        alert.messageText = "Update Available"
+        alert.messageText = "Kext Update Available"
         alert.informativeText = message
-        alert.alertStyle = .critical
-        alert.addButton(withTitle: "Done")
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Later")
         alert.addButton(withTitle: "Download")
         let res = alert.runModal()
         
