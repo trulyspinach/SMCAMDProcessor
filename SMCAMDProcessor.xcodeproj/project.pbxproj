@@ -37,6 +37,9 @@
 		B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */; };
 		B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */; };
 		B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */; };
+		B5CE1F7F26B4271800DBF70A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CE1F7E26B4271800DBF70A /* AppDelegate.swift */; };
+		B5CE1F8B26B4294000DBF70A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CE1F8A26B4294000DBF70A /* main.swift */; };
+		B5CE1F8D26B42B1600DBF70A /* APGLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B5D20188241B85E800BBD06A /* kernel_resolver.h in Headers */ = {isa = PBXBuildFile; fileRef = B5D20186241B85E800BBD06A /* kernel_resolver.h */; };
 		B5D20189241B85E800BBD06A /* kernel_resolver.c in Sources */ = {isa = PBXBuildFile; fileRef = B5D20187241B85E800BBD06A /* kernel_resolver.c */; };
 		B5DB81D12417CB5E00741A38 /* PStateEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB81D02417CB5E00741A38 /* PStateEditorViewController.swift */; };
@@ -47,6 +50,19 @@
 		B5F46D81240E6F19009F2961 /* ProcessorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D80240E6F19009F2961 /* ProcessorModel.swift */; };
 		B5F46D83240E76D9009F2961 /* PowerToolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D82240E76D9009F2961 /* PowerToolViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B5CE1F8C26B42B0100DBF70A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				B5CE1F8D26B42B1600DBF70A /* APGLaunchHelper.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5B72086A247C884C00BF7492 /* ISSuperIOIT86XXEFamily.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ISSuperIOIT86XXEFamily.hpp; sourceTree = "<group>"; };
@@ -88,6 +104,11 @@
 		B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
 		B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewGridLineLayer.swift; sourceTree = "<group>"; };
+		B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APGLaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5CE1F7E26B4271800DBF70A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B5CE1F8526B4271900DBF70A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5CE1F8626B4271900DBF70A /* APGLaunchHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = APGLaunchHelper.entitlements; sourceTree = "<group>"; };
+		B5CE1F8A26B4294000DBF70A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B5D20186241B85E800BBD06A /* kernel_resolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kernel_resolver.h; sourceTree = "<group>"; };
 		B5D20187241B85E800BBD06A /* kernel_resolver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kernel_resolver.c; sourceTree = "<group>"; };
 		B5DB81D02417CB5E00741A38 /* PStateEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PStateEditorViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +136,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B57D27F123F66AE7002BC699 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CE1F7926B4271800DBF70A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -226,6 +254,7 @@
 				B57D27F623F66AE7002BC699 /* AMDRyzenCPUPowerManagement */,
 				B5011E9F242E01CC009FB2A2 /* SMCAMDProcessor */,
 				B56162C52400EF770006A7D8 /* AMD Power Gadget */,
+				B5CE1F7D26B4271800DBF70A /* APGLaunchHelper */,
 				B57D27F523F66AE7002BC699 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -236,6 +265,7 @@
 				B57D27F423F66AE7002BC699 /* AMDRyzenCPUPowerManagement.kext */,
 				B56162C42400EF770006A7D8 /* AMD Power Gadget.app */,
 				B5011E9E242E01CC009FB2A2 /* SMCAMDProcessor.kext */,
+				B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -279,6 +309,17 @@
 				B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B5CE1F7D26B4271800DBF70A /* APGLaunchHelper */ = {
+			isa = PBXGroup;
+			children = (
+				B5CE1F7E26B4271800DBF70A /* AppDelegate.swift */,
+				B5CE1F8526B4271900DBF70A /* Info.plist */,
+				B5CE1F8626B4271900DBF70A /* APGLaunchHelper.entitlements */,
+				B5CE1F8A26B4294000DBF70A /* main.swift */,
+			);
+			path = APGLaunchHelper;
 			sourceTree = "<group>";
 		};
 		B5D2018A241B877C00BBD06A /* symresolver */ = {
@@ -347,6 +388,7 @@
 				B56162C02400EF770006A7D8 /* Sources */,
 				B56162C12400EF770006A7D8 /* Frameworks */,
 				B56162C22400EF770006A7D8 /* Resources */,
+				B5CE1F8C26B42B0100DBF70A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -375,13 +417,30 @@
 			productReference = B57D27F423F66AE7002BC699 /* AMDRyzenCPUPowerManagement.kext */;
 			productType = "com.apple.product-type.kernel-extension";
 		};
+		B5CE1F7B26B4271800DBF70A /* APGLaunchHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5CE1F8926B4271900DBF70A /* Build configuration list for PBXNativeTarget "APGLaunchHelper" */;
+			buildPhases = (
+				B5CE1F7826B4271800DBF70A /* Sources */,
+				B5CE1F7926B4271800DBF70A /* Frameworks */,
+				B5CE1F7A26B4271800DBF70A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = APGLaunchHelper;
+			productName = APGLaunchHelper;
+			productReference = B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		B57D27EB23F66AE7002BC699 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = trulyspinach;
 				TargetAttributes = {
@@ -393,6 +452,9 @@
 					};
 					B57D27F323F66AE7002BC699 = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					B5CE1F7B26B4271800DBF70A = {
+						CreatedOnToolsVersion = 12.5.1;
 					};
 				};
 			};
@@ -412,6 +474,7 @@
 				B57D27F323F66AE7002BC699 /* AMDRyzenCPUPowerManagement */,
 				B5011E9D242E01CC009FB2A2 /* SMCAMDProcessor */,
 				B56162C32400EF770006A7D8 /* AMD Power Gadget */,
+				B5CE1F7B26B4271800DBF70A /* APGLaunchHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -436,6 +499,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B57D27F223F66AE7002BC699 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CE1F7A26B4271800DBF70A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -486,6 +556,15 @@
 				B57D280B23F66C8E002BC699 /* AMDRyzenCPUPMUserClient.cpp in Sources */,
 				B57D280723F66C8E002BC699 /* AMDRyzenCPUPowerManagement.cpp in Sources */,
 				B5810044246D629C00A38AB7 /* ISSuperIONCT67XXFamily.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CE1F7826B4271800DBF70A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CE1F8B26B4294000DBF70A /* main.swift in Sources */,
+				B5CE1F7F26B4271800DBF70A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +882,51 @@
 			};
 			name = Release;
 		};
+		B5CE1F8726B4271900DBF70A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = APGLaunchHelper/APGLaunchHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = APGLaunchHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				PRODUCT_BUNDLE_IDENTIFIER = wtf.spinach.APGLaunchHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B5CE1F8826B4271900DBF70A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = APGLaunchHelper/APGLaunchHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = APGLaunchHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				PRODUCT_BUNDLE_IDENTIFIER = wtf.spinach.APGLaunchHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -838,6 +962,15 @@
 			buildConfigurations = (
 				B57D27FF23F66AE7002BC699 /* Debug */,
 				B57D280023F66AE7002BC699 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5CE1F8926B4271900DBF70A /* Build configuration list for PBXNativeTarget "APGLaunchHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CE1F8726B4271900DBF70A /* Debug */,
+				B5CE1F8826B4271900DBF70A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

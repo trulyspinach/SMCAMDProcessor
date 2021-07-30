@@ -110,6 +110,12 @@
                                                 <action selector="toggleStatusBar:" target="Voe-Tx-rLC" id="F1t-uf-hDf"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Launch in menu bar at login" id="UJh-jc-2fi">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="startAtLogin:" target="Voe-Tx-rLC" id="73L-hw-2nN"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -159,6 +165,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AMD_Power_Gadget" customModuleProvider="target">
                     <connections>
                         <outlet property="appearanceToggle" destination="fV4-Ra-Fu1" id="QrG-wZ-zSC"/>
+                        <outlet property="startAtLoginToggle" destination="UJh-jc-2fi" id="XYm-oE-KaU"/>
                         <outlet property="statusbarToggle" destination="goc-Nc-vnb" id="xNu-fJ-KhX"/>
                     </connections>
                 </customObject>
@@ -1352,7 +1359,7 @@
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                                     <textFieldCell key="cell" allowsUndo="NO" alignment="left" id="AIb-f9-EZB">
                                                                                         <font key="font" size="12" name="HelveticaNeue"/>
-                                                                                        <mutableString key="title">When enabled, your processor speed will increase automatically on demand, and decrease after a short period of low activity.  Lower amount of energy will be consumed when processor running at a lower speed; AMDRyzenCPUPowerManagement will always optimze how your processor idle to save energy. This option is enabled by default since release version 0.6.</mutableString>
+                                                                                        <string key="title">When enabled, your processor speed will increase automatically on demand, and decrease after a short period of low activity.  Lower amount of energy will be consumed when processor running at a lower speed; AMDRyzenCPUPowerManagement will always optimze how your processor idle to save energy. This option is enabled by default since release version 0.6.</string>
                                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.54901960780000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import ServiceManagement
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -15,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var appearanceToggle: NSMenuItem!
     @IBOutlet weak var statusbarToggle: NSMenuItem!
+    @IBOutlet weak var startAtLoginToggle: NSMenuItem!
     
     
     @IBAction func openPage(_ sender: Any) {
@@ -54,22 +56,59 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         applyStatusBarSwitch(enabled: statusbarToggle.state == .off)
     }
     
+    @IBAction func startAtLogin(_ sender: Any) {
+        applyStartAtLogin(enabled: startAtLoginToggle.state == .off)
+    }
+    
     @IBAction func sysmonitor(_ sender: Any) {
         SystemMonitorViewController.launch()
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        UserDefaults.standard.register(defaults: ["usetranslucency" : false,
-                                                  "statusbarenabled": true])
+        
+        let keyDefaults = [
+            "usetranslucency" : false,
+            "statusbarenabled": true,
+            "startAtLogin": false,
+            "startAtLoginAsked": false
+        ]
+        
+        UserDefaults.standard.register(defaults: keyDefaults)
         
         let useTran = UserDefaults.standard.bool(forKey: "usetranslucency")
         let sb = UserDefaults.standard.bool(forKey: "statusbarenabled")
+        let sl = UserDefaults.standard.bool(forKey: "startAtLogin")
+        
+        if !UserDefaults.standard.bool(forKey: "startAtLoginAsked") {
+            askStartup()
+            UserDefaults.standard.set(true, forKey: "startAtLoginAsked")
+        } else { applyStartAtLogin(enabled: sl) }
         
         applyStatusBarSwitch(enabled: sb)
         applyAppearanceSwitch(translucency: useTran)
         
+        
         if !sb {
             ViewController.launch()
+        }
+    
+    }
+    
+    func askStartup() {
+        let alert = NSAlert()
+        alert.messageText = "Startup at login?"
+        alert.informativeText = "Do you want AMD Power Gadget to start in menu bar at login? \n\n This will only be asked once. You can change this setting later under Appearance menu."
+        alert.alertStyle = .critical
+        alert.addButton(withTitle: "Yes")
+        alert.addButton(withTitle: "No")
+        let res = alert.runModal()
+        
+        if res == .alertFirstButtonReturn {
+            applyStartAtLogin(enabled: true)
+        }
+        
+        if res == .alertSecondButtonReturn {
+            applyStartAtLogin(enabled: false)
         }
     }
     
@@ -99,6 +138,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         UserDefaults.standard.set(enabled, forKey: "statusbarenabled")
+    }
+    
+    func applyStartAtLogin(enabled: Bool) {
+        startAtLoginToggle.state = enabled ? .on : .off
+        UserDefaults.standard.set(enabled, forKey: "startAtLogin")
+        SMLoginItemSetEnabled("wtf.spinach.APGLaunchHelper" as CFString, enabled)
     }
 }
 
