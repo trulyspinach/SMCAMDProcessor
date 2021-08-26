@@ -39,6 +39,8 @@ class ProcessorModel {
     var fetchRetry2 : Int = 10
     var retryTimer : Timer?
     
+    var hotasHandle: OpaquePointer? = nil
+    
     init() {
         if !initDriver() {
             alertAndQuit(message: "Please download AMDRyzenCPUPowerManagement from the release page.")
@@ -85,6 +87,29 @@ class ProcessorModel {
         }
         
         fetchSupportedProcessor()
+        
+        initHotas()
+        if hotasHandle == nil {
+            print("FATAL: No Hotas detected!")
+        }
+    }
+    
+    func initHotas() {
+        hotasHandle = hid_open(0x044f, 0xb109, nil)
+    }
+    
+    func getThrottle() -> Int? {
+        var buf = [UInt8](repeating: 0, count: 64)
+        var valid = false
+        while true {
+            let shit = hid_read_timeout(hotasHandle!, &buf, 64, 1)
+            if shit != 0 {valid = true}
+            if shit != 19 {break}
+            
+        }
+        
+        if !valid{ return nil}
+        return 255 - Int(buf[6])
     }
     
     func initDriver() -> Bool {

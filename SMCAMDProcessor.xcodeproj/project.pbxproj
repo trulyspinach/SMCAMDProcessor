@@ -37,6 +37,7 @@
 		B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */; };
 		B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */; };
 		B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */; };
+		B5ACE06826D7F297007960AD /* hid.c in Sources */ = {isa = PBXBuildFile; fileRef = B5ACE06726D7F297007960AD /* hid.c */; };
 		B5CE1F7F26B4271800DBF70A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CE1F7E26B4271800DBF70A /* AppDelegate.swift */; };
 		B5CE1F8B26B4294000DBF70A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CE1F8A26B4294000DBF70A /* main.swift */; };
 		B5CE1F8D26B42B1600DBF70A /* APGLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -104,6 +105,9 @@
 		B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
 		B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewGridLineLayer.swift; sourceTree = "<group>"; };
+		B5ACE06626D7F296007960AD /* AMD Power Gadget-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AMD Power Gadget-Bridging-Header.h"; sourceTree = "<group>"; };
+		B5ACE06726D7F297007960AD /* hid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hid.c; sourceTree = "<group>"; };
+		B5ACE06926D7F2B2007960AD /* hidapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hidapi.h; sourceTree = "<group>"; };
 		B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APGLaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5CE1F7E26B4271800DBF70A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5CE1F8526B4271900DBF70A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,9 +179,11 @@
 		B56162C52400EF770006A7D8 /* AMD Power Gadget */ = {
 			isa = PBXGroup;
 			children = (
+				B5ACE06526D7F288007960AD /* hidapi */,
 				B5735D3924724AC9002BA4DE /* GraphView */,
 				B595D3E124166F6000B704F7 /* Resources */,
 				B5F46D80240E6F19009F2961 /* ProcessorModel.swift */,
+				B5ACE06626D7F296007960AD /* AMD Power Gadget-Bridging-Header.h */,
 				B56162C62400EF770006A7D8 /* AppDelegate.swift */,
 				B56162C82400EF770006A7D8 /* ViewController.swift */,
 				B51BE99E26B2CBB4002BEE3C /* StatusbarController.swift */,
@@ -309,6 +315,15 @@
 				B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B5ACE06526D7F288007960AD /* hidapi */ = {
+			isa = PBXGroup;
+			children = (
+				B5ACE06926D7F2B2007960AD /* hidapi.h */,
+				B5ACE06726D7F297007960AD /* hid.c */,
+			);
+			path = hidapi;
 			sourceTree = "<group>";
 		};
 		B5CE1F7D26B4271800DBF70A /* APGLaunchHelper */ = {
@@ -449,6 +464,7 @@
 					};
 					B56162C32400EF770006A7D8 = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1250;
 					};
 					B57D27F323F66AE7002BC699 = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -539,6 +555,7 @@
 				B56162C72400EF770006A7D8 /* AppDelegate.swift in Sources */,
 				B5F46D81240E6F19009F2961 /* ProcessorModel.swift in Sources */,
 				B5DB81D12417CB5E00741A38 /* PStateEditorViewController.swift in Sources */,
+				B5ACE06826D7F297007960AD /* hid.c in Sources */,
 				B561633524010C050006A7D8 /* GraphView.swift in Sources */,
 				B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */,
 			);
@@ -632,6 +649,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "AMD Power Gadget/AMD_Power_Gadget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -651,6 +669,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "AMD Power Gadget/AMD Power Gadget-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -660,6 +679,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "AMD Power Gadget/AMD_Power_Gadget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -675,6 +695,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "wtf.spinach.AMD-Power-Gadget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "AMD Power Gadget/AMD Power Gadget-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};

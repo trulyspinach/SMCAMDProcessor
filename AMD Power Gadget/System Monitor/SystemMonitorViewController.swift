@@ -78,6 +78,12 @@ class SystemMonitorViewController: NSViewController, NSTableViewDelegate, NSTabl
             
             timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (_) in
                 self.updateFanRPMs()
+                
+                if let t = ProcessorModel.shared.getThrottle() {
+                    for i in 0..<self.numFans {
+                        ProcessorModel.shared.kernelSetUInt64(selector: 95, args: [UInt64(i), UInt64(t)])
+                    }
+                }
             })
         }
 
