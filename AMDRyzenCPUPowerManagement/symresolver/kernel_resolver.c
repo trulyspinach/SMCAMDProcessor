@@ -41,7 +41,7 @@ void find_mach_header_addr(uint8_t kc){
     for (uint32_t i = 0; i < mach_header->ncmds; i++) {
         if (lcp->cmd == LC_SEGMENT_64) {
             seg_command_64_t *sc = (seg_command_64_t*)lcp;
-            if (!strncmp(sc->segname, "__PRELINK_TEXT", sizeof(sc->segname))) {
+            if (!strncmp(sc->segname, "__TEXT_EXEC", sizeof(sc->segname))) {
                 mh_base_addr = sc->vmaddr;
                 break;
             }
