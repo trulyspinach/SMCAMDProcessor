@@ -74,7 +74,7 @@ class ViewController: NSViewController, NSWindowDelegate {
         
         timeStart = Date.timeIntervalSinceReferenceDate
         
-        toggleTranslucency(enabled: UserDefaults.standard.bool(forKey: "usetranslucency"))
+        toggleTranslucency(enabled: UserDefaults.usetranslucency)
         
         sampleData(forced: true)
         sampleData(forced: true)

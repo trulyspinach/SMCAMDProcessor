@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -49,6 +49,8 @@
 		B5F46D7F240E593D009F2961 /* CPUPowerStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D7E240E593D009F2961 /* CPUPowerStepView.swift */; };
 		B5F46D81240E6F19009F2961 /* ProcessorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D80240E6F19009F2961 /* ProcessorModel.swift */; };
 		B5F46D83240E76D9009F2961 /* PowerToolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F46D82240E76D9009F2961 /* PowerToolViewController.swift */; };
+		F7B467B828A0FA6900C5A338 /* UserDefaultValue in Frameworks */ = {isa = PBXBuildFile; productRef = F7B467B728A0FA6900C5A338 /* UserDefaultValue */; };
+		F7B467BE28A10A7300C5A338 /* MenuBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = F7B467BD28A10A7300C5A338 /* MenuBuilder */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -132,6 +134,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7B467B828A0FA6900C5A338 /* UserDefaultValue in Frameworks */,
+				F7B467BE28A10A7300C5A338 /* MenuBuilder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +399,10 @@
 			dependencies = (
 			);
 			name = "AMD Power Gadget";
+			packageProductDependencies = (
+				F7B467B728A0FA6900C5A338 /* UserDefaultValue */,
+				F7B467BD28A10A7300C5A338 /* MenuBuilder */,
+			);
 			productName = "AMD Power Gadget";
 			productReference = B56162C42400EF770006A7D8 /* AMD Power Gadget.app */;
 			productType = "com.apple.product-type.application";
@@ -467,6 +475,10 @@
 				Base,
 			);
 			mainGroup = B57D27EA23F66AE7002BC699;
+			packageReferences = (
+				F7B467B628A0FA6900C5A338 /* XCRemoteSwiftPackageReference "UserDefaultValue" */,
+				F7B467BC28A10A7300C5A338 /* XCRemoteSwiftPackageReference "MenuBuilder" */,
+			);
 			productRefGroup = B57D27F523F66AE7002BC699 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -976,6 +988,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F7B467B628A0FA6900C5A338 /* XCRemoteSwiftPackageReference "UserDefaultValue" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mlch911/UserDefaultValue";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		F7B467BC28A10A7300C5A338 /* XCRemoteSwiftPackageReference "MenuBuilder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mlch911/MenuBuilder";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F7B467B728A0FA6900C5A338 /* UserDefaultValue */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F7B467B628A0FA6900C5A338 /* XCRemoteSwiftPackageReference "UserDefaultValue" */;
+			productName = UserDefaultValue;
+		};
+		F7B467BD28A10A7300C5A338 /* MenuBuilder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F7B467BC28A10A7300C5A338 /* XCRemoteSwiftPackageReference "MenuBuilder" */;
+			productName = MenuBuilder;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B57D27EB23F66AE7002BC699 /* Project object */;
 }
