@@ -7,8 +7,9 @@
 //
 
 import Cocoa
+import MenuBuilder
 
-fileprivate class StatusbarView: NSView{
+fileprivate class StatusbarView: NSView {
     
     var meanFreq: Float = 0
     var maxFreq: Float = 0
@@ -20,15 +21,13 @@ fileprivate class StatusbarView: NSView{
     var normalValue: [NSAttributedString.Key : NSObject]?
     var compactValue: [NSAttributedString.Key : NSObject]?
     
-    
-    func setup(){
+    func setup() {
         let compactLH: CGFloat = 6
         
         let p = NSMutableParagraphStyle()
         p.minimumLineHeight = compactLH
         p.maximumLineHeight = compactLH
         compactLabel = [
-            
             NSAttributedString.Key.font: NSFont.init(name: "Monaco", size: 7.2)!,
             NSAttributedString.Key.foregroundColor: NSColor.labelColor,
             NSAttributedString.Key.paragraphStyle: p
@@ -51,20 +50,26 @@ fileprivate class StatusbarView: NSView{
     }
     
     override func draw(_ dirtyRect: NSRect) {
-        guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
-        let fr = String(format: "%.1f", meanFreq * 0.001)
-//        drawCompactSingle(label: "AVG", value: "\(fr) Ghz", x: 0)
-        
-        let mfr = String(format: "%.1f", maxFreq * 0.001)
-        
-        
-        drawDoubleCompactValue(label: "CPU", up: "\(mfr) Ghz", down: "\(fr) Ghz", x: 0)
-        drawCompactSingle(label: "TEM", value: "\(Int(round(temp)))º", x: 80)
-        drawCompactSingle(label: "PWR", value: "\(Int(round(pwr)))W", x: 122)
+		var width: CGFloat = 0
+        if UserDefaults.showCPUUsage {
+			let fr = String(format: "%.1f", meanFreq * 0.001)
+//			drawCompactSingle(label: "AVG", value: "\(fr) Ghz", x: 0)
+			let mfr = String(format: "%.1f", maxFreq * 0.001)
+			drawDoubleCompactValue(label: "CPU", up: "\(mfr) Ghz", down: "\(fr) Ghz", x: &width)
+		}
+		if UserDefaults.showTemperatureUsage {
+			drawCompactSingle(label: "TEM", value: "\(Int(round(temp)))º", x: &width)
+		}
+		if UserDefaults.showPowerUsage {
+			drawCompactSingle(label: "PWR", value: "\(Int(round(pwr)))W", x: &width)
+		}
+		
+		if width != frame.width {
+			frame = NSRect(origin: frame.origin, size: CGSize(width: width, height: frame.height))
+		}
     }
     
-    func drawDoubleCompactValue(label: String, up: String, down: String, x: CGFloat) {
+    func drawDoubleCompactValue(label: String, up: String, down: String, x: inout CGFloat) {
         let attributedString = NSAttributedString(string: label, attributes: normalLabel)
         attributedString.draw(at: NSPoint(x: x, y: 2.5))
         
@@ -73,14 +78,18 @@ fileprivate class StatusbarView: NSView{
         
         let down = NSAttributedString(string: down, attributes: compactValue)
         down.draw(at: NSPoint(x: x + 33, y: 0))
+		
+		x += 80
     }
     
-    func drawCompactSingle(label: String, value: String, x: CGFloat) {
+    func drawCompactSingle(label: String, value: String, x: inout CGFloat) {
         let attributedString = NSAttributedString(string: label, attributes: compactLabel)
         attributedString.draw(in: NSRect(x: x, y: -4.5, width: 7, height: frame.height))
         
         let value = NSAttributedString(string: value, attributes: normalValue)
         value.draw(at: NSPoint(x: x + 10, y: 2.5))
+		
+		x += 42
     }
 }
 
@@ -106,10 +115,9 @@ class StatusbarController {
         statusItem.button?.action = #selector(itemClicked)
         statusItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
         
-        statusItem.length = 170
         view.frame = statusItem.button!.bounds
         
-        addMenuItems()
+        rebuildMenuItems()
         
         updateTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self.update()
@@ -141,7 +149,9 @@ class StatusbarController {
         view?.temp = temperature
         view?.pwr = power
         view.setNeedsDisplay(view.frame)
-        
+		if statusItem.length != view.frame.width {
+			statusItem.length = view.frame.width
+		}
     }
     
     @objc func itemClicked(){
@@ -176,24 +186,63 @@ class StatusbarController {
         exit(0)
     }
     
-    private func addMenuItems() {
-        menu = NSMenu()
-        guard let m = menu else {return}
-        var item = NSMenuItem(title: "AMD Power Gadget", action: #selector(gadget), keyEquivalent: ""); item.target = self
-        m.addItem(item)
-        item = NSMenuItem(title: "AMD Power Tool", action: #selector(tool), keyEquivalent: ""); item.target = self
-        m.addItem(item)
-        item = NSMenuItem(title: "SMC Fans", action: #selector(fans), keyEquivalent: ""); item.target = self
-        m.addItem(item)
-        
-        
-        m.addItem(NSMenuItem.separator())
-        
-        item = NSMenuItem(title: "Exit", action: #selector(exitApp), keyEquivalent: ""); item.target = self
-        m.addItem(item)
-        
-//        statusItem.menu = menu
+    private func rebuildMenuItems() {
+		menu = NSMenu {
+			MenuItem("AMD Power Gadget")
+				.onSelect { [unowned self] in
+					gadget()
+				}
+			MenuItem("AMD Power Tool")
+				.onSelect { [unowned self] in
+					tool()
+				}
+			MenuItem("SMC Fans")
+				.onSelect { [unowned self] in
+					fans()
+				}
+			SeparatorItem()
+			createMenuItem("Show CPU Usage", defaults: UserDefaults.$showCPUUsage)
+			createMenuItem("Show Temperature Usage", defaults: UserDefaults.$showTemperatureUsage)
+			createMenuItem("Show Power Usage", defaults: UserDefaults.$showPowerUsage)
+			SeparatorItem()
+			MenuItem("Exit")
+				.shortcut("q")
+				.onSelect { [unowned self] in
+					exitApp()
+				}
+		}
     }
+	
+	private func createMenuItem(_ text: String, defaults: UserDefaultValue<Bool>) -> MenuItem {
+		if !defaults.wrappedValue || canHideMenuItem() {
+			return MenuItem(text)
+				.state(defaults.wrappedValue ? .on : .off)
+				.onSelect { [unowned self] in
+					defaults.wrappedValue.toggle()
+					rebuildMenuItems()
+				}
+		} else {
+			return MenuItem(text)
+				.state(defaults.wrappedValue ? .on : .off)
+				.toolTip("Do Not Allow to Hide All MenuBarItem")
+		}
+	}
+	
+	private func canHideMenuItem() -> Bool {
+		// Do Not Allow to Hide All MenuBarItem
+		[UserDefaults.showCPUUsage, UserDefaults.showTemperatureUsage, UserDefaults.showPowerUsage].filter { $0 }.count > 1
+	}
 }
 
+import UserDefaultValue
 
+private extension UserDefaults {
+	@UserDefaultValue(key: "showCPUUsage")
+	static var showCPUUsage = true
+	
+	@UserDefaultValue(key: "showTemperatureUsage")
+	static var showTemperatureUsage = true
+	
+	@UserDefaultValue(key: "showPowerUsage")
+	static var showPowerUsage = true
+}
