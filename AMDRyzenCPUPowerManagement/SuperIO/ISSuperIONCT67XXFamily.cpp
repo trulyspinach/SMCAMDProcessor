@@ -19,6 +19,9 @@ ISSuperIONCT67XXFamily::ISSuperIONCT67XXFamily(int psel, uint16_t addr, uint16_t
         
         case CHIP_NCT6797D:
         case CHIP_NCT6798D:
+            activeFansOnSystem = 7;
+            break;
+            
         case CHIP_NCT6799D:
             activeFansOnSystem = 7;
             break;
