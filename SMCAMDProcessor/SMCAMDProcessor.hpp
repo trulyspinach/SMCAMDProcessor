@@ -9,6 +9,7 @@
 
 #include <AMDRyzenCPUPowerManagement.hpp>
 
+#undef EFIAPI   // must place here!
 #include <VirtualSMCSDK/kern_vsmcapi.hpp>
 #include <VirtualSMCSDK/AppleSmc.h>
 
