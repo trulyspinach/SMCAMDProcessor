@@ -22,6 +22,10 @@ ISSuperIONCT67XXFamily::ISSuperIONCT67XXFamily(int psel, uint16_t addr, uint16_t
             activeFansOnSystem = 7;
             break;
             
+        case CHIP_NCT6799D:
+            activeFansOnSystem = 7;
+            break;
+            
         default:
             activeFansOnSystem = 6;
             break;
@@ -71,8 +75,13 @@ ISSuperIONCT67XXFamily* ISSuperIONCT67XXFamily::getDevice(uint16_t *chipIntel){
                 IOLog("NCT67XX chip identified\n");
                 break;
                 
-            default:
+            case CHIP_NCT6799D:
+                found = true;
+                IOLog("NCT67XX chip identified\n");
+                break;
                 
+            default:
+                IOLog("NCT67XX chip not identified\n");
                 break;
         }
         
@@ -112,6 +121,13 @@ ISSuperIONCT67XXFamily* ISSuperIONCT67XXFamily::getDevice(uint16_t *chipIntel){
         case CHIP_NCT6796DR:
         case CHIP_NCT6797D:
         case CHIP_NCT6798D:
+            conf = ISLPCPort::readByte(portSel, CHIP_IO_SPACE_LOCK);
+            if(conf & 0x10){
+                ISLPCPort::writeByte(portSel, CHIP_IO_SPACE_LOCK, conf & ~0x10);
+            }
+            break; 
+            
+        case CHIP_NCT6799D:
             conf = ISLPCPort::readByte(portSel, CHIP_IO_SPACE_LOCK);
             if(conf & 0x10){
                 ISLPCPort::writeByte(portSel, CHIP_IO_SPACE_LOCK, conf & ~0x10);
@@ -175,7 +191,7 @@ void ISSuperIONCT67XXFamily::updateFanRPMS(){
     for (int i = 0; i < activeFansOnSystem; i++) {
         int v = (int)readWord(kFAN_RPM_REGS[i]);
         fanRPMs[i] = v;
-//        IOLog("fan %d: %d\n", i, (int)v);
+        //IOLog("fan %d: %d\n", i, (int)v);
     }
 }
 
