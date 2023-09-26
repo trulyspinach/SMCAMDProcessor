@@ -2,8 +2,7 @@
 //  SystemMonitorViewController.swift
 //  AMD Power Gadget
 //
-//  Created by Qi HaoYan on 5/16/20.
-//  Copyright © 2020 trulyspinach. All rights reserved.
+//  Created by trulyspinach on 5/16/20.
 //
 
 import Cocoa

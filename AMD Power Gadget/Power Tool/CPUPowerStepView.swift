@@ -2,8 +2,7 @@
 //  CPUPowerStepView.swift
 //  AMD Power Gadget
 //
-//  Created by Qi HaoYan on 3/3/20.
-//  Copyright © 2020 trulyspinach. All rights reserved.
+//  Created by trulyspinach on 3/3/20.
 //
 
 import Cocoa

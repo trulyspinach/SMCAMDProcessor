@@ -2,8 +2,7 @@
 //  main.swift
 //  APGLaunchHelper
 //
-//  Created by Qi HaoYan on 7/30/21.
-//  Copyright © 2021 trulyspinach. All rights reserved.
+//  Created by trulyspinach on 7/30/21.
 //
 
 import Cocoa

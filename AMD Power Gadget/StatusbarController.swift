@@ -2,8 +2,7 @@
 //  MenubarController.swift
 //  AMD Power Gadget
 //
-//  Created by Qi HaoYan on 7/29/21.
-//  Copyright © 2021 trulyspinach. All rights reserved.
+//  Created by trulyspinach on 7/29/21.
 //
 
 import Cocoa
