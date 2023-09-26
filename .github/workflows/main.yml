@@ -33,11 +33,13 @@ jobs:
       - name: Build stage 1
         run: xcodebuild -jobs 1 -arch x86_64 -arch ACID32 -configuration Release
 
-      - name: Show build
-        run: ls build
-  
+      - name: Archive Artifacts
+        run: 
+          ls build
+          zip -r build/Release.zip build/Release
+        
       - name: Upload to Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Artifacts
-          path: build/*/*.zip
+          path: build/Release.zip
