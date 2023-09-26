@@ -22,13 +22,11 @@ jobs:
         with:
           submodules: "recursive"
           
-      - name: CI Bootstrap
+      - name: Fetch Dependencies 
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
-
-      - name: Lilu Bootstrap
-        run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/Lilu/master/Lilu/Scripts/bootstrap.sh) && eval "$src" || exit 1
+          git clone https://github.com/acidanthera/VirtualSMC.git
           
       - name: Build All Schemes
         run: |
@@ -45,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Artifacts
-          path: build/Products.zip
+          path: build/Release.zip
