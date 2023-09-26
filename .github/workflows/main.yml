@@ -34,7 +34,7 @@ jobs:
         run: xcodebuild -jobs 1 -arch x86_64 -arch ACID32 -configuration Release
 
       - name: Archive Artifacts
-        run: 
+        run: |
           ls build
           zip -r build/Release.zip build/Release
         
