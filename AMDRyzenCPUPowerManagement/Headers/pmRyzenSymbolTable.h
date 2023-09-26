@@ -2,8 +2,7 @@
 //  pmRyzenSymbolTable.c
 //  AMDRyzenCPUPowerManagement
 //
-//  Created by Qi HaoYan on 9/2/20.
-//  Copyright © 2020 trulyspinach. All rights reserved.
+//  Created by trulyspinach on 9/2/20.
 //
 
 

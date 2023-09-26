@@ -2,8 +2,7 @@
 //  ISSuperIODevice.hpp
 //  AMDRyzenCPUPowerManagement
 //
-//  Created by Qi HaoYan on 5/14/20.
-//  Copyright © 2020 trulyspinach. All rights reserved.
+//  Created by trulyspinach on 5/14/20.
 //
 
 #ifndef ISSuperIODevice_hpp

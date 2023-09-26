@@ -3,7 +3,6 @@
 //  AMDRyzenCPUPowerManagement
 //
 //  Created by Maurice on 25.05.20.
-//  Copyright © 2020 trulyspinach. All rights reserved.
 //
 
 #include "ISSuperIOIT86XXEFamily.hpp"

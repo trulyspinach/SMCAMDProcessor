@@ -2,8 +2,7 @@
 //  ISSuperIODevice.cpp
 //  AMDRyzenCPUPowerManagement
 //
-//  Created by Qi HaoYan on 5/14/20.
-//  Copyright © 2020 trulyspinach. All rights reserved.
+//  Created by trulyspinach on 5/14/20.
 //
 
 #include "ISSuperIONCT67XXFamily.hpp"

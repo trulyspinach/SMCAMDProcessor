@@ -2,8 +2,7 @@
 //  AMDRyzenCPUPowerManagementUserClient.hpp
 //  AMDRyzenCPUPowerManagement
 //
-//  Created by Qi HaoYan on 2/4/20.
-//  Copyright © 2020 Qi HaoYan. All rights reserved.
+//  Created by trulyspinach on 2/4/20.
 //
 
 #ifndef AMDRyzenCPUPowerManagementUserClient_hpp
