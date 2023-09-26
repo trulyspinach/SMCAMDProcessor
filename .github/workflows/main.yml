@@ -30,12 +30,16 @@ jobs:
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/Lilu/master/Lilu/Scripts/bootstrap.sh) && eval "$src" || exit 1
           
-      - name: Build stage 1
-        run: xcodebuild -scheme "AMDRyzenCPUPowerManagement" -jobs 1 -arch x86_64 -arch ACID32 -configuration Release -derivedDataPath ./build
+      - name: Build All Schemes
+        run: |
+          xcodebuild -scheme "AMDRyzenCPUPowerManagement" -jobs 1 -arch x86_64 -arch ACID32 -configuration Release -derivedDataPath ./build
+          xcodebuild -scheme "APGLaunchHelper" -jobs 1 -arch x86_64 -arch ACID32 -configuration Release -derivedDataPath ./build
+          xcodebuild -scheme "AMD Power Gadget" -jobs 1 -arch x86_64 -arch ACID32 -configuration Release -derivedDataPath ./build
 
       - name: Archive Artifacts
         run: |
-          ls build
+          ls build/Build
+          tree build
           zip -r build/Release.zip build/Release
         
       - name: Upload to Artifacts
