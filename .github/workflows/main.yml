@@ -37,6 +37,9 @@ jobs:
 
       - name: Archive Artifacts
         run: |
+          rm -rf build/Build/Products/Release/*.dSYM
+          rm -rf build/Build/Products/Release/*.swiftmodule
+          rm -rf build/Build/Products/Release/APGLaunchHelper*
           zip -r build/Release.zip build/Build/Products/Release
         
       - name: Upload to Artifacts
