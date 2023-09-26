@@ -24,7 +24,7 @@ jobs:
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
           
       - name: Build stage 1
-      - run: xcodebuild -scheme "AMDRyzenCPUPowerManagement" -jobs 1 -arch x86_64 -arch ACID32 -configuration Debug
+        run: xcodebuild -scheme "AMDRyzenCPUPowerManagement" -jobs 1 -arch x86_64 -arch ACID32 -configuration Debug
 
       - name: Upload to Artifacts
         uses: actions/upload-artifact@v3
