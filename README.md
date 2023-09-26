@@ -62,7 +62,7 @@ Currently only a limited amount of SMC controllers are supported.
 #### If you like this project, please consider supporting it via:
 
 * Give it a star!
-* [Buy](https://ko-fi.com/trulyspinach) me a coffee(or a Zen 3 processsor 😝).
+* [Buy](https://ko-fi.com/trulyspinach) me a coffee.
 
 * Opening up an issue if you encountered any problem or want to make suggestions.
 * or if you're a coding person, feel free to submit any pull request or just DM me on Discord.

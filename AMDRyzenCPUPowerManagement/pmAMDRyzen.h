@@ -9,7 +9,7 @@
 #define pmAMDRyzen_h
 
 
-#include <mach/mach_types.h>
+#include <Headers/mach/mach_types.h>
 #include <IOKit/IOLib.h>
 
 #include "Headers/osfmk/i386/pmCPU.h"

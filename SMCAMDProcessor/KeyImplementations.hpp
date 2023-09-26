@@ -8,8 +8,6 @@
 #ifndef KeyImplementations_hpp
 #define KeyImplementations_hpp
 
-#include <VirtualSMCSDK/kern_vsmcapi.hpp>
-#include <VirtualSMCSDK/AppleSmc.h>
 
 #include "SMCAMDProcessor.hpp"
 

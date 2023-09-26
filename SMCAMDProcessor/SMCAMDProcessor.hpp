@@ -4,7 +4,7 @@
 
 
 //Support for macOS 10.13
-#include <Library/LegacyIOService.h>
+#include "Headers/LegacyHeaders/LegacyIOService.h"
 #include <IOKit/IOLib.h>
 
 #include <AMDRyzenCPUPowerManagement.hpp>
