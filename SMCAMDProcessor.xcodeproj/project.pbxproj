@@ -37,6 +37,7 @@
 		B595D3E42416701D00B704F7 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */; };
 		B595D3E52416702000B704F7 /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */; };
 		B59762382472A1FE0074E0B5 /* GraphViewGridLineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */; };
+		B5CA7D662AC2DE73005FEE73 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CA7D652AC2DE73005FEE73 /* libkmod.a */; };
 		B5CE1F7F26B4271800DBF70A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CE1F7E26B4271800DBF70A /* AppDelegate.swift */; };
 		B5CE1F8B26B4294000DBF70A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CE1F8A26B4294000DBF70A /* main.swift */; };
 		B5CE1F8D26B42B1600DBF70A /* APGLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -104,6 +105,7 @@
 		B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
 		B595D3E32416700800B704F7 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		B59762372472A1FE0074E0B5 /* GraphViewGridLineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewGridLineLayer.swift; sourceTree = "<group>"; };
+		B5CA7D652AC2DE73005FEE73 /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/universal/libkmod.a; sourceTree = "<group>"; };
 		B5CE1F7C26B4271800DBF70A /* APGLaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APGLaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5CE1F7E26B4271800DBF70A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5CE1F8526B4271900DBF70A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5CA7D662AC2DE73005FEE73 /* libkmod.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +259,7 @@
 				B56162C52400EF770006A7D8 /* AMD Power Gadget */,
 				B5CE1F7D26B4271800DBF70A /* APGLaunchHelper */,
 				B57D27F523F66AE7002BC699 /* Products */,
+				B5CA7D642AC2DE73005FEE73 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -309,6 +313,14 @@
 				B595D3E22416700700B704F7 /* SF-Pro-Rounded-Semibold.otf */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B5CA7D642AC2DE73005FEE73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5CA7D652AC2DE73005FEE73 /* libkmod.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B5CE1F7D26B4271800DBF70A /* APGLaunchHelper */ = {
@@ -806,9 +818,12 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",
 					"${PROJECT_DIR}/VirtualSMC.kext/Contents/Resources",
+					"${PROJECT_DIR}/MacKernelSDK",
 				);
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "${PROJECT_DIR}/MacKernelSDK/Headers";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/universal";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 0.7.1;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;
@@ -851,9 +866,12 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",
 					"${PROJECT_DIR}/VirtualSMC.kext/Contents/Resources",
+					"${PROJECT_DIR}/MacKernelSDK",
 				);
 				INFOPLIST_FILE = AMDRyzenCPUPowerManagement/Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library";
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "${PROJECT_DIR}/MacKernelSDK/Headers";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/universal";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 0.7.1;
 				MODULE_NAME = wtf.spinach.AMDRyzenCPUPowerManagement;

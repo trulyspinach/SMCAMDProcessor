@@ -2,7 +2,7 @@
 #define AMDRyzenCPUPowerManagement_h
 
 //Support for macOS 10.13
-#include <Library/LegacyIOService.h>
+#include "Headers/LegacyHeaders/LegacyIOService.h"
 
 #include <math.h>
 #include <IOKit/pci/IOPCIDevice.h>
@@ -19,7 +19,7 @@
 #include <Headers/kern_time.hpp>
 
 
-#include <Headers/kern_api.hpp>
+//#include <Headers/kern_api.hpp>
 #define LILU_CUSTOM_KMOD_INIT
 #define LILU_CUSTOM_IOKIT_INIT
 #include <Headers/plugin_start.hpp>

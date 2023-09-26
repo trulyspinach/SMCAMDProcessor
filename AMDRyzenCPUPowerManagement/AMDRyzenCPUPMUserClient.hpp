@@ -9,7 +9,7 @@
 #define AMDRyzenCPUPowerManagementUserClient_hpp
 
 //Support for macOS 10.13
-#include <Library/LegacyIOService.h>
+#include "Headers/LegacyHeaders/LegacyIOService.h"
 #include "Headers/LegacyHeaders/LegacyIOUserClient.h"
 
 #include <sys/proc.h>
