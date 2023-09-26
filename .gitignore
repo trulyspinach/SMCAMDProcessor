@@ -1,6 +1,7 @@
 
 Lilu.kext/
 VirtualSMC.kext/
+VirtualSMC/
 SMCAMDProcessor.xcodeproj/
 .DS_Store
 
