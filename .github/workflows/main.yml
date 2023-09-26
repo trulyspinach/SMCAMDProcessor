@@ -38,12 +38,10 @@ jobs:
 
       - name: Archive Artifacts
         run: |
-          ls build/Build
-          tree build
-          zip -r build/Release.zip build/Release
+          zip -r build/Products.zip build/Build/Products
         
       - name: Upload to Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Artifacts
-          path: build/Release.zip
+          path: build/Products.zip
