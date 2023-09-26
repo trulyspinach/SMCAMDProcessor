@@ -31,7 +31,7 @@ jobs:
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/Lilu/master/Lilu/Scripts/bootstrap.sh) && eval "$src" || exit 1
           
       - name: Build stage 1
-        run: xcodebuild -jobs 1 -arch x86_64 -arch ACID32 -configuration Release
+        run: xcodebuild -scheme "AMDRyzenCPUPowerManagement" -jobs 1 -arch x86_64 -arch ACID32 -configuration Release
 
       - name: Archive Artifacts
         run: |
