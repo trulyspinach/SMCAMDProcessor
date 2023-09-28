@@ -7,7 +7,10 @@ SMCAMDProcessor
 XNU kernel extension for power management and monitoring of AMD processors.
 Also comes with a plugin for [VirtualSMC](https://github.com/acidanthera/VirtualSMC) to export readings to other applications.
 
-Please note that this release is at very initial stage of development, make sure you have a proper backup of your EFI folder and never run on any system that matters. 
+~~Please note that this release is at very initial stage of development, make sure you have a proper backup of your EFI folder and never run on any system that matters.~~
+This notice has been here since the very beginning of this repository. Although I still wouldn't consider it completely finished, many users, including me, have been running these kexts daily without any major issues. If it's your first time adding these kexts to your system, please ensure you have a backup of your EFI.
+
+Now you can also access the latest(and probably unstable) builds from [Github Action](https://github.com/trulyspinach/SMCAMDProcessor/actions).
 
 ## Installation
 
