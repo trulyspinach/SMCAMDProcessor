@@ -12,6 +12,7 @@
 #undef EFIAPI   // must place here!
 #include <VirtualSMCSDK/kern_vsmcapi.hpp>
 #include <VirtualSMCSDK/AppleSmc.h>
+#define EFIAPI
 
 class SMCAMDProcessor : public IOService {
     OSDeclareDefaultStructors(SMCAMDProcessor)
