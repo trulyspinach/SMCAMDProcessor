@@ -69,14 +69,16 @@ Currently only a limited amount of SMC controllers are supported.
 * Give it a star!
 * [Buy](https://ko-fi.com/trulyspinach) me a coffee.
 
-* Opening up an issue if you encountered any problem or want to make suggestions.
-* or if you're a coding person, feel free to submit any pull request or just DM me on Discord.
+* Open an issue(English only) if you encountered any problem or have suggestions.
+* or if you're a coding person, feel free to submit a pull request. DM me on Discord if you have any code related questions.
 
 ## Credits
 * [aluveitie](https://github.com/aluveitie) for various enhancements and fixes.
 * [mauricelos](https://github.com/mauricelos) for IT86XXE SMC chip driver.
 * [necross2](https://github.com/necross2) for adding support to temperature sensor offset.
 * [Shaneee](https://github.com/Shaneee) for the beautiful icon.
+* [mbarbierato](https://github.com/mbarbierato), [Lorys89](https://github.com/Lorys89) for NCT6799D SMC chip driver.
+* All contributors for various fixes and improvements.
 
 
 ## Notes
