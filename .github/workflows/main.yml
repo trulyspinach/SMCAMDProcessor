@@ -43,7 +43,7 @@ jobs:
           zip -r build/Release.zip build/Build/Products/Release
         
       - name: Upload to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Artifacts
           path: build/Release.zip
