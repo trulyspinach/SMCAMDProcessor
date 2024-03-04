@@ -82,6 +82,7 @@ typedef struct sleep_state {
     bool sleep;
     bool cpb;
     uint64_t pstate[8];
+    uint8_t PStateCtl;
 } SleepState;
 
 
@@ -155,7 +156,7 @@ public:
     void updateClockSpeed(uint8_t physical);
     void calculateEffectiveFrequency(uint8_t physical);
     void updateInstructionDelta(uint8_t physical);
-    void applyPowerControl();
+    void applyPowerControl(uint8_t pstate);
     
     void setCPBState(bool enabled);
     bool getCPBState();

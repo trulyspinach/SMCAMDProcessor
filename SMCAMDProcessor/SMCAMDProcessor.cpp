@@ -178,12 +178,12 @@ bool SMCAMDProcessor::setupKeysVsmc(){
     // [PC0c] type [ui16] 75693136 len [ 2] attr [C0] -> ATTR_WRITE|ATTR_READ
     // CPU Raw Package power, raw ADC input value.
     // This is a legacy key present in e.g. MacBookAir3,1.
-    // for(int core = 0; core <= fProvider->totalNumberOfPhysicalCores; core++){
+    for(int core = 0; core <= fProvider->totalNumberOfPhysicalCores; core++){
         // VirtualSMCAPI::addKey(KeyTCxC(core), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(fProvider, core)));
-        // VirtualSMCAPI::addKey(KeyTCxc(core), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(fProvider, core)));
+        VirtualSMCAPI::addKey(KeyTCxc(core), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(fProvider, core)));
         // VirtualSMCAPI::addKey(KeyPCxC(core), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnergyPackage(fProvider, core)));
         // VirtualSMCAPI::addKey(KeyPCxc(core), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp96, new EnergyPackage(fProvider, core)));
-    // }
+    }
     VirtualSMCAPI::addKey(KeyTGxD(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(fProvider, 0)));
     VirtualSMCAPI::addKey(KeyTGxP(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(fProvider, 0)));
     // VirtualSMCAPI::addKey(KeyTGxd(0), vsmcPlugin.data, VirtualSMCAPI::valueWithSp(0, SmcKeyTypeSp78, new TempCore(fProvider, 0)));
@@ -247,3 +247,4 @@ bool SMCAMDProcessor::start(IOService *provider){
 void SMCAMDProcessor::stop(IOService *provider){
     
 }
+

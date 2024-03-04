@@ -380,7 +380,8 @@ bool AMDRyzenCPUPowerManagement::start(IOService *provider){
     initWorkLoop();
 
 	// 初始化时关闭CPB
-    setCPBState(false);
+    setCPBState(sleepState.cpb);
+    writePstate(sleepState.pstate);
 
     PMinit();
     provider->joinPMtree(this);
@@ -419,14 +420,15 @@ IOReturn AMDRyzenCPUPowerManagement::setPowerState(unsigned long powerStateOrdin
         IOLog("AMDCPUSupport::setPowerState preparing for sleep\n");
         sleepState.sleep = true;
         sleepState.cpb = getCPBState();
-        // dumpPstate(sleepState.pstate);
+        dumpPstate(sleepState.pstate);
         stopWorkLoop();
     } else if (1 == powerStateOrdinal && sleepState.sleep) {
         // Waking up
         IOLog("AMDCPUSupport::setPowerState preparing for wakeup\n");
         sleepState.sleep = false;
         setCPBState(sleepState.cpb);
-        // writePstate(sleepState.pstate);
+        writePstate(sleepState.pstate);
+        applyPowerControl(sleepState.PStateCtl);
         resumeWorkLoop();
     }
 
@@ -587,14 +589,30 @@ void AMDRyzenCPUPowerManagement::updateInstructionDelta(uint8_t cpu_num){
 //    loadIndex_PerCore[cpu_num] = log10f(min(index,1) * growth) / log10f(growth);
 }
 
-void AMDRyzenCPUPowerManagement::applyPowerControl(){
-    mp_rendezvous(nullptr, [](void *obj) {
-        auto provider = static_cast<AMDRyzenCPUPowerManagement*>(obj);
+void AMDRyzenCPUPowerManagement::applyPowerControl(uint8_t pstate){
+    struct Args {
+        AMDRyzenCPUPowerManagement* provider;
+        uint8_t pstate;
+    };
+
+    Args args = { this, pstate };
+
+    mp_rendezvous(nullptr, [](void *arg) {
+        auto args = static_cast<Args*>(arg);
+        auto provider = args->provider;
+        auto pstate = args->pstate;
+
+        if(pstate != 0) provider->PStateCtl = pstate;
+        else
+            provider->sleepState.PStateCtl = provider->PStateCtl;
         provider->write_msr(kMSR_PSTATE_CTL, (uint64_t)(provider->PStateCtl & 0x7));
-    }, nullptr, this);
+    }, nullptr, &args);
 }
 
+
 void AMDRyzenCPUPowerManagement::setCPBState(bool enabled){
+    IOLog("AMDCPUSupport::setCPBState enabled is %s\n", enabled?"true":"false");
+
     if(!cpbSupported) return;
     
     uint64_t hwConfig;
@@ -694,7 +712,7 @@ void AMDRyzenCPUPowerManagement::dumpPstate(uint64_t buf[8]){
         
         PStateDef_perCore[i] = msr_value_buf;
         PStateDefClock_perCore[i] = clock;
-        
+        IOLog("AMDCPUSupport::dumpPstate: Index: %u, value: %u\n", i, msr_value_buf);
         if(buf != nullptr) buf[i] = msr_value_buf;
     };
 }

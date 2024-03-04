@@ -286,7 +286,7 @@ IOReturn AMDRyzenCPUPMUserClient::externalMethod(uint32_t selector, IOExternalMe
                 return kIOReturnBadArgument;
             
             fProvider->PStateCtl = (uint8_t)arguments->scalarInput[0];
-            fProvider->applyPowerControl();
+            fProvider->applyPowerControl(0);
             break;
         }
             
