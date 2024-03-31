@@ -54,7 +54,7 @@ class ProcessorModel {
                                       &outputStr, &outputStrCount)
         AMDRyzenCPUPowerManagementVersion = String(cString: Array(outputStr[0...outputStrCount-1]))
         
-        let compatVers = ["0.6.3", "0.6.4", "0.6.5", "0.6.6", "0.7", "0.7.1"]
+        let compatVers = ["0.6.3", "0.6.4", "0.6.5", "0.6.6", "0.7", "0.7.1", "0.7.2"]
         let latestMajorVers = ["0.7.1"]
         
         if !compatVers.contains(AMDRyzenCPUPowerManagementVersion){
