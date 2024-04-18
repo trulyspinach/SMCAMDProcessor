@@ -121,7 +121,7 @@ class PowerToolViewController: NSViewController, NSWindowDelegate {
         topLabel1.font = NSFont(name: "SF Pro Rounded", size: 32)
         topLabel2.font = NSFont(name: "SF Pro Rounded", size: 32)
         
-        toggleTranslucency(enabled: UserDefaults.standard.bool(forKey: "usetranslucency"))
+        toggleTranslucency(enabled: UserDefaults.usetranslucency)
         
         PowerToolViewController.activeSelf = self
         AppDelegate.updateDockIcon()
