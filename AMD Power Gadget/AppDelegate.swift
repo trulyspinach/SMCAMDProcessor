@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     static func haveActiveWindows() -> Bool {
-        if !UserDefaults.standard.bool(forKey: "statusbarenabled") {return true}
+        guard UserDefaults.statusbarenabled else { return true }
         
         return ViewController.activeSelf != nil
             || PowerToolViewController.activeSelf != nil
@@ -64,23 +64,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        let useTran = UserDefaults.usetranslucency
+        let sb = UserDefaults.statusbarenabled
+        let sl = UserDefaults.startAtLogin
         
-        let keyDefaults = [
-            "usetranslucency" : false,
-            "statusbarenabled": true,
-            "startAtLogin": false,
-            "startAtLoginAsked": false
-        ]
-        
-        UserDefaults.standard.register(defaults: keyDefaults)
-        
-        let useTran = UserDefaults.standard.bool(forKey: "usetranslucency")
-        let sb = UserDefaults.standard.bool(forKey: "statusbarenabled")
-        let sl = UserDefaults.standard.bool(forKey: "startAtLogin")
-        
-        if !UserDefaults.standard.bool(forKey: "startAtLoginAsked") {
+        if !UserDefaults.startAtLoginAsked {
             askStartup()
-            UserDefaults.standard.set(true, forKey: "startAtLoginAsked")
+            UserDefaults.startAtLoginAsked = true
         } else { applyStartAtLogin(enabled: sl) }
         
         applyStatusBarSwitch(enabled: sb)
@@ -121,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ViewController.activeSelf?.toggleTranslucency(enabled: translucency)
         PowerToolViewController.activeSelf?.toggleTranslucency(enabled: translucency)
         
-        UserDefaults.standard.set(translucency, forKey: "usetranslucency")
+        UserDefaults.usetranslucency = translucency
     }
     
     func applyStatusBarSwitch(enabled: Bool) {
@@ -136,13 +126,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             mbController = nil
         }
         
-        UserDefaults.standard.set(enabled, forKey: "statusbarenabled")
+        UserDefaults.statusbarenabled = enabled
     }
     
     func applyStartAtLogin(enabled: Bool) {
         startAtLoginToggle.state = enabled ? .on : .off
-        UserDefaults.standard.set(enabled, forKey: "startAtLogin")
+        UserDefaults.startAtLogin = enabled
         SMLoginItemSetEnabled("wtf.spinach.APGLaunchHelper" as CFString, enabled)
     }
 }
 
+import UserDefaultValue
+
+extension UserDefaults {
+	@UserDefaultValue(key: "usetranslucency")
+	static var usetranslucency = false
+	
+	@UserDefaultValue(key: "statusbarenabled")
+	static var statusbarenabled = false
+	
+	@UserDefaultValue(key: "startAtLogin")
+	static var startAtLogin = false
+	
+	@UserDefaultValue(key: "startAtLoginAsked")
+	static var startAtLoginAsked = false
+}
