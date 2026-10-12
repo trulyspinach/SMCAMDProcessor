@@ -53,6 +53,13 @@ bool SMCAMDProcessor::setupKeysVsmc(){
         IOLog("AMDCPUSupport::setupKeysVsmc: VirtualSMCAPI::addKey succeed!. \n");
     }
     
+    // VirtualSMC looks keys up with a binary search over the submitted storage
+    // (VirtualSMCKeystore::getByName), so the plugin key storage MUST be sorted
+    // before submission. Reference VirtualSMC plugins (SMCProcessor, SMCSuperIO,
+    // SMCBatteryManager) sort their storage the same way. Without this, keys that
+    // sort before the first stored element (PCPR/PSTR) cannot be found.
+    qsort(const_cast<VirtualSMCKeyValue *>(vsmcPlugin.data.data()), vsmcPlugin.data.size(), sizeof(VirtualSMCKeyValue), VirtualSMCKeyValue::compare);
+
     return suc;
 }
 
